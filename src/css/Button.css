@@ -1,0 +1,28 @@
+button {
+    background-color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 4px;
+    padding: 8px 24px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 10px;
+}
+
+button:hover {
+    background-color: var(--blue-hover);
+}
+
+button svg {
+    margin-right: 10px;
+}
+
+.secondary-btn {
+    background: none;
+    color: var(--blue);
+}
+
+.secondary-btn:hover {
+    color: #fff;
+}

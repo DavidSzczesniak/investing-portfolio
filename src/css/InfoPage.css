@@ -1,0 +1,13 @@
+.info-page {
+    text-align: center;
+    transform: translateY(50%);
+}
+
+.info-page svg {
+    color: var(--light-grey);
+}
+
+.info-page__message {
+    margin: 20px;
+    font-size: 1.15rem;
+}
