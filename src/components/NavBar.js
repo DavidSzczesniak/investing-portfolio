@@ -15,7 +15,7 @@ const UserList = (props) => {
                     <Button label="Watchlist" click={() => history.replace('/user-list')} />
                 </div>
             </div>
-            <div className="page-title">{props.title}</div>
+            {props.title && <div className="page-title">{props.title}</div>}
         </div>
     );
 };

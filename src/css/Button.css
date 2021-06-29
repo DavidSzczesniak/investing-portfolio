@@ -14,10 +14,6 @@ button:hover {
     background-color: var(--blue-hover);
 }
 
-button svg {
-    margin-right: 10px;
-}
-
 .secondary-btn {
     background: none;
     color: var(--blue);

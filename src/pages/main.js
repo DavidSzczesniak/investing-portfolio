@@ -1,28 +1,45 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Main.css';
-import SearchResult from '../components/SearchResult';
-import Button from '../components/Button';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import AssetInfo from '../components/AssetInfo';
 import NavBar from '../components/NavBar';
-import InfoPage from '../components/InfoPage';
+import AsyncSelect from 'react-select/async';
+import { geckoAPI } from '../constants.js';
 
 const Main = () => {
-    const geckoAPI = 'https://api.coingecko.com/api/v3/';
-    const searchRef = useRef(undefined);
     const [searchResult, setResult] = useState({});
-    const [errorMessage, setError] = useState(undefined);
     const [userAssetList, setAssetList] = useState([]);
-    const [resultAssetOwned, setOwned] = useState(false);
+    const [owned, setOwned] = useState(false);
+    const [top20, setTop20] = useState([]);
+    const [refreshed, refreshPage] = useState(false);
 
     useEffect(() => {
-        setError(undefined);
         setResult({});
-        setAssetList(localStorage.getItem('assetList') || []);
-    }, []);
+        setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
 
-    async function handleSearch() {
-        const query = searchRef.current.value;
+        fetch(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((json) => {
+                setTop20(json);
+            });
+    }, [refreshed]);
 
+    async function getAllCoins() {
+        return await fetch(
+            `${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100`
+        )
+            .then((res) => {
+                return res.json();
+            })
+            .then((json) => {
+                return json.map((coin) => {
+                    return { label: `(${coin.symbol.toUpperCase()}) ${coin.name}`, value: coin.id };
+                });
+            });
+    }
+
+    function handleSearch(query) {
         if (query) {
             fetch(`${geckoAPI}coins/${query}`)
                 .then((res) => {
@@ -31,19 +48,17 @@ const Main = () => {
                 .then((json) => {
                     if (json.error) {
                         setResult({});
-                        setError(json.error);
                     } else {
                         searchAssetList(json.symbol);
-                        setError(undefined);
                         setResult({
+                            id: json.id,
                             name: json.name,
                             symbol: json.symbol,
-                            thumb: json.image.thumb,
                             image: json.image.small,
-                            price: json.market_data.current_price.gbp,
-                            price_change: {
-                                '24h': json.market_data.price_change_percentage_24h.toFixed(2),
-                            },
+                            current_price: json.market_data.current_price.gbp,
+                            price_change_percentage_24h:
+                                json.market_data.price_change_percentage_24h,
+                            updatedOn: new Date(),
                         });
                     }
                 });
@@ -54,7 +69,7 @@ const Main = () => {
         setOwned(false);
         if (userAssetList.length) {
             const assetMatches = (asset) => asset.symbol === searchedAsset;
-            if (JSON.parse(userAssetList).some(assetMatches)) {
+            if (userAssetList.some(assetMatches)) {
                 setOwned(true);
             }
         }
@@ -62,21 +77,34 @@ const Main = () => {
 
     return (
         <>
-            <NavBar title="Search" />
+            <NavBar title="Home" />
             <div className="search-page">
-                <div className="search-field">
-                    <input type="text" ref={searchRef} placeholder="Search assets..." />
-                    <Button label="Search" click={handleSearch} />
-                </div>
-                {errorMessage && (
-                    <InfoPage title="Not Found" message={errorMessage} icon={faSearch} />
-                )}
+                <AsyncSelect
+                    loadOptions={getAllCoins}
+                    defaultOptions
+                    placeholder="Search assets..."
+                    onChange={(e) => handleSearch(e.value)}
+                />
                 {Object.entries(searchResult).length > 0 && (
-                    <SearchResult
-                        result={searchResult}
-                        owned={resultAssetOwned}
-                        setOwned={setOwned}
-                    />
+                    <AssetInfo asset={searchResult} userAssetList={userAssetList} styleXL />
+                )}
+                {top20.length > 0 && (
+                    <>
+                        <h2>Top 20</h2>
+                        <div>
+                            {top20.map((coin, index) => {
+                                return (
+                                    <AssetInfo
+                                        key={index}
+                                        asset={coin}
+                                        refreshPage={refreshPage}
+                                        refreshState={refreshed}
+                                        userAssetList={userAssetList}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </>
                 )}
             </div>
         </>
