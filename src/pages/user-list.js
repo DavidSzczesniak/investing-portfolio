@@ -14,9 +14,9 @@ const UserList = () => {
         setAssetList(currentAssetList);
 
         currentAssetList.forEach((asset) => {
-            const diffInMinutes = Math.round(
-                (((new Date(asset.updatedOn) - new Date()) % 86400000) % 3600000) / 60000
-            );
+            let diffInMinutes = new Date(asset.updatedOn) - new Date();
+            diffInMinutes = Math.round(diffInMinutes / 1000 / 60);
+
             if (diffInMinutes < -5) {
                 fetch(`${geckoAPI}coins/${asset.id}`)
                     .then((res) => {
