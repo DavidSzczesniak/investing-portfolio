@@ -4,6 +4,7 @@ import AssetInfo from '../components/AssetInfo';
 import NavBar from '../components/NavBar';
 import AsyncSelect from 'react-select/async';
 import { geckoAPI } from '../constants.js';
+import axios from 'axios';
 
 const Main = () => {
     const [searchResult, setResult] = useState({});
@@ -15,25 +16,18 @@ const Main = () => {
     useEffect(() => {
         setResult({});
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
-
-        fetch(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
+        axios
+            .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
             .then((res) => {
-                return res.json();
-            })
-            .then((json) => {
-                setTop20(json);
+                setTop20(res.data);
             });
     }, [refreshed]);
 
     async function getAllCoins() {
-        return await fetch(
-            `${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100`
-        )
+        return await axios
+            .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100`)
             .then((res) => {
-                return res.json();
-            })
-            .then((json) => {
-                return json.map((coin) => {
+                return res.data.map((coin) => {
                     return { label: `(${coin.symbol.toUpperCase()}) ${coin.name}`, value: coin.id };
                 });
             });
@@ -41,27 +35,19 @@ const Main = () => {
 
     function handleSearch(query) {
         if (query) {
-            fetch(`${geckoAPI}coins/${query}`)
-                .then((res) => {
-                    return res.json();
-                })
-                .then((json) => {
-                    if (json.error) {
-                        setResult({});
-                    } else {
-                        searchAssetList(json.symbol);
-                        setResult({
-                            id: json.id,
-                            name: json.name,
-                            symbol: json.symbol,
-                            image: json.image.small,
-                            current_price: json.market_data.current_price.gbp,
-                            price_change_percentage_24h:
-                                json.market_data.price_change_percentage_24h,
-                            updatedOn: new Date(),
-                        });
-                    }
+            axios.get(`${geckoAPI}coins/${query}`).then((res) => {
+                const data = res.data;
+                searchAssetList(data.symbol);
+                setResult({
+                    id: data.id,
+                    name: data.name,
+                    symbol: data.symbol,
+                    image: data.image.small,
+                    current_price: data.market_data.current_price.gbp,
+                    price_change_percentage_24h: data.market_data.price_change_percentage_24h,
+                    updatedOn: new Date(),
                 });
+            });
         }
     }
 
