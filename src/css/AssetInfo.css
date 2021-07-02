@@ -1,9 +1,14 @@
 .asset-container {
-    margin: 0;
+    margin: 3px 0;
     border: 1px solid var(--outline-grey);
     border-radius: 5px;
     padding: 0 20px;
     background-color: #fff;
+}
+
+div.asset-container:hover:not(.styleXL) {
+    cursor: pointer;
+    box-shadow: 0 0 0 2px var(--blue);
 }
 
 .asset-container:not(:first-child):not(.styleXL) {
@@ -69,7 +74,7 @@
 /* xl style */
 
 .asset-container.styleXL {
-    margin: 50px 0;
+    margin: 50px;
     height: fit-content;
     padding: 20px;
     background: linear-gradient(to top, var(--outline-grey) 0%, rgba(248, 250, 253, 0) 414px);

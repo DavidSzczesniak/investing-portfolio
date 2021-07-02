@@ -5,16 +5,15 @@ import NavBar from '../components/NavBar';
 import AsyncSelect from 'react-select/async';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const Main = () => {
-    const [searchResult, setResult] = useState({});
     const [userAssetList, setAssetList] = useState([]);
-    const [owned, setOwned] = useState(false);
     const [top20, setTop20] = useState([]);
     const [refreshed, refreshPage] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
-        setResult({});
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
         axios
             .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
@@ -35,29 +34,7 @@ const Main = () => {
 
     function handleSearch(query) {
         if (query) {
-            axios.get(`${geckoAPI}coins/${query}`).then((res) => {
-                const data = res.data;
-                searchAssetList(data.symbol);
-                setResult({
-                    id: data.id,
-                    name: data.name,
-                    symbol: data.symbol,
-                    image: data.image.small,
-                    current_price: data.market_data.current_price.usd,
-                    price_change_percentage_24h: data.market_data.price_change_percentage_24h,
-                    updatedOn: new Date(),
-                });
-            });
-        }
-    }
-
-    function searchAssetList(searchedAsset) {
-        setOwned(false);
-        if (userAssetList.length) {
-            const assetMatches = (asset) => asset.symbol === searchedAsset;
-            if (userAssetList.some(assetMatches)) {
-                setOwned(true);
-            }
+            history.replace(`/asset-view?id=${query}`);
         }
     }
 
@@ -71,9 +48,6 @@ const Main = () => {
                     placeholder="Search assets..."
                     onChange={(e) => handleSearch(e.value)}
                 />
-                {Object.entries(searchResult).length > 0 && (
-                    <AssetInfo asset={searchResult} userAssetList={userAssetList} styleXL />
-                )}
                 {top20.length > 0 && (
                     <>
                         <h2>Top 20</h2>
@@ -86,6 +60,7 @@ const Main = () => {
                                         refreshPage={refreshPage}
                                         refreshState={refreshed}
                                         userAssetList={userAssetList}
+                                        click={() => history.replace(`/asset-view?id=${coin.id}`)}
                                     />
                                 );
                             })}

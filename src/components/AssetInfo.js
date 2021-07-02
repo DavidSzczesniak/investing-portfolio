@@ -8,7 +8,7 @@ import loadingGif from '../assets/loading-dots.gif';
 import Sparkline from './Sparkline';
 
 const AssetInfo = (props) => {
-    const { asset, refreshPage, refreshState, userAssetList, styleXL } = props;
+    const { asset, refreshPage, refreshState, userAssetList, styleXL, click } = props;
     const [owned, setOwned] = useState(false);
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
 
@@ -17,6 +17,8 @@ const AssetInfo = (props) => {
             const assetMatches = (currentAsset) => currentAsset.symbol === asset.symbol;
             if (userAssetList.some(assetMatches)) {
                 setOwned(true);
+            } else {
+                setOwned(false);
             }
         }
     }, [asset.id, asset.symbol, userAssetList]);
@@ -51,7 +53,9 @@ const AssetInfo = (props) => {
     }
 
     return (
-        <div className={`asset-container ${styleXL ? 'styleXL' : ''}`}>
+        <div
+            className={`asset-container ${styleXL ? 'styleXL' : ''}`}
+            onClick={() => click && !styleXL && click()}>
             <div className="asset-header">
                 <div className="asset-title">
                     <img src={asset.image} alt={`${asset.name} logo`} />

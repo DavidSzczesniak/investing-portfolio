@@ -5,10 +5,12 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import AssetInfo from '../components/AssetInfo';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const UserList = () => {
     const [userAssetList, setAssetList] = useState([]);
     const [refreshed, refreshPage] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || [];
@@ -56,6 +58,7 @@ const UserList = () => {
                                 refreshPage={refreshPage}
                                 refreshState={refreshed}
                                 userAssetList={userAssetList}
+                                click={() => history.replace(`/asset-view?id=${asset.id}`)}
                             />
                         );
                     })}
