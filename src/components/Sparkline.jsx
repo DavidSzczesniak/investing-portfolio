@@ -69,6 +69,17 @@ const Sparkline = (props) => {
                     size: 16,
                     family: "'Poppins', sans-serif",
                 },
+                callbacks: {
+                    label: function (context) {
+                        // override default formatting of tooltips
+                        const value = context.raw;
+                        if (value >= 1000) {
+                            return '$' + value.toLocaleString();
+                        } else {
+                            return '$' + value.toFixed(8);
+                        }
+                    },
+                },
             },
         },
         scales: {
@@ -93,10 +104,11 @@ const Sparkline = (props) => {
                 ticks: {
                     beginAtZero: true,
                     callback: function (value) {
-                        if (value >= 1000) {
+                        if (value >= 1) {
                             return '$' + value.toLocaleString();
                         } else {
-                            return '$' + value;
+                            // rounds numbers below 0, up to 10 decimal places
+                            return '$' + Math.round(value * 10000000000) / 10000000000;
                         }
                     },
                     font: {
