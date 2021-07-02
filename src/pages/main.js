@@ -43,7 +43,7 @@ const Main = () => {
                     name: data.name,
                     symbol: data.symbol,
                     image: data.image.small,
-                    current_price: data.market_data.current_price.gbp,
+                    current_price: data.market_data.current_price.usd,
                     price_change_percentage_24h: data.market_data.price_change_percentage_24h,
                     updatedOn: new Date(),
                 });

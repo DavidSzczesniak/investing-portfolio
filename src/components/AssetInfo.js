@@ -5,10 +5,12 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
 import '../css/AssetInfo.css';
 import loadingGif from '../assets/loading-dots.gif';
+import Sparkline from './Sparkline';
 
 const AssetInfo = (props) => {
     const { asset, refreshPage, refreshState, userAssetList, styleXL } = props;
     const [owned, setOwned] = useState(false);
+    const priceChangePositive = isPositive(asset.price_change_percentage_24h);
 
     useEffect(() => {
         if (userAssetList.length > 0) {
@@ -67,11 +69,7 @@ const AssetInfo = (props) => {
                             </span>
                             <span
                                 className={`
-                            ${
-                                isPositive(asset.price_change_percentage_24h)
-                                    ? 'positive'
-                                    : 'negative'
-                            } price-change
+                            ${priceChangePositive ? 'positive' : 'negative'} price-change
                         `}>
                                 {asset.price_change_percentage_24h.toFixed(2)}%
                             </span>
@@ -86,6 +84,7 @@ const AssetInfo = (props) => {
                     )}
                 </div>
             </div>
+            {styleXL && <Sparkline asset={asset} priceChangePositive={priceChangePositive} />}
         </div>
     );
 };
