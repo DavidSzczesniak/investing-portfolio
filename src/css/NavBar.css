@@ -12,6 +12,22 @@
     font-size: 2rem;
     font-weight: 600;
     cursor: pointer;
+    margin-right: 30px;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-btn {
+    margin-right: 2rem;
+    display: inline-block;
+}
+
+.nav-btn:hover {
+    color: var(--blue);
+    cursor: pointer;
 }
 
 .page-title {
@@ -20,4 +36,8 @@
     padding: 10px 20px;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.search-container {
+    width: 300px;
 }
