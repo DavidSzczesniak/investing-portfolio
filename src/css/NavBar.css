@@ -28,6 +28,7 @@
 .nav-btn:hover {
     color: var(--blue);
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .page-title {
