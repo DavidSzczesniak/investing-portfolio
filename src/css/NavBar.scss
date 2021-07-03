@@ -23,12 +23,11 @@
 .nav-btn {
     margin-right: 2rem;
     display: inline-block;
-}
-
-.nav-btn:hover {
-    color: var(--blue);
-    cursor: pointer;
-    text-decoration: underline;
+    &:hover {
+        color: var(--blue);
+        cursor: pointer;
+        text-decoration: underline;
+    }
 }
 
 .page-title {

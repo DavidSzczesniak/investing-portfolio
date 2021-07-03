@@ -1,10 +1,9 @@
 .info-page {
     text-align: center;
     transform: translateY(50%);
-}
-
-.info-page svg {
-    color: var(--light-grey);
+    svg {
+        color: var(--light-grey);
+    }
 }
 
 .info-page__message {

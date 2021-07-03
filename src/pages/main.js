@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import AssetInfo from '../components/AssetInfo';
 import NavBar from '../components/NavBar';
 import { geckoAPI } from '../constants.js';
-import '../css/Main.css';
+import '../css/Main.scss';
 
 const Main = () => {
     const [userAssetList, setAssetList] = useState([]);
@@ -24,7 +24,7 @@ const Main = () => {
     return (
         <>
             <NavBar />
-            <div className="search-page">
+            <div className="home-page">
                 {top20.length > 0 && (
                     <>
                         <h2>Top 20 by Market Cap</h2>

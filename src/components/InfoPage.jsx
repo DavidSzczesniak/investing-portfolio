@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import Button from './Button';
-import '../css/InfoPage.css';
+import '../css/InfoPage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const InfoPage = (props) => {

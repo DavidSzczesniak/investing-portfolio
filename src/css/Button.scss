@@ -8,26 +8,22 @@ button {
     font-size: 16px;
     font-weight: 400;
     margin: 0 10px;
-}
-
-button svg {
-    color: #fff;
-}
-
-button:hover {
-    background-color: var(--blue-hover);
+    &:hover {
+        background-color: var(--blue-hover);
+    }
+    svg {
+        color: #fff;
+    }
 }
 
 .secondary-btn {
     background: none;
     color: var(--blue);
-}
-
-.secondary-btn:hover,
-.secondary-btn:hover path {
-    color: #fff;
-}
-
-.secondary-btn path {
-    color: var(--blue);
+    &:hover,
+    &:hover path {
+        color: #fff;
+    }
+    path {
+        color: var(--blue);
+    }
 }

@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
-import '../css/Sparkline.css';
 
 const Sparkline = (props) => {
     const { asset, priceChangePositive } = props;
@@ -122,7 +121,7 @@ const Sparkline = (props) => {
     };
 
     return (
-        <div className="sparkline-container">
+        <div style={{ marginTop: '50px', padding: '10px' }}>
             <Line data={data} options={options} />
         </div>
     );

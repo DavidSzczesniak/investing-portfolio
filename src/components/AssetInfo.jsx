@@ -3,7 +3,7 @@ import { isPositive } from '../Utils/helpers';
 import Button from './Button';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
-import '../css/AssetInfo.css';
+import '../css/AssetInfo.scss';
 import loadingGif from '../assets/loading-dots.gif';
 import Sparkline from './Sparkline';
 

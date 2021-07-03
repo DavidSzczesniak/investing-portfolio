@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import AsyncSelect from 'react-select/async';
 import { geckoAPI } from '../constants';
-import '../css/NavBar.css';
+import '../css/NavBar.scss';
 
 const UserList = (props) => {
     const history = useHistory();
