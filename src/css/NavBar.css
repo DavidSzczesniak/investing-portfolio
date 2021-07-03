@@ -9,14 +9,10 @@
 }
 
 .site-logo {
-    color: var(--grey);
+    color: var(--black);
     font-size: 2rem;
     font-weight: 600;
     cursor: pointer;
-}
-
-.site-logo:hover {
-    color: var(--blue);
 }
 
 .page-title {

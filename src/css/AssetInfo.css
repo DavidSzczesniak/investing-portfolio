@@ -6,11 +6,6 @@
     background-color: #fff;
 }
 
-div.asset-container:hover:not(.styleXL) {
-    cursor: pointer;
-    box-shadow: 0 0 0 2px var(--blue);
-}
-
 .asset-container:not(:first-child):not(.styleXL) {
     border-top: 1px solid #fff;
 }
@@ -28,6 +23,10 @@ div.asset-container:hover:not(.styleXL) {
     display: flex;
     align-items: center;
     font-weight: 600;
+}
+
+.asset-title:hover {
+    cursor: pointer;
 }
 
 .asset-title img {
@@ -86,6 +85,10 @@ div.asset-container:hover:not(.styleXL) {
 
 .styleXL .asset-title img {
     height: unset;
+}
+
+.styleXL .asset-title:hover {
+    cursor: unset;
 }
 
 .styleXL .current-price {

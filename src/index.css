@@ -1,7 +1,7 @@
 :root {
     --blue: #0a46e4;
     --blue-hover: rgba(10, 70, 228, 0.9);
-    --tal-green: #01c4b3;
+    --black: #222531;
     --grey: #656b7a;
     --light-grey: #999eaa;
     --outline-grey: #dee1eb;
@@ -13,6 +13,7 @@
 
 * {
     font-family: 'Poppins', sans-serif;
+    color: var(--black);
 }
 
 body {

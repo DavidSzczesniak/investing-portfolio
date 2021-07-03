@@ -53,11 +53,9 @@ const AssetInfo = (props) => {
     }
 
     return (
-        <div
-            className={`asset-container ${styleXL ? 'styleXL' : ''}`}
-            onClick={() => click && !styleXL && click()}>
+        <div className={`asset-container ${styleXL ? 'styleXL' : ''}`}>
             <div className="asset-header">
-                <div className="asset-title">
+                <div className="asset-title" onClick={() => click && !styleXL && click()}>
                     <img src={asset.image} alt={`${asset.name} logo`} />
                     <span>{asset.name}</span>
                     <span className="asset-symbol">{asset.symbol.toUpperCase()}</span>
