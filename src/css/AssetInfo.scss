@@ -1,3 +1,5 @@
+@import './helpers';
+
 .asset-container {
     margin: 0;
     border: 1px solid var(--outline-grey);
@@ -16,17 +18,15 @@
 }
 
 .asset-header {
-    display: flex;
+    @include flexCenter();
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     margin: 10px 0;
     font-size: 1.5rem;
 }
 
 .asset-title {
-    display: flex;
-    align-items: center;
+    @include flexCenter();
     font-weight: 600;
     &:hover {
         cursor: pointer;
@@ -38,9 +38,8 @@
 }
 
 .current-price {
+    @include flexCenter();
     font-weight: 300;
-    display: flex;
-    align-items: center;
     font-size: 1.25rem;
     span {
         font-weight: 600;
