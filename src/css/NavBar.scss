@@ -1,22 +1,32 @@
 @import './helpers';
 
 .navbar {
-    @include flexCenter();
-    padding: 10px 20px;
-    justify-content: space-between;
+    display: flex;
+    padding: 1.2rem;
     border-bottom: 1px solid var(--outline-grey);
-    margin-bottom: 10px;
     background-color: #fff;
+    flex-direction: column;
+    & > * {
+        flex-basis: 100%;
+        justify-content: center;
+    }
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+@media (min-width: 40em) {
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .site-logo {
     cursor: pointer;
     margin-right: 30px;
-}
-
-.site-logo,
-.page-title {
-    font-size: 2rem;
+    color: var(--blue);
     font-weight: 600;
 }
 
@@ -25,8 +35,9 @@
 }
 
 .nav-btn {
-    margin-right: 2rem;
+    margin-left: 2rem;
     display: inline-block;
+    text-align: right;
     &:hover {
         color: var(--blue);
         cursor: pointer;
@@ -34,12 +45,13 @@
     }
 }
 
-.page-title {
-    padding: 10px 20px;
-    text-align: center;
-    margin-bottom: 10px;
+.search-container {
+    margin-top: 1em;
+    max-width: 30rem;
 }
 
-.search-container {
-    width: 300px;
+@media (min-width: 40em) {
+    .search-container {
+        margin-top: 0;
+    }
 }

@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Button = (props) => {
     const { label, click, icon, isSecondary } = props;
+    const secondary = isSecondary ? 'secondary-btn' : '';
 
     return (
-        <button
-            onClick={() => click && click()}
-            className={`${isSecondary ? 'secondary-btn' : ''}`}>
+        <button onClick={() => click && click()} className={`${secondary}`}>
             {icon && <FontAwesomeIcon icon={icon} />}
             {label}
         </button>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
 import AssetInfo from '../components/AssetInfo';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
@@ -27,12 +26,7 @@ const AssetView = () => {
         });
     }, [assetId]);
 
-    return (
-        <>
-            <NavBar />
-            {asset && <AssetInfo asset={asset} userAssetList={userAssetList} styleXL />}
-        </>
-    );
+    return <>{asset && <AssetInfo asset={asset} userAssetList={userAssetList} styleXL />}</>;
 };
 
 export default AssetView;

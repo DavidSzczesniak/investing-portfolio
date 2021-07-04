@@ -2,10 +2,10 @@ button {
     background-color: var(--blue);
     border: 1px solid var(--blue);
     border-radius: 4px;
-    padding: 8px 24px;
+    padding: 8px 16px;
     cursor: pointer;
     color: #fff;
-    font-size: 16px;
+    font-size: initial;
     font-weight: 400;
     margin: 0 10px;
     &:hover {

@@ -24,29 +24,24 @@ const UserList = (props) => {
         }
     }
     return (
-        <div>
-            <div className="navbar">
-                <div className="nav-container">
-                    <span className="site-logo" onClick={() => history.replace('/')}>
-                        Investii
-                    </span>
-                    <div className="search-container">
-                        <AsyncSelect
-                            loadOptions={getAllCoins}
-                            defaultOptions
-                            placeholder="Search assets..."
-                            onChange={(e) => handleSearch(e.value)}
-                        />
-                    </div>
+        <div className="navbar">
+            <div className="nav-container">
+                <h2 className="site-logo" onClick={() => history.replace('/')}>
+                    Investii
+                </h2>
+                <div className="nav-btn" onClick={() => history.replace('/user-list')}>
+                    Watchlist
                 </div>
-                <div>
-                    <div className="nav-btn" onClick={() => history.replace('/user-list')}>
-                        Watchlist
-                    </div>
-                    <div className="nav-btn">Portfolio</div>
-                </div>
+                <div className="nav-btn">Portfolio</div>
             </div>
-            {props.title && <div className="page-title">{props.title}</div>}
+            <div className="search-container">
+                <AsyncSelect
+                    loadOptions={getAllCoins}
+                    defaultOptions
+                    placeholder="Search assets..."
+                    onChange={(e) => handleSearch(e.value)}
+                />
+            </div>
         </div>
     );
 };

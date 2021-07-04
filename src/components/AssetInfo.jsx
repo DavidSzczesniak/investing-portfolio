@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { isPositive } from '../Utils/helpers';
 import Button from './Button';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
 import '../css/AssetInfo.scss';
-import loadingGif from '../assets/loading-dots.gif';
 import Sparkline from './Sparkline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AssetInfo = (props) => {
     const { asset, refreshPage, refreshState, userAssetList, styleXL, click } = props;
     const [owned, setOwned] = useState(false);
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
+    const currentPrice =
+        asset.current_price >= 1000 ? asset.current_price.toLocaleString() : asset.current_price;
 
     useEffect(() => {
         if (userAssetList.length > 0) {
@@ -57,34 +59,28 @@ const AssetInfo = (props) => {
             <div className="asset-header">
                 <div className="asset-title" onClick={() => click && !styleXL && click()}>
                     <img src={asset.image} alt={`${asset.name} logo`} />
-                    <span>{asset.name}</span>
-                    <span className="asset-symbol">{asset.symbol.toUpperCase()}</span>
+                    <div>
+                        <span>{asset.name}</span>
+                        <span className="asset-symbol">{asset.symbol.toUpperCase()}</span>
+                    </div>
                 </div>
+                {/* <div className="asset-mcap">MCap: $348.884 Bn</div> */}
                 <div className="current-price">
-                    {asset.current_price ? (
-                        <>
-                            <span>
-                                $
-                                {asset.current_price >= 1000
-                                    ? asset.current_price.toLocaleString()
-                                    : asset.current_price}
-                            </span>
-                            <span
-                                className={`
-                            ${priceChangePositive ? 'positive' : 'negative'} price-change
-                        `}>
-                                {asset.price_change_percentage_24h.toFixed(2)}%
-                            </span>
-                        </>
-                    ) : (
-                        <img src={loadingGif} alt="loading animation" style={{ height: '40px' }} />
-                    )}
-                    {owned ? (
-                        <Button click={handleRemoveAsset} icon={faStar} isSecondary />
-                    ) : (
-                        <Button click={handleSaveAsset} icon={faOutlineStar} isSecondary />
-                    )}
+                    <span>${currentPrice}</span>
+                    <span className="price-change">
+                        {priceChangePositive ? (
+                            <FontAwesomeIcon className="positive" icon={faCaretUp} size="2x" />
+                        ) : (
+                            <FontAwesomeIcon className="negative" icon={faCaretDown} size="2x" />
+                        )}
+                        <p>{asset.price_change_percentage_24h.toFixed(2)}%</p>
+                    </span>
                 </div>
+                {owned ? (
+                    <Button click={handleRemoveAsset} icon={faStar} isSecondary />
+                ) : (
+                    <Button click={handleSaveAsset} icon={faOutlineStar} isSecondary />
+                )}
             </div>
             {styleXL && <Sparkline asset={asset} priceChangePositive={priceChangePositive} />}
         </div>
