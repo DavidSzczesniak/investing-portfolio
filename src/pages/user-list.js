@@ -47,30 +47,28 @@ const UserList = () => {
     return (
         <>
             <h2 className="page-title">Your Watchlist</h2>
-            <div className="asset-list">
-                {userAssetList.length ? (
-                    <div>
-                        {userAssetList.map((asset, index) => {
-                            return (
-                                <AssetInfo
-                                    key={index}
-                                    asset={asset}
-                                    refreshPage={refreshPage}
-                                    refreshState={refreshed}
-                                    userAssetList={userAssetList}
-                                    click={() => history.replace(`/asset-view?id=${asset.id}`)}
-                                />
-                            );
-                        })}
-                    </div>
-                ) : (
-                    <InfoPage
-                        title="Woops! Nothing here!"
-                        message="It looks like you haven't saved anything to your watchlist yet."
-                        icon={faQuestionCircle}
-                    />
-                )}
-            </div>
+            {userAssetList.length ? (
+                <div className="asset-list">
+                    {userAssetList.map((asset, index) => {
+                        return (
+                            <AssetInfo
+                                key={index}
+                                asset={asset}
+                                refreshPage={refreshPage}
+                                refreshState={refreshed}
+                                userAssetList={userAssetList}
+                                click={() => history.replace(`/asset-view?id=${asset.id}`)}
+                            />
+                        );
+                    })}
+                </div>
+            ) : (
+                <InfoPage
+                    title="Woops! Nothing here!"
+                    message="It looks like you haven't saved anything to your watchlist yet."
+                    icon={faQuestionCircle}
+                />
+            )}
         </>
     );
 };
