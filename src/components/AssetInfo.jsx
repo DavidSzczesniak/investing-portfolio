@@ -77,11 +77,11 @@ const AssetInfo = (props) => {
                     </span>
                 </div>
                 {owned ? (
-                    <button onClick={handleRemoveAsset}>
+                    <button onClick={handleRemoveAsset} aria-label="Remove from Favourites">
                         <FontAwesomeIcon icon={faStar} />
                     </button>
                 ) : (
-                    <button onClick={handleSaveAsset}>
+                    <button onClick={handleSaveAsset} aria-label="Add to Favourites">
                         <FontAwesomeIcon icon={faOutlineStar} />
                     </button>
                 )}
