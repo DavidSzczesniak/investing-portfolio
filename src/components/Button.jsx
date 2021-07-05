@@ -7,7 +7,7 @@ const Button = (props) => {
     const secondary = isSecondary ? 'secondary-btn' : '';
 
     return (
-        <button onClick={() => click && click()} className={`${secondary}`}>
+        <button onClick={() => click && click()} className={`${secondary} custom-btn`}>
             {icon && <FontAwesomeIcon icon={icon} />}
             {label}
         </button>

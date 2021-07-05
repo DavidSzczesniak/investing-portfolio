@@ -77,9 +77,13 @@ const AssetInfo = (props) => {
                     </span>
                 </div>
                 {owned ? (
-                    <Button click={handleRemoveAsset} icon={faStar} isSecondary />
+                    <button onClick={handleRemoveAsset}>
+                        <FontAwesomeIcon icon={faStar} />
+                    </button>
                 ) : (
-                    <Button click={handleSaveAsset} icon={faOutlineStar} isSecondary />
+                    <button onClick={handleSaveAsset}>
+                        <FontAwesomeIcon icon={faOutlineStar} />
+                    </button>
                 )}
             </div>
             {styleXL && <Sparkline asset={asset} priceChangePositive={priceChangePositive} />}

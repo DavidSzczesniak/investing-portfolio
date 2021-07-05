@@ -14,12 +14,8 @@
         border-top: 1px solid #fff;
     }
     &.styleXL {
-        border: 1px solid var(--outline-grey);
-        border-radius: 5px;
-        margin: 50px;
+        padding: 0;
         height: fit-content;
-        padding: 20px;
-        background: linear-gradient(to top, var(--outline-grey) 0%, rgba(248, 250, 253, 0) 414px);
     }
 }
 
@@ -29,17 +25,24 @@
         flex-basis: 100%;
     }
     & > button {
+        font-size: 1rem;
         margin-left: 0.75em;
+        background: none;
         flex-basis: 20%;
         border: none;
+        padding: 0;
+        cursor: pointer;
+        & path {
+            color: var(--blue);
+        }
     }
 }
 
 @media (min-width: 40em) {
     .asset-header {
         & > button {
-            border: 1px solid;
             flex-basis: 10%;
+            font-size: 1.5rem;
         }
     }
 }
@@ -89,9 +92,6 @@ div.current-price {
     span {
         font-weight: 600;
     }
-    span:nth-child(2) {
-        font-size: 0.65rem;
-    }
 }
 
 @media (min-width: 40em) {
@@ -101,9 +101,6 @@ div.current-price {
         align-items: center;
         span {
             margin-right: 1em;
-        }
-        span:nth-child(2) {
-            font-size: 1rem;
         }
     }
 }
@@ -130,8 +127,15 @@ div.current-price {
     color: var(--grey);
     display: flex;
     align-items: center;
+    font-size: 0.65rem;
     p {
         margin-left: 5px;
+    }
+}
+
+@media (min-width: 40em) {
+    .price-change {
+        font-size: 1rem;
     }
 }
 
@@ -148,24 +152,38 @@ div.current-price {
 }
 
 /* xl style */
-
 .styleXL {
     .asset-header {
-        font-size: 2rem;
-    }
-    .asset-title {
-        &:hover {
-            cursor: unset;
-        }
-        img {
-            height: unset;
-        }
+        font-size: 1.2rem;
     }
     .current-price {
-        font-size: 1.75rem;
+        font-size: 1rem;
     }
     .asset-symbol,
     .price-change {
-        font-size: 1.25rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 40em) {
+    .styleXL {
+        .asset-header {
+            font-size: 2rem;
+        }
+        .asset-title {
+            &:hover {
+                cursor: unset;
+            }
+            img {
+                height: unset;
+            }
+        }
+        .current-price {
+            font-size: 1.75rem;
+        }
+        .asset-symbol,
+        .price-change {
+            font-size: 1.25rem;
+        }
     }
 }

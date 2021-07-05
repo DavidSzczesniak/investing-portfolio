@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
+import '../css/Sparkline.scss';
 
 const Sparkline = (props) => {
     const { asset, priceChangePositive } = props;
@@ -44,7 +45,6 @@ const Sparkline = (props) => {
     };
 
     const options = {
-        responsive: true,
         interaction: {
             mode: 'index',
             intersect: false,
@@ -93,15 +93,18 @@ const Sparkline = (props) => {
                         weight: 'bold',
                         family: "'Poppins', sans-serif",
                     },
-                    callback: function (val, index) {
-                        // Hide the label of every 2nd dataset
-                        return index % 6 === 0 ? this.getLabelForValue(val) : '';
-                    },
+                    /* haven't got a responsive solution for this right now */
+                    display: false,
+                    // callback: function (val, index) {
+                    //     // Hide the label of every 2nd dataset
+                    //     return index % 6 === 0 ? this.getLabelForValue(val) : '';
+                    // },
                 },
             },
             y: {
                 ticks: {
                     beginAtZero: true,
+                    mirror: true,
                     callback: function (value) {
                         if (value >= 1) {
                             return '$' + value.toLocaleString();
@@ -121,7 +124,7 @@ const Sparkline = (props) => {
     };
 
     return (
-        <div style={{ marginTop: '50px', padding: '10px' }}>
+        <div className="sparkline-container">
             <Line data={data} options={options} />
         </div>
     );
