@@ -25,17 +25,18 @@
 
 .site-logo {
     cursor: pointer;
-    margin-right: 30px;
     color: var(--blue);
     font-weight: 600;
 }
 
 .nav-container {
     @include flexCenter();
+    & > * {
+        margin-inline: 1.5rem;
+    }
 }
 
 .nav-btn {
-    margin-left: 2rem;
     display: inline-block;
     text-align: right;
     &:hover {
@@ -46,8 +47,9 @@
 }
 
 .search-container {
-    margin-top: 1em;
+    margin-top: 1.5rem;
     max-width: 30rem;
+    margin-inline: 1.5rem;
 }
 
 @media (min-width: 40em) {
