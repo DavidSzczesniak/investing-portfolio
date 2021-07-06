@@ -1,21 +1,30 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 import { geckoAPI } from '../constants';
 import '../css/NavBar.scss';
 
-const UserList = (props) => {
+const UserList = () => {
     const history = useHistory();
+    const [coins, setCoins] = useState([]);
 
-    async function getAllCoins() {
-        return await axios
+    useEffect(() => {
+        getCoins();
+    }, []);
+
+    async function getCoins() {
+        const result = await axios
             .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100`)
             .then((res) => {
                 return res.data.map((coin) => {
-                    return { label: `(${coin.symbol.toUpperCase()}) ${coin.name}`, value: coin.id };
+                    return {
+                        value: coin.id,
+                        label: `(${coin.symbol.toUpperCase()}) ${coin.name}`,
+                    };
                 });
             });
+        setCoins(result);
     }
 
     function handleSearch(query) {
@@ -23,6 +32,7 @@ const UserList = (props) => {
             history.replace(`/asset-view?id=${query}`);
         }
     }
+
     return (
         <div className="navbar">
             <div className="nav-container">
@@ -34,14 +44,15 @@ const UserList = (props) => {
                 </div>
                 <div className="nav-btn">Portfolio</div>
             </div>
-            <div className="search-container">
-                <AsyncSelect
-                    loadOptions={getAllCoins}
-                    defaultOptions
-                    placeholder="Search assets..."
-                    onChange={(e) => handleSearch(e.value)}
-                />
-            </div>
+            {coins.length > 0 && (
+                <div className="search-container">
+                    <Select
+                        options={coins}
+                        placeholder="Search assets..."
+                        onChange={(e) => handleSearch(e.value)}
+                    />
+                </div>
+            )}
         </div>
     );
 };
