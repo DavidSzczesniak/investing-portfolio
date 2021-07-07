@@ -3,22 +3,40 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
+import Select from 'react-select';
 
 const Sparkline = (props) => {
     const { asset, priceChangePositive } = props;
     const [assetPrices, setPrices] = useState(null);
     const [assetTimestamps, setTimestamps] = useState(null);
+    const timeRanges = [
+        { value: '1', label: '24 Hours' },
+        { value: '7', label: '7 Days' },
+        { value: '30', label: '30 Days' },
+        { value: '90', label: '3 Months' },
+        { value: '160', label: '6 Months' },
+        { value: '365', label: '1 Year' },
+        { value: 'max', label: 'All Time' },
+    ];
+    const [timeRange, setTimeRange] = useState(
+        JSON.parse(localStorage.getItem('sparklineDataRange')) || {
+            value: '1',
+            label: '24 Hours',
+        }
+    );
 
     useEffect(() => {
         async function getMarketChart() {
             await axios
-                .get(`${geckoAPI}coins/${asset.id}/market_chart?vs_currency=usd&days=1`)
+                .get(
+                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=usd&days=${timeRange.value}`
+                )
                 .then((res) => {
                     let timestamps = [];
                     let prices = [];
                     res.data.prices.forEach((price) => {
                         timestamps.push(
-                            new Date(price[0]).toLocaleTimeString('en-GB', {
+                            new Date(price[0]).toLocaleDateString('en-GB', {
                                 hour: '2-digit',
                                 minute: '2-digit',
                             })
@@ -31,7 +49,12 @@ const Sparkline = (props) => {
                 });
         }
         getMarketChart();
-    }, [asset.id]);
+    }, [asset.id, timeRange]);
+
+    function handleRangeSelection(selectedOption) {
+        localStorage.setItem('sparklineDataRange', JSON.stringify(selectedOption));
+        setTimeRange(selectedOption);
+    }
 
     const data = {
         labels: assetTimestamps,
@@ -125,6 +148,13 @@ const Sparkline = (props) => {
 
     return (
         <div className="sparkline-container">
+            <Select
+                options={timeRanges}
+                isSearchable={false}
+                defaultValue={timeRange}
+                className="time-range"
+                onChange={(e) => handleRangeSelection(e)}
+            />
             <Line data={data} options={options} />
         </div>
     );

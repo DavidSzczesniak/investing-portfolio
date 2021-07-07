@@ -1,6 +1,10 @@
 .sparkline-container {
     margin: 0.7rem 0 0.7rem -1rem;
     width: auto;
+    .time-range {
+        width: 10rem;
+        float: right;
+    }
 }
 
 @media (min-width: 40em) {
