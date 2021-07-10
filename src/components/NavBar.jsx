@@ -5,32 +5,50 @@ import Select from 'react-select';
 import { geckoAPI } from '../constants';
 import '../css/NavBar.scss';
 
-const UserList = () => {
+const UserList = (props) => {
+    const { refreshed, refreshApp } = props;
     const history = useHistory();
+    const currencyList = [
+        { value: 'usd', label: 'USD - $', symbol: '$' },
+        { value: 'gbp', label: 'GBP - £', symbol: '£' },
+        { value: 'eur', label: 'EUR - €', symbol: '€' },
+        { value: 'cad', label: 'CAD - $', symbol: '$' },
+    ];
     const [coins, setCoins] = useState([]);
+    const [currency, setCurrency] = useState(
+        JSON.parse(localStorage.getItem('currency')) || currencyList[0]
+    );
 
     useEffect(() => {
+        localStorage.setItem('currency', JSON.stringify(currency));
         getCoins();
-    }, []);
-
-    async function getCoins() {
-        const result = await axios
-            .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100`)
-            .then((res) => {
-                return res.data.map((coin) => {
-                    return {
-                        value: coin.id,
-                        label: `(${coin.symbol.toUpperCase()}) ${coin.name}`,
-                    };
+        async function getCoins() {
+            const result = await axios
+                .get(
+                    `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=100`
+                )
+                .then((res) => {
+                    return res.data.map((coin) => {
+                        return {
+                            value: coin.id,
+                            label: `(${coin.symbol.toUpperCase()}) ${coin.name}`,
+                        };
+                    });
                 });
-            });
-        setCoins(result);
-    }
+            setCoins(result);
+        }
+    }, [currency.value, currency]);
 
     function handleSearch(query) {
         if (query) {
             history.replace(`/asset-view?id=${query}`);
         }
+    }
+
+    function changeCurrency(selectedCurrency) {
+        localStorage.setItem('currency', JSON.stringify(selectedCurrency));
+        setCurrency(selectedCurrency);
+        refreshApp(!refreshed);
     }
 
     return (
@@ -50,6 +68,11 @@ const UserList = () => {
                         options={coins}
                         placeholder="Search assets..."
                         onChange={(e) => handleSearch(e.value)}
+                    />
+                    <Select
+                        options={currencyList}
+                        defaultValue={currency}
+                        onChange={(e) => changeCurrency(e)}
                     />
                 </div>
             )}

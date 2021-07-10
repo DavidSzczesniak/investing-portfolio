@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { isPositive } from '../Utils/helpers';
-import Button from './Button';
 import { faStar, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
 import '../css/AssetInfo.scss';
@@ -13,6 +12,7 @@ const AssetInfo = (props) => {
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
     const currentPrice =
         asset.current_price >= 1000 ? asset.current_price.toLocaleString() : asset.current_price;
+    const currency = JSON.parse(localStorage.getItem('currency'));
 
     useEffect(() => {
         if (userAssetList.length > 0) {
@@ -66,7 +66,10 @@ const AssetInfo = (props) => {
                 </div>
                 {/* <div className="asset-mcap">MCap: $348.884 Bn</div> */}
                 <div className="current-price">
-                    <span>${currentPrice}</span>
+                    <span>
+                        {currency.symbol}
+                        {currentPrice}
+                    </span>
                     <span className="price-change">
                         {priceChangePositive ? (
                             <FontAwesomeIcon className="positive" icon={faCaretUp} size="2x" />

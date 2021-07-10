@@ -22,12 +22,13 @@ const Sparkline = (props) => {
             label: '24 Hours',
         }
     );
+    const currency = JSON.parse(localStorage.getItem('currency'));
 
     useEffect(() => {
         async function getMarketChart() {
             await axios
                 .get(
-                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=usd&days=${timeRange.value}`
+                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency.value}&days=${timeRange.value}`
                 )
                 .then((res) => {
                     let timestamps = [];
@@ -47,7 +48,7 @@ const Sparkline = (props) => {
                 });
         }
         getMarketChart();
-    }, [asset.id, timeRange]);
+    }, [asset.id, currency.value, timeRange]);
 
     function handleRangeSelection(selectedOption) {
         localStorage.setItem('sparklineDataRange', JSON.stringify(selectedOption));
@@ -92,12 +93,13 @@ const Sparkline = (props) => {
                 callbacks: {
                     label: function (context) {
                         // override default formatting of tooltips
-                        const value = context.raw;
+                        let value = context.raw;
                         if (value >= 1000) {
-                            return '$' + value.toLocaleString();
+                            value = value.toLocaleString();
                         } else {
-                            return '$' + value.toFixed(8);
+                            value = value.toFixed(8);
                         }
+                        return currency.symbol + value;
                     },
                 },
             },
@@ -128,11 +130,12 @@ const Sparkline = (props) => {
                     mirror: true,
                     callback: function (value) {
                         if (value >= 1) {
-                            return '$' + value.toLocaleString();
+                            value = value.toLocaleString();
                         } else {
                             // rounds numbers below 0, up to 10 decimal places
-                            return '$' + Math.round(value * 10000000000) / 10000000000;
+                            value = Math.round(value * 10000000000) / 10000000000;
                         }
+                        return currency.symbol + value;
                     },
                     font: {
                         size: 14,

@@ -9,15 +9,18 @@ const Main = () => {
     const [top20, setTop20] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const history = useHistory();
+    const currency = JSON.parse(localStorage.getItem('currency'));
 
     useEffect(() => {
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
         axios
-            .get(`${geckoAPI}coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
+            .get(
+                `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=20`
+            )
             .then((res) => {
                 setTop20(res.data);
             });
-    }, [refreshed]);
+    }, [refreshed, currency.value]);
 
     return (
         <>

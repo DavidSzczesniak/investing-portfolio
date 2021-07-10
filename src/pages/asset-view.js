@@ -9,6 +9,7 @@ const AssetView = () => {
     const assetId = query.get('id');
     const [userAssetList, setAssetList] = useState([]);
     const [asset, setAssetInfo] = useState(null);
+    const currency = JSON.parse(localStorage.getItem('currency'));
 
     useEffect(() => {
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
@@ -19,12 +20,12 @@ const AssetView = () => {
                 name: data.name,
                 symbol: data.symbol,
                 image: data.image.small,
-                current_price: data.market_data.current_price.usd,
+                current_price: data.market_data.current_price[currency.value],
                 price_change_percentage_24h: data.market_data.price_change_percentage_24h,
                 updatedOn: new Date(),
             });
         });
-    }, [assetId]);
+    }, [assetId, currency.value]);
 
     return <>{asset && <AssetInfo asset={asset} userAssetList={userAssetList} styleXL />}</>;
 };

@@ -10,6 +10,7 @@ const UserList = () => {
     const [userAssetList, setAssetList] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const history = useHistory();
+    const currency = JSON.parse(localStorage.getItem('currency'));
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || [];
@@ -27,7 +28,7 @@ const UserList = () => {
                         symbol: data.symbol,
                         name: data.name,
                         image: data.image.small,
-                        current_price: data.market_data.current_price.usd,
+                        current_price: data.market_data.current_price[currency.value],
                         price_change_percentage_24h: data.market_data.price_change_percentage_24h,
                         updatedOn: new Date(),
                     };
@@ -42,7 +43,7 @@ const UserList = () => {
                 });
             }
         });
-    }, [refreshed]);
+    }, [refreshed, currency.value]);
 
     return (
         <>
