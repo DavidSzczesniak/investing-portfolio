@@ -1,14 +1,41 @@
 .sparkline-container {
-    margin: 0.7rem 0 0.7rem -1rem;
     width: auto;
-    .time-range {
-        width: 10rem;
-        float: right;
-    }
 }
 
 @media (min-width: 40em) {
     .sparkline-container {
         padding: 1rem;
+        margin: 0.7rem 0 0.7rem -1rem;
+    }
+}
+
+.time-ranges {
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    button {
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: unset;
+        padding: 0.5rem;
+        margin-inline: 0.5rem;
+        font-weight: 500;
+        &:hover,
+        &.selected {
+            background-color: var(--blue);
+            color: #fff;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .time-ranges {
+        float: right;
+        button {
+        }
     }
 }

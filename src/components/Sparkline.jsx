@@ -3,20 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
-import Select from 'react-select';
 
 const Sparkline = (props) => {
     const { asset, priceChangePositive } = props;
     const [assetPrices, setPrices] = useState(null);
     const [assetTimestamps, setTimestamps] = useState(null);
     const timeRanges = [
-        { value: '1', label: '24 Hours' },
-        { value: '7', label: '7 Days' },
-        { value: '30', label: '30 Days' },
-        { value: '90', label: '3 Months' },
-        { value: '160', label: '6 Months' },
-        { value: '365', label: '1 Year' },
-        { value: 'max', label: 'All Time' },
+        { value: '1', label: '24h' },
+        { value: '7', label: '7d' },
+        { value: '30', label: '30d' },
+        { value: '90', label: '90d' },
+        { value: '365', label: '1y' },
+        { value: 'max', label: 'All' },
     ];
     const [timeRange, setTimeRange] = useState(
         JSON.parse(localStorage.getItem('sparklineDataRange')) || {
@@ -148,13 +146,18 @@ const Sparkline = (props) => {
 
     return (
         <div className="sparkline-container">
-            <Select
-                options={timeRanges}
-                isSearchable={false}
-                defaultValue={timeRange}
-                className="time-range"
-                onChange={(e) => handleRangeSelection(e)}
-            />
+            <div className="time-ranges">
+                {timeRanges.map((option, index) => {
+                    return (
+                        <button
+                            key={index}
+                            className={`${timeRange.value === option.value ? 'selected' : ''}`}
+                            onClick={() => handleRangeSelection(option)}>
+                            {option.label}
+                        </button>
+                    );
+                })}
+            </div>
             <Line data={data} options={options} />
         </div>
     );
