@@ -1,3 +1,5 @@
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
@@ -18,8 +20,14 @@ const UserList = (props) => {
     const [currency, setCurrency] = useState(
         JSON.parse(localStorage.getItem('currency')) || currencyList[0]
     );
+    const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
 
     useEffect(() => {
+        if (darkMode) {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
         localStorage.setItem('currency', JSON.stringify(currency));
         getCoins();
         async function getCoins() {
@@ -37,7 +45,7 @@ const UserList = (props) => {
                 });
             setCoins(result);
         }
-    }, [currency.value, currency]);
+    }, [currency.value, currency, darkMode]);
 
     function handleSearch(query) {
         if (query) {
@@ -49,6 +57,11 @@ const UserList = (props) => {
         localStorage.setItem('currency', JSON.stringify(selectedCurrency));
         setCurrency(selectedCurrency);
         refreshApp(!refreshed);
+    }
+
+    function toggleDarkMode() {
+        localStorage.setItem('darkMode', !darkMode);
+        setDarkMode(!darkMode);
     }
 
     return (
@@ -74,6 +87,15 @@ const UserList = (props) => {
                         defaultValue={currency}
                         onChange={(e) => changeCurrency(e)}
                     />
+                    <div className="dark-mode-toggle">
+                        <button onClick={toggleDarkMode} aria-label="toggle dark mode">
+                            {darkMode ? (
+                                <FontAwesomeIcon icon={faSun} size="2x" />
+                            ) : (
+                                <FontAwesomeIcon icon={faMoon} size="2x" />
+                            )}
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

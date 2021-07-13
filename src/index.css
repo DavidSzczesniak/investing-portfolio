@@ -1,24 +1,44 @@
 :root {
-    --blue: #0a46e4;
     --blue-hover: rgba(10, 70, 228, 0.9);
-    --black: #222531;
-    --grey: #656b7a;
-    --light-grey: #999eaa;
-    --outline-grey: #dee1eb;
     --up: #16c784;
     --down: #ea3943;
+
+    --clr-light: #eeeeee;
+    --clr-dark: #1c1c1c;
+    --clr-darker: #161616;
+
+    --clr-primary: #fff;
+    --clr-accent: #0a46e4;
+    --clr-border: #ddd;
+
+    --foreground: var(--clr-dark);
+    --foreground-secondary: #666;
+    --background: var(--clr-light);
+    --background-secondary: var(--clr-primary);
+}
+
+.dark-theme {
+    --clr-primary: #333333;
+    --clr-accent: #678fff;
+    --clr-border: transparent;
+
+    --foreground: var(--clr-light);
+    --foreground-secondary: #cccccc;
+    --background: var(--clr-dark);
+    --background-secondary: var(--clr-darker);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
     font-family: 'Poppins', sans-serif;
-    color: var(--black);
     box-sizing: border-box;
+    border-radius: 4px;
 }
 
 body {
-    background-color: rgba(10, 70, 228, 0.02);
+    color: var(--foreground);
+    background-color: var(--background);
     line-height: 1.6;
     font-size: 0.9rem;
 }
@@ -49,6 +69,11 @@ h2 {
 
 p {
     display: inline-block;
+}
+
+button {
+    color: var(--foreground);
+    cursor: pointer;
 }
 
 .container {

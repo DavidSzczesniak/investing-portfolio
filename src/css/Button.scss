@@ -1,10 +1,9 @@
 .custom-btn {
-    background-color: var(--blue);
-    border: 1px solid var(--blue);
-    border-radius: 4px;
+    background-color: var(--clr-accent);
+    border: 1px solid var(--clr-accent);
     padding: 8px 16px;
     cursor: pointer;
-    color: #fff;
+    color: var(--foreground);
     font-size: initial;
     font-weight: 400;
     margin: 0 10px;
@@ -12,18 +11,18 @@
         background-color: var(--blue-hover);
     }
     svg {
-        color: #fff;
+        color: var(--foreground);
     }
 }
 
 .secondary-btn {
     background: none;
-    color: var(--blue);
+    color: var(--clr-accent);
     &:hover,
     &:hover path {
-        color: #fff;
+        color: var(--foreground);
     }
     path {
-        color: var(--blue);
+        color: var(--clr-accent);
     }
 }

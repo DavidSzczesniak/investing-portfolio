@@ -1,18 +1,16 @@
 @import './helpers';
 
 .asset-list {
-    border: 1px solid var(--outline-grey);
-    border-radius: 5px;
-    background-color: #fff;
     min-width: 290px;
+    background-color: var(--clr-primary);
 }
 
 .asset-container {
     margin: 0;
     padding: 0 1rem;
-    &:not(:first-child):not(.styleXL) {
-        border-top: 1px solid #fff;
-    }
+    // &:not(:first-child):not(.styleXL) {
+    //     border-top: 1px solid var(--clr-primary);
+    // }
     &.styleXL {
         padding: 0;
         height: fit-content;
@@ -33,7 +31,7 @@
         padding: 0;
         cursor: pointer;
         & path {
-            color: var(--blue);
+            color: var(--clr-accent);
         }
     }
 }
@@ -114,7 +112,7 @@ div.current-price {
 .asset-symbol {
     width: fit-content;
     font-size: 0.65rem;
-    color: var(--grey);
+    color: var(--foreground-secondary);
 }
 
 @media (min-width: 40em) {
@@ -124,7 +122,7 @@ div.current-price {
 }
 
 .price-change {
-    color: var(--grey);
+    color: var(--foreground-secondary);
     display: flex;
     align-items: center;
     font-size: 0.65rem;
