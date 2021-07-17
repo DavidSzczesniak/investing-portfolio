@@ -9,7 +9,11 @@ const AssetView = () => {
     const assetId = query.get('id');
     const [userAssetList, setAssetList] = useState([]);
     const [asset, setAssetInfo] = useState(null);
-    const currency = JSON.parse(localStorage.getItem('currency'));
+    const currency = JSON.parse(localStorage.getItem('currency')) || {
+        value: 'usd',
+        label: 'USD - $',
+        symbol: '$',
+    };
 
     useEffect(() => {
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);

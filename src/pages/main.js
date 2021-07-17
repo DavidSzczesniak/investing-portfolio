@@ -9,7 +9,11 @@ const Main = () => {
     const [top20, setTop20] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const history = useHistory();
-    const currency = JSON.parse(localStorage.getItem('currency'));
+    const currency = JSON.parse(localStorage.getItem('currency')) || {
+        value: 'usd',
+        label: 'USD - $',
+        symbol: '$',
+    };
 
     useEffect(() => {
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);

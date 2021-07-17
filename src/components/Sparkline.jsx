@@ -22,7 +22,11 @@ const Sparkline = (props) => {
             label: '24 Hours',
         }
     );
-    const currency = JSON.parse(localStorage.getItem('currency'));
+    const currency = JSON.parse(localStorage.getItem('currency')) || {
+        value: 'usd',
+        label: 'USD - $',
+        symbol: '$',
+    };
 
     useEffect(() => {
         async function getMarketChart() {

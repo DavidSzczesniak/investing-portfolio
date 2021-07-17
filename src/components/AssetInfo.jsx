@@ -12,7 +12,11 @@ const AssetInfo = (props) => {
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
     const currentPrice =
         asset.current_price >= 1000 ? asset.current_price.toLocaleString() : asset.current_price;
-    const currency = JSON.parse(localStorage.getItem('currency'));
+    const currency = JSON.parse(localStorage.getItem('currency')) || {
+        value: 'usd',
+        label: 'USD - $',
+        symbol: '$',
+    };
 
     useEffect(() => {
         if (userAssetList.length > 0) {
