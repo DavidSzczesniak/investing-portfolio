@@ -95,7 +95,6 @@ const AssetInfo = (props) => {
             </div>
             {styleXL && (
                 <>
-                    <Sparkline asset={asset} priceChangePositive={priceChangePositive} />
                     <div className="asset-market-stats">
                         <div>
                             <h4>Market Cap</h4>
@@ -118,6 +117,7 @@ const AssetInfo = (props) => {
                             </p>
                         </div>
                     </div>
+                    <Sparkline asset={asset} priceChangePositive={priceChangePositive} />
                 </>
             )}
         </div>
