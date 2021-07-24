@@ -93,7 +93,33 @@ const AssetInfo = (props) => {
                     </button>
                 )}
             </div>
-            {styleXL && <Sparkline asset={asset} priceChangePositive={priceChangePositive} />}
+            {styleXL && (
+                <>
+                    <Sparkline asset={asset} priceChangePositive={priceChangePositive} />
+                    <div className="asset-market-stats">
+                        <div>
+                            <h4>Market Cap</h4>
+                            <p>
+                                {currency.symbol}
+                                {asset.market_cap}
+                            </p>
+                        </div>
+                        <div>
+                            <h4>24 Hour Volume</h4>
+                            <p>
+                                {currency.symbol}
+                                {asset.volume}
+                            </p>
+                        </div>
+                        <div>
+                            <h4>Circulating Supply</h4>
+                            <p>
+                                {asset.supply} {asset.symbol.toUpperCase()}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

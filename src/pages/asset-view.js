@@ -19,13 +19,17 @@ const AssetView = () => {
         setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
         axios.get(`${geckoAPI}coins/${assetId}`).then((res) => {
             const data = res.data;
+            const marketData = data.market_data;
             setAssetInfo({
                 id: data.id,
                 name: data.name,
                 symbol: data.symbol,
                 image: data.image.small,
-                current_price: data.market_data.current_price[currency.value],
-                price_change_percentage_24h: data.market_data.price_change_percentage_24h,
+                current_price: marketData.current_price[currency.value],
+                price_change_percentage_24h: marketData.price_change_percentage_24h,
+                market_cap: marketData.market_cap[currency.value].toLocaleString(),
+                volume: marketData.total_volume[currency.value].toLocaleString(),
+                supply: marketData.circulating_supply.toLocaleString(),
                 updatedOn: new Date(),
             });
         });

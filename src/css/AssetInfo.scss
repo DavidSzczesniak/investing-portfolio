@@ -185,3 +185,24 @@ div.current-price {
         }
     }
 }
+
+.asset-market-stats {
+    display: grid;
+    margin-top: 1rem;
+    align-items: center;
+    & > div {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        & > h4 {
+            color: var(--foreground-secondary);
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .asset-market-stats {
+        grid-template-columns: 50% 50%;
+    }
+}
