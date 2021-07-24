@@ -74,6 +74,10 @@
         &:hover {
             border-color: var(--clr-accent);
         }
+
+        & [class$='-Input'] {
+            color: var(--foreground);
+        }
     }
 
     & [class$='-singleValue'] {
