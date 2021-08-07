@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import Button from './Button';
+import { Button } from './Button/Button';
 import '../css/InfoPage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -14,7 +14,7 @@ const InfoPage = (props) => {
             <h2>{title}</h2>
             <div className="info-page__message">{message}</div>
             {title.startsWith('Woops!') && (
-                <Button label="Search" click={() => history.replace('/')} />
+                <Button label="Search" onClick={() => history.replace('/')} />
             )}
         </div>
     );
