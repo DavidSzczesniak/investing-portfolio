@@ -4,9 +4,8 @@ import { Button } from './Button/Button';
 import '../css/InfoPage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const InfoPage = (props) => {
+const InfoPage = ({ title, message, icon }) => {
     const history = useHistory();
-    const { title, message, icon } = props;
 
     return (
         <div className="info-page">

@@ -4,8 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
 
-const Sparkline = (props) => {
-    const { asset, priceChangePositive } = props;
+const Sparkline = ({ asset, priceChangePositive }) => {
     const [assetPrices, setPrices] = useState(null);
     const [assetTimestamps, setTimestamps] = useState(null);
     const timeRanges = [

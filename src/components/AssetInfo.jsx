@@ -6,8 +6,7 @@ import '../css/AssetInfo.scss';
 import Sparkline from './Sparkline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AssetInfo = (props) => {
-    const { asset, refreshPage, refreshState, userAssetList, styleXL, click } = props;
+const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, click }) => {
     const [owned, setOwned] = useState(false);
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
     const currentPrice =

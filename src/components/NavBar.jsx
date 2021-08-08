@@ -7,8 +7,7 @@ import Select from 'react-select';
 import { geckoAPI } from '../constants';
 import '../css/NavBar.scss';
 
-const UserList = (props) => {
-    const { refreshed, refreshApp } = props;
+const UserList = ({ refreshed, refreshApp }) => {
     const history = useHistory();
     const currencyList = [
         { value: 'usd', label: 'USD - $', symbol: '$' },
