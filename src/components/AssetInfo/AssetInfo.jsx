@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { isPositive } from '../Utils/helpers';
+import { isPositive } from '../../Utils/helpers';
 import { faStar, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
-import '../css/AssetInfo.scss';
-import Sparkline from './Sparkline';
+import './AssetInfo.scss';
+import Sparkline from '../Sparkline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, click }) => {
+const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, onClick }) => {
     const [owned, setOwned] = useState(false);
     const priceChangePositive = isPositive(asset.price_change_percentage_24h);
     const currentPrice =
@@ -58,9 +58,12 @@ const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, c
     }
 
     return (
-        <div className={`asset-container ${styleXL ? 'styleXL' : ''}`}>
+        <div data-testid="asset-info" className={`asset-container ${styleXL ? 'styleXL' : ''}`}>
             <div className="asset-header">
-                <div className="asset-title" onClick={() => click && !styleXL && click()}>
+                <div
+                    data-testid="asset-title"
+                    className="asset-title"
+                    onClick={() => onClick && !styleXL && onClick()}>
                     <img src={asset.image} alt={`${asset.name} logo`} />
                     <div>
                         <span>{asset.name}</span>
@@ -83,11 +86,17 @@ const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, c
                     </span>
                 </div>
                 {owned ? (
-                    <button onClick={handleRemoveAsset} aria-label="Remove from Favourites">
+                    <button
+                        data-testid="remove-asset"
+                        onClick={handleRemoveAsset}
+                        aria-label="Remove from Favourites">
                         <FontAwesomeIcon icon={faStar} />
                     </button>
                 ) : (
-                    <button onClick={handleSaveAsset} aria-label="Add to Favourites">
+                    <button
+                        data-testid="save-asset"
+                        onClick={handleSaveAsset}
+                        aria-label="Add to Favourites">
                         <FontAwesomeIcon icon={faOutlineStar} />
                     </button>
                 )}

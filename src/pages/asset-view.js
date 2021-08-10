@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AssetInfo from '../components/AssetInfo';
+import AssetInfo from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
 import { useLocation } from 'react-router';

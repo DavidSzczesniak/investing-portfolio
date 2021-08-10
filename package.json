@@ -22,6 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "nyc react-scripts test",
+    "testall": "nyc react-scripts test --watchAll=false",
+    "coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

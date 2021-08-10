@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InfoPage from '../components/InfoPage';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import AssetInfo from '../components/AssetInfo';
+import AssetInfo from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
 import { useHistory } from 'react-router';
@@ -62,7 +62,7 @@ const UserList = () => {
                                 refreshPage={refreshPage}
                                 refreshState={refreshed}
                                 userAssetList={userAssetList}
-                                click={() => history.replace(`/asset-view?id=${asset.id}`)}
+                                onClick={() => history.replace(`/asset-view?id=${asset.id}`)}
                             />
                         );
                     })}

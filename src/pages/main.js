@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import AssetInfo from '../components/AssetInfo';
+import AssetInfo from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 
 const Main = () => {
@@ -40,7 +40,7 @@ const Main = () => {
                                     refreshPage={refreshPage}
                                     refreshState={refreshed}
                                     userAssetList={userAssetList}
-                                    click={() => history.replace(`/asset-view?id=${coin.id}`)}
+                                    onClick={() => history.replace(`/asset-view?id=${coin.id}`)}
                                 />
                             );
                         })}
