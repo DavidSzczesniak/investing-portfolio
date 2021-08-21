@@ -70,7 +70,6 @@ const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, o
                         <span className="asset-symbol">{asset.symbol.toUpperCase()}</span>
                     </div>
                 </div>
-                {/* <div className="asset-mcap">MCap: $348.884 Bn</div> */}
                 <div className="current-price">
                     <span>
                         {currency.symbol}
@@ -78,9 +77,19 @@ const AssetInfo = ({ asset, refreshPage, refreshState, userAssetList, styleXL, o
                     </span>
                     <span className="price-change">
                         {priceChangePositive ? (
-                            <FontAwesomeIcon className="positive" icon={faCaretUp} size="2x" />
+                            <FontAwesomeIcon
+                                title="caret-up"
+                                className="positive"
+                                icon={faCaretUp}
+                                size="2x"
+                            />
                         ) : (
-                            <FontAwesomeIcon className="negative" icon={faCaretDown} size="2x" />
+                            <FontAwesomeIcon
+                                title="caret-down"
+                                className="negative"
+                                icon={faCaretDown}
+                                size="2x"
+                            />
                         )}
                         <p>{asset.price_change_percentage_24h.toFixed(2)}%</p>
                     </span>
