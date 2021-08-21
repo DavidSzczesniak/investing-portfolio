@@ -1,34 +1,38 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Button } from './Button';
 
-test('loads and displays with label and icon', async () => {
-    render(<Button label="Click Me!" icon={faPlus} />);
+const renderComponent = ({ onClick, isSecondary = false }) =>
+    render(<Button label="Click Me!" icon={faPlus} isSecondary={isSecondary} onClick={onClick} />);
+const mockCallback = jest.fn();
 
-    expect(screen.getByTestId('custom-btn')).toHaveTextContent('Click Me!');
-    expect(screen.getByTestId('custom-btn')).toContainHTML('svg');
+it('renders with props', async () => {
+    const { getByTestId } = renderComponent({});
+
+    expect(getByTestId('custom-btn')).toHaveTextContent('Click Me!');
+    expect(getByTestId('custom-btn')).toContainHTML('svg');
+    expect(getByTestId('custom-btn')).not.toHaveClass('secondary-btn');
 });
 
-test('loads and displays with just an icon', async () => {
-    render(<Button icon={faPlus} />);
+it('renders with props and secondary styling', async () => {
+    const { getByTestId } = renderComponent({ isSecondary: true });
 
-    expect(screen.getByTestId('custom-btn')).toHaveTextContent('');
-    expect(screen.getByTestId('custom-btn')).toContainHTML('svg');
+    expect(getByTestId('custom-btn')).toHaveClass('secondary-btn');
 });
 
-test('loads and displays with secondary styling', async () => {
-    render(<Button label="Click Me!" isSecondary />);
+it('renders with just an icon', async () => {
+    const { getByTestId } = render(<Button icon={faPlus} />);
 
-    expect(screen.getByTestId('custom-btn')).toHaveClass('secondary-btn');
+    expect(getByTestId('custom-btn')).toHaveTextContent('');
+    expect(getByTestId('custom-btn')).toContainHTML('svg');
 });
 
-test('executes callback function on click', async () => {
-    const mockCallback = jest.fn();
-    render(<Button label="Click Me!" onClick={mockCallback} />);
+it('executes callback function on click', async () => {
+    const { getByTestId } = renderComponent({ onClick: mockCallback });
 
-    const button = screen.getByTestId('custom-btn');
+    const button = getByTestId('custom-btn');
     fireEvent.click(button);
 
     expect(mockCallback).toHaveBeenCalledTimes(1);
