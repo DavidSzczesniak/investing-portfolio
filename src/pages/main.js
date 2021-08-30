@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import AssetInfo from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 
-const Main = () => {
+export const Main = () => {
     const [userAssetList, setAssetList] = useState([]);
     const [top20, setTop20] = useState([]);
     const [refreshed, refreshPage] = useState(false);
@@ -50,5 +50,3 @@ const Main = () => {
         </>
     );
 };
-
-export default Main;

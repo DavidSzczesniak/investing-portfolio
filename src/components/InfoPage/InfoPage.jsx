@@ -4,7 +4,7 @@ import { Button } from '../Button/Button';
 import './InfoPage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const InfoPage = ({ title, message, icon }) => {
+export const InfoPage = ({ title, message, icon }) => {
     const history = useHistory();
 
     return (
@@ -18,5 +18,3 @@ const InfoPage = ({ title, message, icon }) => {
         </div>
     );
 };
-
-export default InfoPage;

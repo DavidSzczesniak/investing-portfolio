@@ -5,7 +5,7 @@ import Main from './pages/main';
 import UserList from './pages/user-list';
 import NavBar from './components/NavBar/NavBar';
 
-const App = () => {
+export const App = () => {
     const [refreshed, refreshApp] = useState(false);
 
     useEffect(() => {}, [refreshed]);
@@ -23,5 +23,3 @@ const App = () => {
         </Router>
     );
 };
-
-export default App;

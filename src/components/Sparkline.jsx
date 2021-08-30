@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
 
-const Sparkline = ({ asset, priceChangePositive }) => {
+export const Sparkline = ({ asset, priceChangePositive }) => {
     const [assetPrices, setPrices] = useState(null);
     const [assetTimestamps, setTimestamps] = useState(null);
     const timeRanges = [
@@ -168,5 +168,3 @@ const Sparkline = ({ asset, priceChangePositive }) => {
         </div>
     );
 };
-
-export default Sparkline;

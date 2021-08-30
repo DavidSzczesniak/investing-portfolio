@@ -6,7 +6,7 @@ import { geckoAPI } from '../constants.js';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
-const UserList = () => {
+export const UserList = () => {
     const [userAssetList, setAssetList] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const history = useHistory();
@@ -77,5 +77,3 @@ const UserList = () => {
         </>
     );
 };
-
-export default UserList;

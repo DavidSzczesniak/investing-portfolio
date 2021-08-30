@@ -4,7 +4,7 @@ import { geckoAPI } from '../constants.js';
 import axios from 'axios';
 import { useLocation } from 'react-router';
 
-const AssetView = () => {
+export const AssetView = () => {
     const query = new URLSearchParams(useLocation().search);
     const assetId = query.get('id');
     const [userAssetList, setAssetList] = useState([]);
@@ -37,5 +37,3 @@ const AssetView = () => {
 
     return <>{asset && <AssetInfo asset={asset} userAssetList={userAssetList} styleXL />}</>;
 };
-
-export default AssetView;
