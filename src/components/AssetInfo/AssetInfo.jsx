@@ -3,7 +3,7 @@ import { isPositive } from '../../Utils/helpers';
 import { faStar, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
 import './AssetInfo.scss';
-import Sparkline from '../Sparkline';
+import { Sparkline } from '../Sparkline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const AssetInfo = ({

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import InfoPage from '../components/InfoPage/InfoPage';
+import { InfoPage } from '../components/InfoPage/InfoPage';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import AssetInfo from '../components/AssetInfo/AssetInfo';
+import { AssetInfo } from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 import axios from 'axios';
 import { useHistory } from 'react-router';

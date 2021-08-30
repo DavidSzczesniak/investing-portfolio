@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import AssetInfo from '../components/AssetInfo/AssetInfo';
+import { AssetInfo } from '../components/AssetInfo/AssetInfo';
 import { geckoAPI } from '../constants.js';
 
 export const Main = () => {
