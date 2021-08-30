@@ -4,8 +4,8 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
-import { geckoAPI } from '../constants';
-import '../css/NavBar.scss';
+import { geckoAPI } from '../../constants';
+import './NavBar.scss';
 
 const UserList = ({ refreshed, refreshApp }) => {
     const history = useHistory();
@@ -64,7 +64,7 @@ const UserList = ({ refreshed, refreshApp }) => {
     }
 
     return (
-        <div className="navbar">
+        <div className="navbar" data-testid="navbar">
             <div className="nav-container">
                 <h2 className="site-logo" onClick={() => history.replace('/')}>
                     Investii
