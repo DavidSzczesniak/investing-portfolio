@@ -121,35 +121,6 @@ div.current-price {
     }
 }
 
-.price-change {
-    color: var(--foreground-secondary);
-    display: flex;
-    align-items: center;
-    font-size: 0.65rem;
-    p {
-        margin-left: 5px;
-    }
-}
-
-@media (min-width: 40em) {
-    .price-change {
-        font-size: 1rem;
-    }
-}
-
-.positive {
-    path {
-        color: var(--up);
-    }
-}
-
-.negative {
-    path {
-        color: var(--down);
-    }
-}
-
-/* xl style */
 .styleXL {
     .asset-header {
         font-size: 1.2rem;
@@ -157,8 +128,7 @@ div.current-price {
     .current-price {
         font-size: 1rem;
     }
-    .asset-symbol,
-    .price-change {
+    .asset-symbol {
         font-size: 0.8rem;
     }
 }
@@ -179,8 +149,7 @@ div.current-price {
         .current-price {
             font-size: 1.75rem;
         }
-        .asset-symbol,
-        .price-change {
+        .asset-symbol {
             font-size: 1.25rem;
         }
     }

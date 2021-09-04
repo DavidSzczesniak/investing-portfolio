@@ -1,0 +1,41 @@
+.value-change {
+    color: var(--foreground-secondary);
+    display: flex;
+    align-items: center;
+    font-size: 0.65rem;
+    p {
+        margin-left: 5px;
+    }
+}
+
+@media (min-width: 40em) {
+    .value-change {
+        font-size: 1rem;
+    }
+}
+
+.positive {
+    path {
+        color: var(--up);
+    }
+}
+
+.negative {
+    path {
+        color: var(--down);
+    }
+}
+
+.styleXL {
+    .value-change {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 40em) {
+    .styleXL {
+        .value-change {
+            font-size: 1.25rem;
+        }
+    }
+}

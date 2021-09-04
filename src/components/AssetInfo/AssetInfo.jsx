@@ -1,10 +1,11 @@
+import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { isPositive } from '../../Utils/helpers';
-import { faStar, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
-import './AssetInfo.scss';
+import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import { Sparkline } from '../Sparkline';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './AssetInfo.scss';
 
 export const AssetInfo = ({
     asset,
@@ -82,24 +83,7 @@ export const AssetInfo = ({
                         {currency.symbol}
                         {currentPrice}
                     </span>
-                    <span className="price-change">
-                        {priceChangePositive ? (
-                            <FontAwesomeIcon
-                                title="caret-up"
-                                className="positive"
-                                icon={faCaretUp}
-                                size="2x"
-                            />
-                        ) : (
-                            <FontAwesomeIcon
-                                title="caret-down"
-                                className="negative"
-                                icon={faCaretDown}
-                                size="2x"
-                            />
-                        )}
-                        <p>{asset.price_change_percentage_24h.toFixed(2)}%</p>
-                    </span>
+                    <ValueChangePercent changeValue={asset.price_change_percentage_24h} />
                 </div>
                 {owned ? (
                     <button

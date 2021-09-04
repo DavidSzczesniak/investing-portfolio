@@ -4,6 +4,7 @@ import { AssetView } from './pages/asset-view';
 import { Main } from './pages/main';
 import { UserList } from './pages/user-list';
 import { NavBar } from './components/NavBar/NavBar';
+import { Portfolio } from './components/Portfolio/Portfolio';
 
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
@@ -18,6 +19,7 @@ export const App = () => {
                     <Route exact path="/" component={() => <Main />} />
                     <Route path="/user-list" component={() => <UserList />} />
                     <Route path="/asset-view" component={() => <AssetView />} />
+                    <Route path="/portfolio" component={() => <Portfolio />} />
                 </Switch>
             </div>
         </Router>

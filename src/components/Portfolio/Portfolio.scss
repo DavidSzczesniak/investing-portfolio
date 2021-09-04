@@ -1,0 +1,55 @@
+.portfolio {
+    & > .header,
+    & > .balance-change {
+        text-align: left;
+        width: 100%;
+        font-size: 0.8rem;
+    }
+    & > .header {
+        margin-top: 1em;
+    }
+}
+
+@media (min-width: 40em) {
+    .portfolio {
+        & > .header,
+        & > .balance-change {
+            font-size: 1rem;
+        }
+    }
+}
+
+.balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > *:nth-child(1) {
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        & .value-change {
+            margin-left: 1em;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .balance {
+        & > *:nth-child(1) {
+            font-size: 2.5rem;
+        }
+        & > *:nth-child(2) {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.balance-change {
+    &.positive {
+        color: var(--up);
+    }
+    &.negative {
+        color: var(--down);
+    }
+}

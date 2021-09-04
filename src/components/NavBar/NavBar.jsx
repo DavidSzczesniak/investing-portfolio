@@ -72,7 +72,9 @@ export const NavBar = ({ refreshed, refreshApp }) => {
                 <div className="nav-btn" onClick={() => history.replace('/user-list')}>
                     Watchlist
                 </div>
-                <div className="nav-btn">Portfolio</div>
+                <div className="nav-btn" onClick={() => history.replace('/portfolio')}>
+                    Portfolio
+                </div>
             </div>
             {coins.length > 0 && (
                 <div className="search-container">
