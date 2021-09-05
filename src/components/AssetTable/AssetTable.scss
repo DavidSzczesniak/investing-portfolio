@@ -1,0 +1,30 @@
+.asset-table {
+    width: 100%;
+    margin-top: 0.5em;
+    min-width: 290px;
+    & thead th {
+        font-weight: 400;
+        font-size: 1rem;
+        margin-bottom: 0.5em;
+    }
+    & tbody td {
+        font-weight: 500;
+    }
+    & thead th:first-child,
+    & tbody td:first-child {
+        text-align: left;
+    }
+    & thead th:nth-child(n + 2),
+    & tbody td:nth-child(n + 2) {
+        text-align: right;
+    }
+}
+
+.sort-holdings {
+    &:hover {
+        cursor: pointer;
+    }
+    & > span {
+        margin-right: 10px;
+    }
+}

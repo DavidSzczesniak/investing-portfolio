@@ -42,7 +42,7 @@ it('renders with basic props - negative price change', async () => {
 it('executes callback function on click of asset title', async () => {
     const { getByTestId } = renderComponent({ onClick: mockCallback });
 
-    fireEvent.click(getByTestId('asset-title'));
+    fireEvent.click(getByTestId('asset-name'));
 
     expect(mockCallback).toHaveBeenCalledTimes(1);
 });

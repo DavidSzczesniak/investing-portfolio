@@ -1,21 +1,26 @@
 .portfolio {
-    & > .header,
-    & > .balance-change {
+    & h3 {
+        margin-top: 2em;
         text-align: left;
         width: 100%;
-        font-size: 0.8rem;
-    }
-    & > .header {
-        margin-top: 1em;
     }
 }
 
+.portfolio__header,
+.balance-change {
+    text-align: left;
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.portfolio__header {
+    margin-top: 1em;
+}
+
 @media (min-width: 40em) {
-    .portfolio {
-        & > .header,
-        & > .balance-change {
-            font-size: 1rem;
-        }
+    .portfolio__header,
+    .balance-change {
+        font-size: 1rem;
     }
 }
 

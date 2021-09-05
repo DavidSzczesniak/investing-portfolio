@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { AssetInfo } from '../components/AssetInfo/AssetInfo';
-import { geckoAPI } from '../constants.js';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import { AssetName, AssetPrice } from '../components/AssetInfo/AssetInfo';
+import { FavouritesButton } from '../components/FavouritesButton/FavouritesButton.jsx';
+import { Sparkline } from '../components/Sparkline.jsx';
+import { geckoAPI } from '../constants.js';
+import '../css/asset-view.scss';
 
 export const AssetView = () => {
     const query = new URLSearchParams(useLocation().search);
     const assetId = query.get('id');
-    const [userAssetList, setAssetList] = useState([]);
     const [asset, setAssetInfo] = useState(null);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
         value: 'usd',
@@ -16,7 +18,6 @@ export const AssetView = () => {
     };
 
     useEffect(() => {
-        setAssetList(JSON.parse(localStorage.getItem('assetList')) || []);
         axios.get(`${geckoAPI}coins/${assetId}`).then((res) => {
             const data = res.data;
             const marketData = data.market_data;
@@ -35,5 +36,41 @@ export const AssetView = () => {
         });
     }, [assetId, currency.value]);
 
-    return <>{asset && <AssetInfo asset={asset} userAssetList={userAssetList} styleXL />}</>;
+    const AssetStat = ({ label, text }) => {
+        return (
+            <div>
+                <h4>{label}</h4>
+                <p>{text}</p>
+            </div>
+        );
+    };
+
+    return (
+        <>
+            {asset && (
+                <>
+                    <div className="asset-view__header">
+                        <AssetName asset={asset} />
+                        <AssetPrice asset={asset} currency={currency.symbol} />
+                        <FavouritesButton asset={asset} />
+                    </div>
+                    <div className="asset-view__stats">
+                        <AssetStat
+                            label="Market Cap"
+                            text={`${currency.symbol}${asset.market_cap}`}
+                        />
+                        <AssetStat
+                            label="24 Hour Volume"
+                            text={`${currency.symbol}${asset.volume}`}
+                        />
+                        <AssetStat
+                            label="Circulating Supply"
+                            text={`${asset.supply}${asset.symbol.toUpperCase()}`}
+                        />
+                    </div>
+                    <Sparkline asset={asset} />
+                </>
+            )}
+        </>
+    );
 };

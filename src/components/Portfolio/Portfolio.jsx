@@ -1,5 +1,6 @@
 import React from 'react';
 import { isPositive, normalizeNumber } from '../../Utils/helpers';
+import { AssetTable } from '../AssetTable/AssetTable';
 import { Button } from '../Button/Button';
 import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import './Portfolio.scss';
@@ -26,7 +27,8 @@ export const Portfolio = () => {
 
     return (
         <div className="portfolio" data-testid="portfolio">
-            <div className="header">Current Balance</div>
+            <h2 className="page-title">Your Portfolio</h2>
+            <div className="portfolio__header">Current Balance</div>
             <div className="balance">
                 <div>
                     <span>
@@ -38,6 +40,8 @@ export const Portfolio = () => {
                 <Button label="Deposit" />
             </div>
             <div className={`balance-change ${balanceChangeClass}`}>{`${balanceChange} (24h)`}</div>
+            <h3>Your Assets</h3>
+            <AssetTable holdings />
         </div>
     );
 };

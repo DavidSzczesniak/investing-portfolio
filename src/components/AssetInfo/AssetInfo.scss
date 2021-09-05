@@ -1,58 +1,16 @@
 @import '../../css/helpers';
 
-.asset-list {
-    min-width: 290px;
-    background-color: var(--clr-primary);
-}
-
-.asset-container {
-    margin: 0;
-    padding: 0 1rem;
-    // &:not(:first-child):not(.styleXL) {
-    //     border-top: 1px solid var(--clr-primary);
-    // }
-    &.styleXL {
-        padding: 0;
-        height: fit-content;
-    }
-}
-
-.asset-header {
-    & > * {
-        margin: 0.75em 0;
-        flex-basis: 100%;
-    }
-    & > button {
-        font-size: 1rem;
-        margin-left: 0.75em;
-        background: none;
-        flex-basis: 20%;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        & path {
-            color: var(--clr-accent);
-        }
-    }
-}
-
-@media (min-width: 40em) {
-    .asset-header {
-        & > button {
-            flex-basis: 10%;
-            font-size: 1.5rem;
-        }
-    }
-}
-
-.asset-title {
+.asset-name {
     font-weight: 600;
+    margin: 0.5em 0;
     &:hover {
         cursor: pointer;
+        color: var(--clr-accent);
     }
     img {
         margin-right: 0.75em;
-        height: 30px;
+        height: 25px;
+        align-self: center;
     }
     & > div {
         display: flex;
@@ -62,7 +20,7 @@
 }
 
 @media (min-width: 40em) {
-    .asset-title {
+    .asset-name {
         & > div {
             flex-direction: row;
             align-items: center;
@@ -73,40 +31,32 @@
     }
 }
 
-.asset-mcap {
-    text-align: right;
-    display: none;
-}
-
-@media (min-width: 40em) {
-    .asset-mcap {
-        display: block;
-    }
-}
-
-div.current-price {
+.asset-price,
+.asset-holdings {
     flex-direction: column;
     align-items: flex-end;
-    span {
+    text-align: left;
+    span:first-child {
         font-weight: 600;
     }
 }
 
 @media (min-width: 40em) {
-    div.current-price {
+    .asset-holdings,
+    .asset-price {
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-        span {
+        span:first-child {
             margin-right: 1em;
         }
     }
 }
 
-.asset-header,
-.asset-title,
-.current-price {
-    @include flexCenter();
+.asset-name,
+.asset-price,
+.asset-holdings {
+    display: flex;
 }
 
 .asset-symbol {
@@ -118,60 +68,5 @@ div.current-price {
 @media (min-width: 40em) {
     .asset-symbol {
         font-size: 1rem;
-    }
-}
-
-.styleXL {
-    .asset-header {
-        font-size: 1.2rem;
-    }
-    .current-price {
-        font-size: 1rem;
-    }
-    .asset-symbol {
-        font-size: 0.8rem;
-    }
-}
-
-@media (min-width: 40em) {
-    .styleXL {
-        .asset-header {
-            font-size: 2rem;
-        }
-        .asset-title {
-            &:hover {
-                cursor: unset;
-            }
-            img {
-                height: unset;
-            }
-        }
-        .current-price {
-            font-size: 1.75rem;
-        }
-        .asset-symbol {
-            font-size: 1.25rem;
-        }
-    }
-}
-
-.asset-market-stats {
-    display: grid;
-    margin-top: 1rem;
-    align-items: center;
-    & > div {
-        padding: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        & > h4 {
-            color: var(--foreground-secondary);
-        }
-    }
-}
-
-@media (min-width: 40em) {
-    .asset-market-stats {
-        grid-template-columns: 50% 50%;
     }
 }

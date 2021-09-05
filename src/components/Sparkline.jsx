@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
+import { isPositive } from '../Utils/helpers.js';
 
-export const Sparkline = ({ asset, priceChangePositive }) => {
+export const Sparkline = ({ asset }) => {
     const [assetPrices, setPrices] = useState(null);
     const [assetTimestamps, setTimestamps] = useState(null);
     const timeRanges = [
@@ -64,7 +65,7 @@ export const Sparkline = ({ asset, priceChangePositive }) => {
             {
                 data: assetPrices,
                 borderWidth: 3,
-                borderColor: priceChangePositive ? '#16c784' : '#ea3943',
+                borderColor: isPositive(asset.price_change_percentage_24h) ? '#16c784' : '#ea3943',
             },
         ],
     };

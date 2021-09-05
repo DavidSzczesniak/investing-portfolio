@@ -1,0 +1,19 @@
+.favourites-btn {
+    font-size: 1rem;
+    margin-left: 0.75em;
+    background: none;
+    flex-basis: 20%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    & path {
+        color: var(--clr-accent);
+    }
+}
+
+@media (min-width: 40em) {
+    .favourites-btn {
+        flex-basis: 10%;
+        font-size: 1.5rem;
+    }
+}
