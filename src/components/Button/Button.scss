@@ -26,3 +26,16 @@
         color: var(--clr-accent);
     }
 }
+
+.icon-only {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    &:hover {
+        background: none;
+        & svg {
+            color: var(--clr-accent);
+        }
+    }
+}

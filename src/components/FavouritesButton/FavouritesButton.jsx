@@ -1,7 +1,7 @@
 import { faStar as faOutlineStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState, useMemo } from 'react';
+import { Button } from '../Button/Button';
 import './FavouritesButton.scss';
 
 export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
@@ -51,21 +51,19 @@ export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
     return (
         <>
             {owned ? (
-                <button
-                    data-testid="remove-asset"
+                <Button
                     className="favourites-btn"
                     onClick={handleRemoveAsset}
-                    aria-label="Remove from Favourites">
-                    <FontAwesomeIcon icon={faStar} />
-                </button>
+                    ariaLabel="Remove from favourites"
+                    icon={faStar}
+                />
             ) : (
-                <button
-                    data-testid="save-asset"
+                <Button
                     className="favourites-btn"
                     onClick={handleSaveAsset}
-                    aria-label="Add to Favourites">
-                    <FontAwesomeIcon icon={faOutlineStar} />
-                </button>
+                    ariaLabel="Save to favourites"
+                    icon={faOutlineStar}
+                />
             )}
         </>
     );

@@ -1,0 +1,66 @@
+.deposit {
+    & .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & > .page-title {
+            flex-basis: 98%;
+        }
+        & > button {
+            flex-basis: 2%;
+            border: none;
+            &:hover {
+                color: var(--clr-accent);
+            }
+        }
+    }
+}
+
+.asset-list {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    & > div {
+        margin: 0.5em 0;
+        padding: 1em;
+        background-color: var(--clr-primary);
+        width: 80%;
+        max-width: 30rem;
+        display: flex;
+        &:hover {
+            box-shadow: 0 0 0 1px var(--clr-accent);
+        }
+    }
+}
+
+.asset-search {
+    width: 80%;
+    max-width: 30rem;
+    margin: 1em 0;
+    background-color: var(--clr-primary);
+    border: none;
+    line-height: 3rem;
+    border-radius: 2em;
+    padding: 0 1em 0 3em;
+    font-size: 1em;
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--clr-accent);
+    }
+}
+
+.search-icon,
+.clear-search {
+    color: #8e8e8e;
+    position: absolute;
+}
+
+.search-icon {
+    transform: translate(20px, 32px);
+}
+
+.clear-search {
+    transform: translate(-45px, 29px);
+    font-size: 1em;
+}

@@ -94,3 +94,7 @@ button {
     color: var(--down);
     margin: 20px 0;
 }
+
+input {
+    color: var(--foreground);
+}

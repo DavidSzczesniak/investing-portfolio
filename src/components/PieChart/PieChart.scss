@@ -1,0 +1,9 @@
+.pie-slice {
+    &:hover {
+        stroke: var(--clr-accent) !important;
+        cursor: pointer;
+    }
+    &.selected {
+        stroke: var(--clr-accent) !important;
+    }
+}
