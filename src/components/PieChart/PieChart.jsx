@@ -39,7 +39,7 @@ export const PieChart = ({ data }) => {
             />
             <VictoryLabel
                 textAnchor="middle"
-                style={{ fontSize: 13 }}
+                style={{ fontSize: 13, fill: 'var(--foreground)' }}
                 x={160}
                 y={160}
                 text={pieMessage}

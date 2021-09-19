@@ -34,13 +34,11 @@ export const Deposit = ({ close }) => {
     function handleSearch(event) {
         setSearchValue(event.target.value);
         // remove whitespace and non alphanumeric characters from input
-        const searchTerm = event.target.value.trim().replace(/[^a-z\d]/, '');
+        const searchTerm = event.target.value.trim().replace(/[^a-z\d]+/, '');
 
         if (searchTerm) {
             const searchRegex = new RegExp(`${searchTerm}`, 'i');
-            setFilteredList((currentArr) =>
-                currentArr.filter((asset) => Boolean(asset.name.match(searchRegex)))
-            );
+            setFilteredList(assetList.filter((asset) => Boolean(asset.name.match(searchRegex))));
         } else {
             setFilteredList(assetList);
         }
@@ -62,7 +60,7 @@ export const Deposit = ({ close }) => {
                 type="text"
                 placeholder="Search"
                 className="asset-search"
-                onChange={(e) => handleSearch(e)}
+                onChange={handleSearch}
                 value={searchValue || ''}
             />
             {searchValue && (
