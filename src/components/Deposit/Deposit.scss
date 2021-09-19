@@ -23,14 +23,38 @@
     align-items: center;
     & > div {
         margin: 0.5em 0;
-        padding: 1em;
+        padding: 0.5em 1em;
         background-color: var(--clr-primary);
         width: 80%;
         max-width: 30rem;
         display: flex;
         &:hover {
+            cursor: pointer;
             box-shadow: 0 0 0 1px var(--clr-accent);
         }
+    }
+}
+
+.asset-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-asset {
+    & input {
+        /* TODO: improve layout on mobile */
+        width: 10em;
+        height: 3em;
+        background: none;
+        border-radius: 4px;
+        border: 1px solid var(--foreground);
+        color: var(--foreground);
+        padding: 0.5em 1em;
+        font-size: 0.9rem;
+    }
+    & button {
+        margin-right: 0;
     }
 }
 

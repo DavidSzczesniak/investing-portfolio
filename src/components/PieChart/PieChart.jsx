@@ -8,7 +8,7 @@ export const PieChart = ({ data }) => {
         label: 'USD - $',
         symbol: '$',
     };
-    const [pieMessage, setPieMessage] = useState(data[0].x);
+    const [pieMessage, setPieMessage] = useState(undefined);
 
     function selectSlice(event) {
         // get index of element relative to its parent, using that to get the label because they're separate elements

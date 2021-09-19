@@ -10,6 +10,7 @@ export const Button = ({
     ariaLabel,
     className,
     iconSize = '1x',
+    type,
 }) => {
     const secondary = isSecondary ? 'secondary-btn' : '';
     const iconOnly = !label ? 'icon-only' : '';
@@ -19,6 +20,7 @@ export const Button = ({
             data-testid="custom-btn"
             onClick={() => onClick && onClick()}
             aria-label={ariaLabel}
+            type={`${type ? type : 'button'}`}
             className={`${secondary} ${iconOnly} ${className} custom-btn`}>
             {icon && <FontAwesomeIcon icon={icon} size={iconSize} />}
             {label}

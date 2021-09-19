@@ -19,6 +19,8 @@ export const Deposit = ({ close }) => {
     const [assetList, setAssetList] = useState([]);
     const [filteredAssetList, setFilteredList] = useState([]);
     const [searchValue, setSearchValue] = useState(undefined);
+    const [holdings, setHoldings] = useState(JSON.parse(localStorage.getItem('holdings')) || []);
+    const [editedAsset, setEditedAsset] = useState(undefined);
 
     useEffect(() => {
         axios
@@ -49,6 +51,22 @@ export const Deposit = ({ close }) => {
         setFilteredList(assetList);
     }
 
+    function handleDeposit(asset, amount) {
+        setEditedAsset(undefined);
+        const existingHolding = holdings.find((a) => a.id === asset.id);
+        if (existingHolding) {
+            const newHoldings = holdings;
+            newHoldings[newHoldings.indexOf(existingHolding)].amount = amount;
+            setHoldings([...newHoldings]);
+        } else {
+            setHoldings((currentArr) => [
+                ...currentArr,
+                { id: asset.id, amount: amount, symbol: asset.symbol },
+            ]);
+        }
+        localStorage.setItem('holdings', JSON.stringify(holdings));
+    }
+
     return (
         <div className="deposit">
             <div className="header">
@@ -76,7 +94,39 @@ export const Deposit = ({ close }) => {
                     {filteredAssetList.length > 0 ? (
                         <>
                             {filteredAssetList.map((asset, index) => {
-                                return <AssetName key={index} asset={asset} />;
+                                return (
+                                    <div
+                                        className="asset-result"
+                                        key={index}
+                                        onClick={() =>
+                                            editedAsset !== asset.id && setEditedAsset(asset.id)
+                                        }>
+                                        <AssetName asset={asset} disableClick />
+                                        {editedAsset === asset.id ? (
+                                            <div className="edit-asset">
+                                                <form
+                                                    onSubmit={(e) =>
+                                                        handleDeposit(asset, e.target[0].value)
+                                                    }>
+                                                    <input
+                                                        type="number"
+                                                        defaultValue={
+                                                            holdings.find((a) => a.id === asset.id)
+                                                                ?.amount || ''
+                                                        }
+                                                    />
+                                                    <Button label="Save" type="submit" />
+                                                </form>
+                                            </div>
+                                        ) : (
+                                            <span className="holding-amount">
+                                                {holdings.find((a) => a.id === asset.id)?.amount ||
+                                                    '0'}{' '}
+                                                {asset.symbol.toUpperCase()}
+                                            </span>
+                                        )}
+                                    </div>
+                                );
                             })}
                         </>
                     ) : (

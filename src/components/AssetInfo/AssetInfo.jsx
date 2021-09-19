@@ -4,13 +4,17 @@ import { normalizeNumber } from '../../Utils/helpers';
 import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import './AssetInfo.scss';
 
-export const AssetName = ({ asset }) => {
+export const AssetName = ({ asset, disableClick }) => {
     const history = useHistory();
+
+    function handleClick() {
+        if (!disableClick) {
+            history.replace(`/asset-view?id=${asset.id}`);
+        }
+    }
+
     return (
-        <div
-            data-testid="asset-name"
-            className="asset-name"
-            onClick={() => history.replace(`/asset-view?id=${asset.id}`)}>
+        <div data-testid="asset-name" className="asset-name" onClick={handleClick}>
             <img src={asset.image} alt={`${asset.name} logo`} />
             <div>
                 <span>{asset.name}</span>
