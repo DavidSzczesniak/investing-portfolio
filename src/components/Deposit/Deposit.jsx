@@ -117,7 +117,6 @@ export const Deposit = ({ close }) => {
                             {filteredAssetList.map((asset, index) => {
                                 return (
                                     <div
-                                        className="asset-result"
                                         key={index}
                                         onClick={() =>
                                             editedAsset !== asset.id && setEditedAsset(asset.id)

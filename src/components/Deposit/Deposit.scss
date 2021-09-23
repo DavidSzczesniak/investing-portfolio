@@ -28,17 +28,17 @@
         width: 80%;
         max-width: 30rem;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         &:hover {
             cursor: pointer;
             box-shadow: 0 0 0 1px var(--clr-accent);
         }
+        /* unset color change on name hover, only on the Deposit screen */
+        & > .asset-name:hover {
+            color: unset;
+        }
     }
-}
-
-.asset-result {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .edit-asset {
