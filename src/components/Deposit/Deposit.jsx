@@ -54,17 +54,38 @@ export const Deposit = ({ close }) => {
     function handleDeposit(asset, amount) {
         setEditedAsset(undefined);
         const existingHolding = holdings.find((a) => a.id === asset.id);
+        const newAmountTotal = asset.current_price * amount;
+        const newHoldings = holdings;
+
         if (existingHolding) {
-            const newHoldings = holdings;
-            newHoldings[newHoldings.indexOf(existingHolding)].amount = amount;
+            const holdingIndex = newHoldings.indexOf(existingHolding);
+            // amend existing amount
+            if (amount === '0') {
+                // remove from array if set to 0
+                newHoldings.splice(holdingIndex, 1);
+            } else {
+                newHoldings[holdingIndex].amount = {
+                    raw: amount,
+                    usd: newAmountTotal,
+                };
+            }
             setHoldings([...newHoldings]);
         } else {
-            setHoldings((currentArr) => [
-                ...currentArr,
-                { id: asset.id, amount: amount, symbol: asset.symbol },
-            ]);
+            // add new array item if it doesn't exist
+            if (amount !== '0') {
+                newHoldings.push({
+                    id: asset.id,
+                    name: asset.name,
+                    amount: { raw: amount, usd: newAmountTotal },
+                    symbol: asset.symbol,
+                    current_price: asset.current_price,
+                    price_change_percentage_24h: asset.price_change_percentage_24h,
+                    image: asset.image,
+                });
+                setHoldings(newHoldings);
+            }
         }
-        localStorage.setItem('holdings', JSON.stringify(holdings));
+        localStorage.setItem('holdings', JSON.stringify(newHoldings));
     }
 
     return (
@@ -110,9 +131,10 @@ export const Deposit = ({ close }) => {
                                                     }>
                                                     <input
                                                         type="number"
+                                                        step="any"
                                                         defaultValue={
                                                             holdings.find((a) => a.id === asset.id)
-                                                                ?.amount || ''
+                                                                ?.amount.raw || ''
                                                         }
                                                     />
                                                     <Button label="Save" type="submit" />
@@ -120,8 +142,8 @@ export const Deposit = ({ close }) => {
                                             </div>
                                         ) : (
                                             <span className="holding-amount">
-                                                {holdings.find((a) => a.id === asset.id)?.amount ||
-                                                    '0'}{' '}
+                                                {holdings.find((a) => a.id === asset.id)?.amount
+                                                    .raw || '0'}{' '}
                                                 {asset.symbol.toUpperCase()}
                                             </span>
                                         )}

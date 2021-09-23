@@ -13,7 +13,8 @@ export const PieChart = ({ data }) => {
     function selectSlice(event) {
         // get index of element relative to its parent, using that to get the label because they're separate elements
         const index = [...event.target.parentNode.children].indexOf(event.target);
-        setPieMessage(document.querySelector(`text#pie-labels-${index}`).textContent);
+        const selected = document.querySelector(`text#pie-labels-${index}`).textContent;
+        setPieMessage(`${selected}\n ${data.find((asset) => asset.x === selected).y.toFixed(2)}%`);
 
         if (document.querySelector('.pie-slice.selected')) {
             document.querySelector('.pie-slice.selected').setAttribute('class', 'pie-slice');
@@ -39,7 +40,10 @@ export const PieChart = ({ data }) => {
             />
             <VictoryLabel
                 textAnchor="middle"
-                style={{ fontSize: 13, fill: 'var(--foreground)' }}
+                style={{
+                    fontSize: 13,
+                    fill: 'var(--foreground)',
+                }}
                 x={160}
                 y={160}
                 text={pieMessage}

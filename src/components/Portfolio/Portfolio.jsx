@@ -8,25 +8,21 @@ import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import './Portfolio.scss';
 
 export const Portfolio = () => {
+    const [depositScreen, toggleDepositScreen] = useState(false);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
         value: 'usd',
         label: 'USD - $',
         symbol: '$',
     };
-    const currentBalance = 15949.31;
-    const oldBalance = 1812.19;
+    const holdings = JSON.parse(localStorage.getItem('holdings')) || [];
+    const oldBalance = JSON.parse(localStorage.getItem('portfolioBalance')) || 0;
+    const currentBalance =
+        holdings.length > 0
+            ? holdings.map((asset) => Number(asset.amount.usd)).reduce((a, b) => a + b)
+            : 0;
     let balanceChange = currentBalance && currentBalance - oldBalance;
     let balanceChangeClass = 'positive';
     const balanceChangePercent = balanceChange && (balanceChange / oldBalance) * 100;
-    const data = [
-        { x: 'Ethereum', y: 20 },
-        { x: 'Bitcoin', y: 30 },
-        { x: 'Cardano', y: 10 },
-        { x: 'Dogecoin', y: 20 },
-        { x: 'Shibacoin', y: 20 },
-    ];
-    const [depositScreen, toggleDepositScreen] = useState(false);
-
     if (isPositive(balanceChange)) {
         balanceChange = `+${currency.symbol}${normalizeNumber(balanceChange)}`;
     } else {
@@ -34,6 +30,13 @@ export const Portfolio = () => {
         balanceChange = `-${currency.symbol}${normalizeNumber(Math.abs(balanceChange))}`;
         balanceChangeClass = 'negative';
     }
+    localStorage.setItem('portfolioBalance', currentBalance.toFixed(2));
+
+    const pieData =
+        holdings.length > 0 &&
+        holdings.map((asset) => {
+            return { x: asset.name, y: (asset.amount.usd / currentBalance) * 100 };
+        });
 
     return (
         <div className="portfolio" data-testid="portfolio">
@@ -59,9 +62,15 @@ export const Portfolio = () => {
                     </div>
                     <div
                         className={`balance-change ${balanceChangeClass}`}>{`${balanceChange} (24h)`}</div>
-                    <PieChart data={data} />
-                    <h3>Your Assets</h3>
-                    <AssetTable holdings />
+                    {holdings.length > 0 ? (
+                        <>
+                            <PieChart data={pieData} />
+                            <h3>Your Assets</h3>
+                            <AssetTable holdings={holdings} />
+                        </>
+                    ) : (
+                        <div>No assets found</div>
+                    )}
                 </>
             )}
         </div>

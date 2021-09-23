@@ -20,6 +20,8 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
         // use given assets or get from user's localStorage
         if (assets) {
             setAssetList(assets);
+        } else if (holdings) {
+            setAssetList(holdings);
         } else {
             const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || [];
             setAssetList(currentAssetList);
@@ -53,7 +55,7 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
                 }
             });
         }
-    }, [refreshed, currency.value, assets]);
+    }, [refreshed, currency.value, assets, holdings]);
     return (
         <>
             {assetList.length > 0 ? (

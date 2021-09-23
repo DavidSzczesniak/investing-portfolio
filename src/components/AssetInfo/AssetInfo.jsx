@@ -40,11 +40,11 @@ export const AssetHoldings = ({ asset, currency }) => {
     return (
         <div className="asset-holdings">
             <span>
-                {currency.symbol}
-                {normalizeNumber((asset.holdings || 120000) * asset.current_price)}
+                {currency}
+                {normalizeNumber(asset.amount.usd, 2)}
             </span>
             <span className="asset-symbol">
-                {asset.holdings || 0} {asset.symbol.toUpperCase()}
+                {asset.amount.raw || 0} {asset.symbol.toUpperCase()}
             </span>
         </div>
     );
