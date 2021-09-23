@@ -46,6 +46,10 @@ export const Deposit = ({ close }) => {
         }
     }
 
+    function getAssetAmount(id) {
+        return holdings.find((asset) => asset.id === id)?.amount.raw;
+    }
+
     function handleSearchClear() {
         setSearchValue(undefined);
         setFilteredList(assetList);
@@ -114,41 +118,41 @@ export const Deposit = ({ close }) => {
                 <div className="asset-list">
                     {filteredAssetList.length > 0 ? (
                         <>
-                            {filteredAssetList.map((asset, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        onClick={() =>
-                                            editedAsset !== asset.id && setEditedAsset(asset.id)
-                                        }>
-                                        <AssetName asset={asset} disableClick />
-                                        {editedAsset === asset.id ? (
-                                            <div className="edit-asset">
-                                                <form
-                                                    onSubmit={(e) =>
-                                                        handleDeposit(asset, e.target[0].value)
-                                                    }>
-                                                    <input
-                                                        type="number"
-                                                        step="any"
-                                                        defaultValue={
-                                                            holdings.find((a) => a.id === asset.id)
-                                                                ?.amount.raw || ''
-                                                        }
-                                                    />
-                                                    <Button label="Save" type="submit" />
-                                                </form>
-                                            </div>
-                                        ) : (
-                                            <span className="holding-amount">
-                                                {holdings.find((a) => a.id === asset.id)?.amount
-                                                    .raw || '0'}{' '}
-                                                {asset.symbol.toUpperCase()}
-                                            </span>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                            {filteredAssetList
+                                .sort((a, b) => getAssetAmount(b.id) - getAssetAmount(a.id))
+                                .map((asset, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            onClick={() =>
+                                                editedAsset !== asset.id && setEditedAsset(asset.id)
+                                            }>
+                                            <AssetName asset={asset} disableClick />
+                                            {editedAsset === asset.id ? (
+                                                <div className="edit-asset">
+                                                    <form
+                                                        onSubmit={(e) =>
+                                                            handleDeposit(asset, e.target[0].value)
+                                                        }>
+                                                        <input
+                                                            type="number"
+                                                            step="any"
+                                                            defaultValue={
+                                                                getAssetAmount(asset.id) || ''
+                                                            }
+                                                        />
+                                                        <Button label="Save" type="submit" />
+                                                    </form>
+                                                </div>
+                                            ) : (
+                                                <span className="holding-amount">
+                                                    {getAssetAmount(asset.id) || '0'}{' '}
+                                                    {asset.symbol.toUpperCase()}
+                                                </span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                         </>
                     ) : (
                         <span>No results found</span>
