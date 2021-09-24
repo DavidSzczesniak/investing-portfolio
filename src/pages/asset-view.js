@@ -1,40 +1,20 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router';
 import { AssetName, AssetPrice } from '../components/AssetInfo/AssetInfo';
 import { FavouritesButton } from '../components/FavouritesButton/FavouritesButton.jsx';
 import { Sparkline } from '../components/Sparkline.jsx';
-import { geckoAPI } from '../constants.js';
 import '../css/asset-view.scss';
 
 export const AssetView = () => {
     const query = new URLSearchParams(useLocation().search);
     const assetId = query.get('id');
-    const [asset, setAssetInfo] = useState(null);
+    const assets = JSON.parse(localStorage.getItem('assetList')).list || [];
+    const asset = assets.find((a) => a.id === assetId);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
         value: 'usd',
         label: 'USD - $',
         symbol: '$',
     };
-
-    useEffect(() => {
-        axios.get(`${geckoAPI}coins/${assetId}`).then((res) => {
-            const data = res.data;
-            const marketData = data.market_data;
-            setAssetInfo({
-                id: data.id,
-                name: data.name,
-                symbol: data.symbol,
-                image: data.image.small,
-                current_price: marketData.current_price[currency.value],
-                price_change_percentage_24h: marketData.price_change_percentage_24h,
-                market_cap: marketData.market_cap[currency.value].toLocaleString(),
-                volume: marketData.total_volume[currency.value].toLocaleString(),
-                supply: marketData.circulating_supply.toLocaleString(),
-                updatedOn: new Date(),
-            });
-        });
-    }, [assetId, currency.value]);
 
     const AssetStat = ({ label, text }) => {
         return (
@@ -57,16 +37,18 @@ export const AssetView = () => {
                     <div className="asset-view__stats">
                         <AssetStat
                             label="Market Cap"
-                            text={`${currency.symbol}${asset.market_cap}`}
+                            text={`${currency.symbol}${asset.market_cap.toLocaleString()}`}
                         />
                         <AssetStat
                             label="24 Hour Volume"
-                            text={`${currency.symbol}${asset.volume}`}
+                            text={`${currency.symbol}${asset.total_volume.toLocaleString()}`}
                         />
-                        <AssetStat
-                            label="Circulating Supply"
-                            text={`${asset.supply}${asset.symbol.toUpperCase()}`}
-                        />
+                        {asset.total_supply && (
+                            <AssetStat
+                                label="Circulating Supply"
+                                text={`${asset.total_supply.toLocaleString()}${asset.symbol.toUpperCase()}`}
+                            />
+                        )}
                     </div>
                     <Sparkline asset={asset} />
                 </>

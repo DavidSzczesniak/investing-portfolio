@@ -1,10 +1,8 @@
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
-import { geckoAPI } from '../../constants';
 import './NavBar.scss';
 
 export const NavBar = ({ refreshed, refreshApp }) => {
@@ -15,7 +13,14 @@ export const NavBar = ({ refreshed, refreshApp }) => {
         { value: 'eur', label: 'EUR - €', symbol: '€' },
         { value: 'cad', label: 'CAD - $', symbol: '$' },
     ];
-    const [coins, setCoins] = useState([]);
+    let assets =
+        JSON.parse(localStorage.getItem('assetList'))
+            ?.list.slice(0, 20)
+            .map((asset) => ({
+                value: asset.id,
+                label: `${asset.symbol.toUpperCase()} - ${asset.name}`,
+            })) || [];
+
     const [currency, setCurrency] = useState(
         JSON.parse(localStorage.getItem('currency')) || currencyList[0]
     );
@@ -28,22 +33,6 @@ export const NavBar = ({ refreshed, refreshApp }) => {
             document.body.classList.remove('dark-theme');
         }
         localStorage.setItem('currency', JSON.stringify(currency));
-        getCoins();
-        async function getCoins() {
-            const result = await axios
-                .get(
-                    `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=100`
-                )
-                .then((res) => {
-                    return res.data.map((coin) => {
-                        return {
-                            value: coin.id,
-                            label: `(${coin.symbol.toUpperCase()}) ${coin.name}`,
-                        };
-                    });
-                });
-            setCoins(result);
-        }
     }, [currency.value, currency, darkMode]);
 
     function handleSearch(query) {
@@ -76,10 +65,10 @@ export const NavBar = ({ refreshed, refreshApp }) => {
                     Portfolio
                 </div>
             </div>
-            {coins.length > 0 && (
+            {assets.length > 0 && (
                 <div className="search-container">
                     <Select
-                        options={coins}
+                        options={assets}
                         placeholder="Search assets..."
                         onChange={(e) => handleSearch(e.value)}
                     />

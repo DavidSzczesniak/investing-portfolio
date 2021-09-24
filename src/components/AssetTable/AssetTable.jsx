@@ -1,8 +1,6 @@
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { InfoPage } from '../../components/InfoPage/InfoPage';
-import { geckoAPI } from '../../constants';
 import { AssetHoldings, AssetName, AssetPrice } from '../AssetInfo/AssetInfo';
 import { FavouritesButton } from '../FavouritesButton/FavouritesButton';
 import './AssetTable.scss';
@@ -17,45 +15,18 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
     };
 
     useEffect(() => {
-        // use given assets or get from user's localStorage
         if (assets) {
             setAssetList(assets);
-        } else if (holdings) {
-            setAssetList(holdings);
-        } else {
-            const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || [];
-            setAssetList(currentAssetList);
-
-            currentAssetList.forEach((asset) => {
-                let diffInMinutes = new Date(asset.updatedOn) - new Date();
-                diffInMinutes = Math.round(diffInMinutes / 1000 / 60);
-
-                if (diffInMinutes < -5) {
-                    axios.get(`${geckoAPI}coins/${asset.id}`).then((res) => {
-                        const data = res.data;
-                        const newInfo = {
-                            id: data.id,
-                            symbol: data.symbol,
-                            name: data.name,
-                            image: data.image.small,
-                            current_price: data.market_data.current_price[currency.value],
-                            price_change_percentage_24h:
-                                data.market_data.price_change_percentage_24h,
-                            updatedOn: new Date(),
-                        };
-
-                        // remove old info about the asset if it exists
-                        let newPrices = currentAssetList.filter((currentAsset) => {
-                            return currentAsset.id !== data.id;
-                        });
-                        newPrices.push(newInfo);
-                        localStorage.setItem('assetList', JSON.stringify(newPrices));
-                        setAssetList(newPrices);
-                    });
-                }
-            });
+        } else if (favourites) {
+            const mainAssetList = JSON.parse(localStorage.getItem('assetList')) || [];
+            const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+            const filteredAssets = mainAssetList.list.filter((asset) =>
+                watchlist.find((watchlistAsset) => watchlistAsset === asset.id)
+            );
+            setAssetList(filteredAssets);
         }
-    }, [refreshed, currency.value, assets, holdings]);
+    }, [refreshed, currency.value, assets, holdings, favourites]);
+
     return (
         <>
             {assetList.length > 0 ? (

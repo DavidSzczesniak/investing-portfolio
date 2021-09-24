@@ -14,11 +14,25 @@ export const Portfolio = () => {
         label: 'USD - $',
         symbol: '$',
     };
-    const holdings = JSON.parse(localStorage.getItem('holdings')) || [];
+    // create list of owned assets with up-to-date prices and amounts owned
+    const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
+    const ownedAssets = JSON.parse(localStorage.getItem('holdings')) || [];
+    const findOwnedAsset = (asset) => ownedAssets.find((owned) => owned.id === asset.id);
+    const portfolioAssets = assets
+        // filter assets by owned status
+        .filter((asset) => findOwnedAsset(asset))
+        // add amounts owned to the new asset list
+        .map((asset) => {
+            asset.amount = findOwnedAsset(asset).amount;
+            return asset;
+        });
+
+    // calculate porfolio balance
+    const getAssetTotal = (asset) => asset.amount * asset.current_price;
     const oldBalance = JSON.parse(localStorage.getItem('portfolioBalance')) || 0;
     const currentBalance =
-        holdings.length > 0
-            ? holdings.map((asset) => Number(asset.amount.usd)).reduce((a, b) => a + b)
+        portfolioAssets.length > 0
+            ? portfolioAssets.map((asset) => getAssetTotal(asset)).reduce((a, b) => a + b)
             : 0;
     let balanceChange = currentBalance && currentBalance - oldBalance;
     let balanceChangeClass = 'positive';
@@ -33,9 +47,9 @@ export const Portfolio = () => {
     localStorage.setItem('portfolioBalance', currentBalance.toFixed(2));
 
     const pieData =
-        holdings.length > 0 &&
-        holdings.map((asset) => {
-            return { x: asset.name, y: (asset.amount.usd / currentBalance) * 100 };
+        portfolioAssets.length > 0 &&
+        portfolioAssets.map((asset) => {
+            return { x: asset.name, y: (getAssetTotal(asset) / currentBalance) * 100 };
         });
 
     return (
@@ -62,11 +76,11 @@ export const Portfolio = () => {
                     </div>
                     <div
                         className={`balance-change ${balanceChangeClass}`}>{`${balanceChange} (24h)`}</div>
-                    {holdings.length > 0 ? (
+                    {portfolioAssets.length > 0 ? (
                         <>
                             <PieChart data={pieData} />
                             <h3>Your Assets</h3>
-                            <AssetTable holdings={holdings} />
+                            <AssetTable assets={portfolioAssets} holdings />
                         </>
                     ) : (
                         <div>No assets found</div>
