@@ -21,8 +21,14 @@ export const App = () => {
         let diffInMinutes = new Date(currentAssetList.updatedOn) - new Date();
         diffInMinutes = Math.round(diffInMinutes / 1000 / 60);
 
-        // update prices if 5 or more minutes passed. Or set the intial prices if they aren't stored yet
-        if (diffInMinutes < -4 || !currentAssetList.updatedOn) {
+        // update prices if 5 or more minutes passed.
+        // OR set the intial prices if they aren't stored yet
+        // OR request again if the currency was changed by the user
+        if (
+            diffInMinutes < -4 ||
+            !currentAssetList.updatedOn ||
+            currency.value !== currentAssetList.currency
+        ) {
             getAssetPrices();
             async function getAssetPrices() {
                 await axios
@@ -32,8 +38,13 @@ export const App = () => {
                     .then((res) => {
                         localStorage.setItem(
                             'assetList',
-                            JSON.stringify({ updatedOn: new Date(), list: res.data })
+                            JSON.stringify({
+                                updatedOn: new Date(),
+                                list: res.data,
+                                currency: currency.value,
+                            })
                         );
+                        window.location.reload();
                     });
             }
         }
