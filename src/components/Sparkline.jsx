@@ -1,13 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { createChart } from 'lightweight-charts';
+import React, { useEffect, useRef, useState } from 'react';
 import { geckoAPI } from '../constants.js';
 import '../css/Sparkline.scss';
-import { isPositive } from '../Utils/helpers.js';
+import { getCSSVar } from '../Utils/helpers.js';
 
 export const Sparkline = ({ asset }) => {
-    const [assetPrices, setPrices] = useState(null);
-    const [assetTimestamps, setTimestamps] = useState(null);
+    const chartDiv = useRef();
     const timeRanges = [
         { value: '1', label: '24h' },
         { value: '7', label: '7d' },
@@ -22,134 +21,71 @@ export const Sparkline = ({ asset }) => {
             label: '24 Hours',
         }
     );
-    const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
-        symbol: '$',
-    };
+    const currency = JSON.parse(localStorage.getItem('currency')).value || 'usd';
 
     useEffect(() => {
+        getMarketChart();
         async function getMarketChart() {
             await axios
                 .get(
-                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency.value}&days=${timeRange.value}`
+                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency}&days=${timeRange.value}`
                 )
                 .then((res) => {
-                    let timestamps = [];
-                    let prices = [];
+                    let formatted = [];
                     res.data.prices.forEach((price) => {
-                        timestamps.push(
-                            new Date(price[0]).toLocaleDateString('en-GB', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                            })
-                        );
-                        prices.push(price[1]);
+                        // convert to UTC timestamp
+                        const timestamp = Math.floor(new Date(price[0]).getTime() / 1000);
+
+                        formatted.push({ time: timestamp, value: price[1] });
                     });
 
-                    setPrices(prices);
-                    setTimestamps(timestamps);
+                    if (chartDiv.current) {
+                        // remove previous chart if it exists
+                        const oldChart = document.querySelector('.tv-lightweight-charts');
+
+                        if (oldChart) {
+                            document.querySelector('.price-chart').removeChild(oldChart);
+                        }
+
+                        const chart = createChart(chartDiv.current, {
+                            height: 300,
+                            timeScale: {
+                                timeVisible: true,
+                            },
+                            layout: {
+                                background: {
+                                    type: 'solid',
+                                    color: getCSSVar('background'),
+                                },
+                                textColor: getCSSVar('foreground'),
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                            },
+                            grid: {
+                                vertLines: {
+                                    visible: false,
+                                },
+                            },
+                            priceScale: {
+                                position: 'left',
+                                borderVisible: true,
+                                autoScale: true,
+                            },
+                        });
+                        const lineSeries = chart.addLineSeries({
+                            color: getCSSVar('clr-accent'),
+                        });
+                        lineSeries.setData(formatted);
+                        chart.timeScale().fitContent();
+                    }
                 });
         }
-        getMarketChart();
-    }, [asset.id, currency.value, timeRange]);
+    }, [asset.id, currency, timeRange]);
 
     function handleRangeSelection(selectedOption) {
         localStorage.setItem('sparklineDataRange', JSON.stringify(selectedOption));
         setTimeRange(selectedOption);
     }
-
-    const data = {
-        labels: assetTimestamps,
-        datasets: [
-            {
-                data: assetPrices,
-                borderWidth: 3,
-                borderColor: isPositive(asset.price_change_percentage_24h) ? '#16c784' : '#ea3943',
-            },
-        ],
-    };
-
-    const options = {
-        interaction: {
-            mode: 'index',
-            intersect: false,
-        },
-        elements: {
-            point: {
-                radius: 0,
-            },
-        },
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                usePointStyle: true,
-                titleFont: {
-                    size: 16,
-                    family: "'Poppins', sans-serif",
-                },
-                bodyFont: {
-                    size: 16,
-                    family: "'Poppins', sans-serif",
-                },
-                callbacks: {
-                    label: function (context) {
-                        // override default formatting of tooltips
-                        let value = context.raw;
-                        if (value >= 1000) {
-                            value = value.toLocaleString();
-                        } else {
-                            value = value.toFixed(8);
-                        }
-                        return currency.symbol + value;
-                    },
-                },
-            },
-        },
-        scales: {
-            x: {
-                grid: {
-                    display: false,
-                },
-                ticks: {
-                    beginAtZero: true,
-                    font: {
-                        size: 14,
-                        weight: 'bold',
-                        family: "'Poppins', sans-serif",
-                    },
-                    /* haven't got a responsive solution for this right now */
-                    display: false,
-                    // callback: function (val, index) {
-                    //     // Hide the label of every 2nd dataset
-                    //     return index % 6 === 0 ? this.getLabelForValue(val) : '';
-                    // },
-                },
-            },
-            y: {
-                ticks: {
-                    beginAtZero: true,
-                    mirror: true,
-                    callback: function (value) {
-                        if (value >= 1) {
-                            value = value.toLocaleString();
-                        } else {
-                            // rounds numbers below 0, up to 10 decimal places
-                            value = Math.round(value * 10000000000) / 10000000000;
-                        }
-                        return currency.symbol + value;
-                    },
-                    font: {
-                        size: 14,
-                        weight: 'bold',
-                        family: "'Poppins', sans-serif",
-                    },
-                },
-            },
-        },
-    };
 
     return (
         <div className="sparkline-container">
@@ -165,7 +101,7 @@ export const Sparkline = ({ asset }) => {
                     );
                 })}
             </div>
-            <Line data={data} options={options} />
+            <div className="price-chart" ref={chartDiv}></div>
         </div>
     );
 };

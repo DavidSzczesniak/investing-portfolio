@@ -50,6 +50,7 @@ export const NavBar = ({ refreshed, refreshApp }) => {
     function toggleDarkMode() {
         localStorage.setItem('darkMode', !darkMode);
         setDarkMode(!darkMode);
+        window.location.reload();
     }
 
     return (
