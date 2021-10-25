@@ -148,7 +148,6 @@ export const Sparkline = ({ asset }) => {
             y: {
                 ticks: {
                     beginAtZero: true,
-                    mirror: true,
                     callback: function (value) {
                         if (value >= 1) {
                             value = value.toLocaleString();
