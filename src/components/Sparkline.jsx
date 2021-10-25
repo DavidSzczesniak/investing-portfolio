@@ -17,10 +17,7 @@ export const Sparkline = ({ asset }) => {
         { value: 'max', label: 'All' },
     ];
     const [timeRange, setTimeRange] = useState(
-        JSON.parse(localStorage.getItem('sparklineDataRange')) || {
-            value: '1',
-            label: '24 Hours',
-        }
+        JSON.parse(localStorage.getItem('sparklineDataRange')).value || '1'
     );
     const currency = JSON.parse(localStorage.getItem('currency')) || {
         value: 'usd',
@@ -32,7 +29,7 @@ export const Sparkline = ({ asset }) => {
         async function getMarketChart() {
             await axios
                 .get(
-                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency.value}&days=${timeRange.value}`
+                    `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency.value}&days=${timeRange}`
                 )
                 .then((res) => {
                     let timestamps = [];
@@ -56,7 +53,7 @@ export const Sparkline = ({ asset }) => {
 
     function handleRangeSelection(selectedOption) {
         localStorage.setItem('sparklineDataRange', JSON.stringify(selectedOption));
-        setTimeRange(selectedOption);
+        setTimeRange(selectedOption.value);
     }
 
     const data = {
@@ -117,15 +114,35 @@ export const Sparkline = ({ asset }) => {
                     beginAtZero: true,
                     font: {
                         size: 14,
-                        weight: 'bold',
                         family: "'Poppins', sans-serif",
                     },
-                    /* haven't got a responsive solution for this right now */
-                    display: false,
-                    // callback: function (val, index) {
-                    //     // Hide the label of every 2nd dataset
-                    //     return index % 6 === 0 ? this.getLabelForValue(val) : '';
-                    // },
+                    callback: function (index) {
+                        const dateValue = this.getLabelForValue(index).split(',');
+                        let interval = 4;
+                        let label = dateValue[0];
+
+                        function getDate(part = '0') {
+                            if (part) {
+                                return label.split('/')[part];
+                            }
+
+                            return label;
+                        }
+
+                        if (timeRange === '1') {
+                            interval = 8;
+                            label = dateValue[1];
+                        } else if (timeRange === '7') {
+                            interval = 6;
+                            label = getDate();
+                        } else if (timeRange === '30' || timeRange === '90') {
+                            label = `${getDate()}/${getDate('1')}`;
+                        } else if (timeRange === '365' || timeRange === 'max') {
+                            label = `${getDate('1')}/${getDate('2')}`;
+                        }
+
+                        return index % interval === 0 ? label : '';
+                    },
                 },
             },
             y: {
@@ -143,7 +160,6 @@ export const Sparkline = ({ asset }) => {
                     },
                     font: {
                         size: 14,
-                        weight: 'bold',
                         family: "'Poppins', sans-serif",
                     },
                 },
@@ -158,7 +174,7 @@ export const Sparkline = ({ asset }) => {
                     return (
                         <button
                             key={index}
-                            className={`${timeRange.value === option.value ? 'selected' : ''}`}
+                            className={`${timeRange === option.value ? 'selected' : ''}`}
                             onClick={() => handleRangeSelection(option)}>
                             {option.label}
                         </button>
