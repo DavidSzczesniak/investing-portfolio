@@ -24,7 +24,7 @@
     & > div {
         margin: 0.5em 0;
         padding: 0.5em 1em;
-        background-color: var(--clr-primary);
+        background-color: var(--background-secondary);
         width: 80%;
         max-width: 30rem;
         display: flex;
@@ -62,7 +62,7 @@
     width: 80%;
     max-width: 30rem;
     margin: 1em 0;
-    background-color: var(--clr-primary);
+    background-color: var(--background-secondary);
     border: none;
     line-height: 3rem;
     border-radius: 2em;

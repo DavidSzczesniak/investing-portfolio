@@ -4,6 +4,8 @@
     align-items: center;
     flex-direction: column;
     margin-top: 1rem;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--clr-border);
 }
 
 @media (min-width: 40em) {
@@ -20,7 +22,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: var(--clr-primary);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--clr-border);
     button {
         border: none;
         border-radius: 0;
