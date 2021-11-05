@@ -77,6 +77,18 @@ export const Sparkline = ({ asset }) => {
                         });
                         lineSeries.setData(formatted);
                         chart.timeScale().fitContent();
+
+                        // set chart size based on container size observed by ResizeObserver
+                        // const chartContainer = document.querySelector('.chart-container');
+
+                        // new ResizeObserver((entries) => {
+                        //     if (entries.length === 0 || entries[0].target !== chartContainer) {
+                        //         return;
+                        //     }
+                        //     const newRect = entries[0].contentRect;
+                        //     // chart.applyOptions({ height: newRect.height, width: newRect.width });
+                        //     console.log(newRect);
+                        // }).observe(chartContainer);
                     }
                 });
         }
@@ -101,7 +113,9 @@ export const Sparkline = ({ asset }) => {
                     );
                 })}
             </div>
-            <div className="price-chart" ref={chartDiv}></div>
+            <div className="chart-container">
+                <div className="price-chart" ref={chartDiv}></div>
+            </div>
         </div>
     );
 };
