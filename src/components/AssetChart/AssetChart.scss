@@ -1,31 +1,41 @@
 .chart-container {
-    width: auto;
+    width: 100%;
+    max-width: 50rem;
     display: flex;
     align-items: center;
     flex-direction: column;
     margin-top: 1rem;
     background-color: var(--background-secondary);
     border: 1px solid var(--clr-border);
+    padding: 0.5rem;
 }
 
 @media (min-width: 40em) {
     .chart-container {
         display: block;
         padding: 1rem;
-        margin: 0.7rem 0 0.7rem -1rem;
+        flex-grow: 3;
     }
 }
 
 .chart-header {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media (min-width: 40em) {
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .toggle-btn {
     width: fit-content;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 1rem;
     justify-content: center;
     background-color: var(--background-secondary);
     border: 1px solid var(--clr-border);
