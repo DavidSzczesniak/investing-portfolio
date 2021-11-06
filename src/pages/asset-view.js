@@ -2,13 +2,13 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import { AssetName, AssetPrice } from '../components/AssetInfo/AssetInfo';
 import { FavouritesButton } from '../components/FavouritesButton/FavouritesButton.jsx';
-import { Sparkline } from '../components/Sparkline.jsx';
+import { AssetChart } from '../components/AssetChart/AssetChart.jsx';
 import '../css/asset-view.scss';
 
 export const AssetView = () => {
     const query = new URLSearchParams(useLocation().search);
     const assetId = query.get('id');
-    const assets = JSON.parse(localStorage.getItem('assetList')).list || [];
+    const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
     const asset = assets.find((a) => a.id === assetId);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
         value: 'usd',
@@ -50,7 +50,7 @@ export const AssetView = () => {
                             />
                         )}
                     </div>
-                    <Sparkline asset={asset} />
+                    <AssetChart asset={asset} />
                 </>
             )}
         </>
