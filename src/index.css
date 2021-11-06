@@ -4,28 +4,23 @@
     --down: #ea3943;
 
     --clr-light: #eeeeee;
-    --clr-dark: #0d1117;
-    --clr-darker: #010409;
-
-    --clr-primary: #f8fafd;
     --clr-accent: #0a46e4;
     --clr-border: #d8dee4;
 
-    --foreground: var(--clr-dark);
+    --foreground: #0d1117;
     --foreground-secondary: #666;
     --background: #f6f8fa;
     --background-secondary: #fff;
 }
 
 .dark-theme {
-    --clr-primary: var(--clr-dark);
     --clr-accent: #678fff;
     --clr-border: #21262d;
 
     --foreground: var(--clr-light);
     --foreground-secondary: #cccccc;
-    --background: var(--clr-darker);
-    --background-secondary: var(--clr-dark);
+    --background: #010409;
+    --background-secondary: #0d1117;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
