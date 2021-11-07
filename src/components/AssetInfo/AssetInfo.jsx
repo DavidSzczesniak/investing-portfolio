@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { normalizeNumber } from '../../Utils/helpers';
 import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import './AssetInfo.scss';
+import { compactNumber } from '../../Utils/helpers';
 
 export const AssetName = ({ asset, disableClick }) => {
     const history = useHistory();
@@ -44,7 +45,7 @@ export const AssetHoldings = ({ asset, currency }) => {
                 {normalizeNumber(asset.amount * asset.current_price, 2)}
             </span>
             <span className="asset-symbol">
-                {asset.amount || 0} {asset.symbol.toUpperCase()}
+                {compactNumber(asset.amount) || 0} {asset.symbol.toUpperCase()}
             </span>
         </div>
     );

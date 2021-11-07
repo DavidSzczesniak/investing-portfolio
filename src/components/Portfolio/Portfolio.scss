@@ -58,3 +58,35 @@
         color: var(--down);
     }
 }
+
+.portfolio__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > div {
+        margin-inline: auto;
+    }
+    & > div:nth-child(2) {
+        margin-inline: auto;
+        width: 100%;
+        max-width: 45rem;
+        padding: 1rem;
+        border: 1px solid var(--clr-border);
+        background: var(--background-secondary);
+        h3 {
+            margin: 1rem;
+            color: var(--foreground);
+            text-align: left;
+            font-weight: 600;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .portfolio__content {
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-flow: row wrap;
+    }
+}

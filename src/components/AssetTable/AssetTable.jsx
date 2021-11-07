@@ -107,11 +107,14 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
             prop: 'current_price',
             label: 'Price',
         },
-        {
+    ];
+
+    if (!holdings) {
+        tableHeadingsList.push({
             prop: 'market_cap',
             label: 'Market Cap',
-        },
-    ];
+        });
+    }
 
     const TableHeading = ({ prop, label }) => {
         return (
@@ -158,15 +161,16 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
                                     <td>
                                         <AssetPrice asset={asset} currency={currency.symbol} />
                                     </td>
-                                    <td>
-                                        <div>{compactNumber(asset.market_cap)}</div>
-                                    </td>
-                                    {holdings && (
+                                    {holdings ? (
                                         <td>
                                             <AssetHoldings
                                                 asset={asset}
                                                 currency={currency.symbol}
                                             />
+                                        </td>
+                                    ) : (
+                                        <td>
+                                            <div>{compactNumber(asset.market_cap)}</div>
                                         </td>
                                     )}
                                     {favourites && (

@@ -24,6 +24,7 @@ export const Portfolio = () => {
         // add amounts owned to the new asset list
         .map((asset) => {
             asset.amount = findOwnedAsset(asset).amount;
+            asset.color = findOwnedAsset(asset).color;
             return asset;
         });
 
@@ -49,7 +50,11 @@ export const Portfolio = () => {
     const pieData =
         portfolioAssets.length > 0 &&
         portfolioAssets.map((asset) => {
-            return { x: asset.name, y: (getAssetTotal(asset) / currentBalance) * 100 };
+            return {
+                title: asset.name,
+                value: (getAssetTotal(asset) / currentBalance) * 100,
+                color: asset.color,
+            };
         });
 
     return (
@@ -58,7 +63,6 @@ export const Portfolio = () => {
                 <Deposit close={() => toggleDepositScreen(false)} />
             ) : (
                 <>
-                    <h2 className="page-title">Your Portfolio</h2>
                     <div className="portfolio__header">Current Balance</div>
                     <div className="balance">
                         <div>
@@ -77,11 +81,15 @@ export const Portfolio = () => {
                     <div
                         className={`balance-change ${balanceChangeClass}`}>{`${balanceChange} (24h)`}</div>
                     {portfolioAssets.length > 0 ? (
-                        <>
+                        <div className="portfolio__content">
                             <PieChart data={pieData} />
-                            <h3>Your Assets</h3>
-                            <AssetTable assets={portfolioAssets} holdings />
-                        </>
+                            <div>
+                                <h3 style={{ maxWidth: '60rem', marginInline: 'auto' }}>
+                                    Your Assets
+                                </h3>
+                                <AssetTable assets={portfolioAssets} holdings />
+                            </div>
+                        </div>
                     ) : (
                         <div>No assets found</div>
                     )}

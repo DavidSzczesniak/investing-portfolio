@@ -1,6 +1,7 @@
 import { faSearch, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { getRandomColor } from '../../Utils/helpers';
 import { AssetName } from '../AssetInfo/AssetInfo';
 import { Button } from '../Button/Button';
 import './Deposit.scss';
@@ -56,6 +57,7 @@ export const Deposit = ({ close }) => {
                 newHoldings.push({
                     id: asset.id,
                     amount: amount,
+                    color: getRandomColor(),
                 });
                 setHoldings(newHoldings);
             }
