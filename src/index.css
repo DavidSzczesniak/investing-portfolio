@@ -11,6 +11,14 @@
     --foreground-secondary: #666;
     --background: #f6f8fa;
     --background-secondary: #fff;
+
+    font-size: 12px;
+}
+
+@media (min-width: 40em) {
+    :root {
+        font-size: 16px;
+    }
 }
 
 .dark-theme {
@@ -35,14 +43,14 @@ body {
     color: var(--foreground);
     background-color: var(--background);
     line-height: 1.6;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
 }
 
-@media (min-width: 40em) {
+/* @media (min-width: 40em) {
     body {
         font-size: 1rem;
     }
-}
+} */
 
 body,
 h1,

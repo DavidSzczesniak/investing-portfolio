@@ -1,6 +1,8 @@
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { InfoPage } from '../../components/InfoPage/InfoPage';
+import { compactNumber } from '../../Utils/helpers';
 import { AssetHoldings, AssetName, AssetPrice } from '../AssetInfo/AssetInfo';
 import { FavouritesButton } from '../FavouritesButton/FavouritesButton';
 import './AssetTable.scss';
@@ -13,6 +15,11 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
         label: 'USD - $',
         symbol: '$',
     };
+    const [currentSort, setCurrentSort] = useState({
+        type: 'default',
+        heading: null,
+        fn: (a, b) => a,
+    });
 
     useEffect(() => {
         if (assets) {
@@ -25,29 +32,134 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
             );
             setAssetList(filteredAssets);
         }
+        // console.log(assetList);
     }, [refreshed, currency.value, assets, holdings, favourites]);
 
+    function handleSort(heading) {
+        let nextSort = {
+            type: 'default',
+            heading,
+            fn: (a, b) => a,
+        };
+
+        // different sorting function if the sorting criteria is a letter or number
+        const sortDesc = (a, b) => {
+            a = a[heading];
+            b = b[heading];
+            if (heading === 'name') {
+                if (a > b) {
+                    return -1;
+                }
+                if (b > a) {
+                    return 1;
+                }
+                return 0;
+            } else {
+                return b - a;
+            }
+        };
+
+        const sortAsc = (a, b) => {
+            a = a[heading];
+            b = b[heading];
+            if (heading === 'name') {
+                if (a > b) {
+                    return 1;
+                }
+                if (b > a) {
+                    return -1;
+                }
+                return 0;
+            } else {
+                return a - b;
+            }
+        };
+
+        if (currentSort.type === 'down') {
+            nextSort = {
+                type: 'up',
+                heading,
+                icon: faSortUp,
+                fn: sortAsc,
+            };
+        } else if (currentSort.type === 'default') {
+            nextSort = {
+                type: 'down',
+                heading,
+                icon: faSortDown,
+                fn: sortDesc,
+            };
+        }
+
+        setCurrentSort(nextSort);
+    }
+
+    const tableHeadingsList = [
+        {
+            prop: 'market_cap_rank',
+            label: '#',
+        },
+        {
+            prop: 'name',
+            label: 'Name',
+        },
+        {
+            prop: 'current_price',
+            label: 'Price',
+        },
+        {
+            prop: 'market_cap',
+            label: 'Market Cap',
+        },
+    ];
+
+    const TableHeading = ({ prop, label }) => {
+        return (
+            <th onClick={() => handleSort(prop)}>
+                <div>
+                    {label}
+                    {currentSort.heading === prop && currentSort.icon && (
+                        <FontAwesomeIcon icon={currentSort.icon} />
+                    )}
+                </div>
+            </th>
+        );
+    };
+
     return (
-        <>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             {assetList.length > 0 ? (
                 <table className="asset-table">
                     <thead>
                         <tr>
-                            <th>Asset</th>
-                            <th>Price</th>
+                            {tableHeadingsList.map((heading, index) => {
+                                return (
+                                    <TableHeading
+                                        key={index}
+                                        prop={heading.prop}
+                                        label={heading.label}
+                                    />
+                                );
+                            })}
                             {holdings && <th>Holdings</th>}
+                            {favourites && <th></th>}
                         </tr>
                     </thead>
                     <tbody>
-                        {/* todo: add sorting */}
-                        {assetList.map((asset, index) => {
+                        {[...assetList].sort(currentSort.fn).map((asset, index) => {
                             return (
                                 <tr key={index}>
+                                    <td>
+                                        <div>{asset.market_cap_rank}</div>
+                                    </td>
                                     <td>
                                         <AssetName asset={asset} />
                                     </td>
                                     <td>
                                         <AssetPrice asset={asset} currency={currency.symbol} />
+                                    </td>
+                                    <td>
+                                        <div>{compactNumber(asset.market_cap)}</div>
                                     </td>
                                     {holdings && (
                                         <td>
@@ -78,6 +190,6 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
                     icon={faQuestionCircle}
                 />
             )}
-        </>
+        </div>
     );
 };

@@ -1,21 +1,55 @@
 .asset-table {
     width: 100%;
-    min-width: 290px;
+    min-width: 20rem;
+    max-width: 60rem;
+    padding: 1rem 0;
+    border-spacing: 0;
     & thead th {
         font-weight: 400;
-        font-size: 1rem;
-        margin-bottom: 0.5em;
+        border-top: 1px solid var(--clr-border);
+        border-bottom: 1px solid var(--clr-border);
+        border-radius: 0;
+        padding: 0.5rem;
+        & > div {
+            display: flex;
+            align-items: center;
+            svg {
+                margin-left: 0.25rem;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
     & tbody td {
         font-weight: 500;
+        border-radius: 0;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--clr-border);
     }
-    & thead th:first-child,
-    & tbody td:first-child {
+    & tbody tr:hover {
+        background-color: var(--background-secondary);
+    }
+    & thead th:nth-child(-n + 2),
+    & tbody td:nth-child(-n + 2) {
         text-align: left;
+        & > div {
+            justify-content: left;
+        }
     }
-    & thead th:nth-child(n + 2),
-    & tbody td:nth-child(n + 2) {
+    & thead th:nth-child(n + 3),
+    & tbody td:nth-child(n + 3) {
         text-align: right;
+        & > div {
+            justify-content: right;
+        }
+    }
+    /* adds space to both ends of the table row, because tr elements can't have padding */
+    & tbody td:first-child {
+        padding-left: 0.5rem;
+    }
+    & tbody td:last-child {
+        padding-right: 0.5rem;
     }
 }
 
