@@ -22,3 +22,7 @@ export function getRandomColor() {
     }
     return color;
 }
+
+export function getCSSVar(variableName) {
+    return getComputedStyle(document.body).getPropertyValue(`--${variableName}`).trim();
+}

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../../constants.js';
 import './AssetChart.scss';
-import { isPositive } from '../../Utils/helpers.js';
+import { getCSSVar, isPositive } from '../../Utils/helpers.js';
 
 export const AssetChart = ({ asset }) => {
     const [chartData, setChartData] = useState({ x: null, y: null });
@@ -32,6 +32,25 @@ export const AssetChart = ({ asset }) => {
     };
 
     useEffect(() => {
+        // set gradient and color options for the chart
+        const darkMode = JSON.parse(localStorage.getItem('darkMode')) || false;
+        const chartCtx = document.getElementsByTagName('canvas')[0].getContext('2d');
+        const gradient = chartCtx.createLinearGradient(0, 0, 0, 600);
+
+        if (isPositive(asset.price_change_percentage_24h)) {
+            gradient.addColorStop(0, '#a1e8cd');
+            gradient.addColorStop(0.35, '#daf6eb');
+        } else {
+            gradient.addColorStop(0, '#f8bec2');
+            gradient.addColorStop(0.35, '#fdecee');
+        }
+
+        if (darkMode) {
+            gradient.addColorStop(1, '#0d1117');
+        } else {
+            gradient.addColorStop(1, '#fff');
+        }
+
         getMarketChart();
         async function getMarketChart() {
             await axios
@@ -51,10 +70,24 @@ export const AssetChart = ({ asset }) => {
                         yAxis.push(data[1]);
                     });
 
-                    setChartData({ x: xAxis, y: yAxis });
+                    setChartData({
+                        labels: xAxis,
+                        datasets: [
+                            {
+                                data: yAxis,
+                                borderWidth: 2.5,
+                                borderColor: isPositive(asset.price_change_percentage_24h)
+                                    ? getCSSVar('up')
+                                    : getCSSVar('down'),
+                                backgroundColor: gradient,
+                                fill: true,
+                                tension: 0.2,
+                            },
+                        ],
+                    });
                 });
         }
-    }, [asset.id, currency.value, dataType, timeRange]);
+    }, [asset.id, asset.price_change_percentage_24h, currency.value, dataType, timeRange]);
 
     function handleRangeSelection(selected) {
         localStorage.setItem('chartTimeRange', JSON.stringify(selected));
@@ -65,17 +98,6 @@ export const AssetChart = ({ asset }) => {
         localStorage.setItem('chartDataType', JSON.stringify(selected));
         setSetDataType(selected.value);
     }
-
-    const data = {
-        labels: chartData.x,
-        datasets: [
-            {
-                data: chartData.y,
-                borderWidth: 3,
-                borderColor: isPositive(asset.price_change_percentage_24h) ? '#16c784' : '#ea3943',
-            },
-        ],
-    };
 
     const options = {
         interaction: {
@@ -209,7 +231,7 @@ export const AssetChart = ({ asset }) => {
                     onClick={handleRangeSelection}
                 />
             </div>
-            <Line data={data} options={options} />
+            <Line data={chartData} options={options} />
         </div>
     );
 };
