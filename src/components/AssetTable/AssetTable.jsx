@@ -7,7 +7,7 @@ import { AssetHoldings, AssetName, AssetPrice } from '../AssetInfo/AssetInfo';
 import { FavouritesButton } from '../FavouritesButton/FavouritesButton';
 import './AssetTable.scss';
 
-export const AssetTable = ({ assets, holdings, favourites }) => {
+export const AssetTable = ({ assets, portfolio, favourites }) => {
     const [assetList, setAssetList] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
@@ -32,8 +32,7 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
             );
             setAssetList(filteredAssets);
         }
-        // console.log(assetList);
-    }, [refreshed, currency.value, assets, holdings, favourites]);
+    }, [refreshed, currency.value, assets, portfolio, favourites]);
 
     function handleSort(heading) {
         let nextSort = {
@@ -44,8 +43,14 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
 
         // different sorting function if the sorting criteria is a letter or number
         const sortDesc = (a, b) => {
-            a = a[heading];
-            b = b[heading];
+            if (heading === 'amount') {
+                a = a.amount * a.current_price;
+                b = b.amount * b.current_price;
+            } else {
+                a = a[heading];
+                b = b[heading];
+            }
+
             if (heading === 'name') {
                 if (a > b) {
                     return -1;
@@ -60,8 +65,14 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
         };
 
         const sortAsc = (a, b) => {
-            a = a[heading];
-            b = b[heading];
+            if (heading === 'amount') {
+                a = a.amount * a.current_price;
+                b = b.amount * b.current_price;
+            } else {
+                a = a[heading];
+                b = b[heading];
+            }
+
             if (heading === 'name') {
                 if (a > b) {
                     return 1;
@@ -96,10 +107,6 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
 
     const tableHeadingsList = [
         {
-            prop: 'market_cap_rank',
-            label: '#',
-        },
-        {
             prop: 'name',
             label: 'Name',
         },
@@ -109,7 +116,16 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
         },
     ];
 
-    if (!holdings) {
+    if (portfolio) {
+        tableHeadingsList.push({
+            prop: 'amount',
+            label: 'Holdings',
+        });
+    } else {
+        tableHeadingsList.push({
+            prop: 'market_cap_rank',
+            label: '#',
+        });
         tableHeadingsList.push({
             prop: 'market_cap',
             label: 'Market Cap',
@@ -144,7 +160,6 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
                                     />
                                 );
                             })}
-                            {holdings && <th>Holdings</th>}
                             {favourites && <th></th>}
                         </tr>
                     </thead>
@@ -152,16 +167,18 @@ export const AssetTable = ({ assets, holdings, favourites }) => {
                         {[...assetList].sort(currentSort.fn).map((asset, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>
-                                        <div>{asset.market_cap_rank}</div>
-                                    </td>
+                                    {!portfolio && (
+                                        <td>
+                                            <div>{asset.market_cap_rank}</div>
+                                        </td>
+                                    )}
                                     <td>
                                         <AssetName asset={asset} />
                                     </td>
                                     <td>
                                         <AssetPrice asset={asset} currency={currency.symbol} />
                                     </td>
-                                    {holdings ? (
+                                    {portfolio ? (
                                         <td>
                                             <AssetHoldings
                                                 asset={asset}

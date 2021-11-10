@@ -87,7 +87,7 @@ export const Portfolio = () => {
                                 <h3 style={{ maxWidth: '60rem', marginInline: 'auto' }}>
                                     Your Assets
                                 </h3>
-                                <AssetTable assets={portfolioAssets} holdings />
+                                <AssetTable assets={portfolioAssets} portfolio />
                             </div>
                         </div>
                     ) : (
