@@ -33,22 +33,15 @@ export const AssetChart = ({ asset }) => {
 
     useEffect(() => {
         // set gradient and color options for the chart
-        const darkMode = JSON.parse(localStorage.getItem('darkMode')) || false;
         const chartCtx = document.getElementsByTagName('canvas')[0].getContext('2d');
         const gradient = chartCtx.createLinearGradient(0, 0, 0, 600);
 
         if (isPositive(asset.price_change_percentage_24h)) {
-            gradient.addColorStop(0, '#a1e8cd');
-            gradient.addColorStop(0.35, '#daf6eb');
+            gradient.addColorStop(0, 'rgb(22, 199, 132, 0.5)');
+            gradient.addColorStop(0.5, 'rgb(22, 199, 132, 0.05)');
         } else {
-            gradient.addColorStop(0, '#f8bec2');
-            gradient.addColorStop(0.35, '#fdecee');
-        }
-
-        if (darkMode) {
-            gradient.addColorStop(1, '#0d1117');
-        } else {
-            gradient.addColorStop(1, '#fff');
+            gradient.addColorStop(0, 'rgba(234, 57, 67, 0.5)');
+            gradient.addColorStop(0.5, 'rgba(234, 57, 67, 0.05)');
         }
 
         getMarketChart();
