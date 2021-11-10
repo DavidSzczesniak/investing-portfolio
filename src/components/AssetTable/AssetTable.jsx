@@ -107,6 +107,10 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
 
     const tableHeadingsList = [
         {
+            prop: 'market_cap_rank',
+            label: '#',
+        },
+        {
             prop: 'name',
             label: 'Name',
         },
@@ -114,22 +118,18 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
             prop: 'current_price',
             label: 'Price',
         },
+        {
+            prop: 'market_cap',
+            label: 'Market Cap',
+        },
     ];
 
     if (portfolio) {
-        tableHeadingsList.push({
+        tableHeadingsList.splice(3, 1, {
             prop: 'amount',
             label: 'Holdings',
         });
-    } else {
-        tableHeadingsList.push({
-            prop: 'market_cap_rank',
-            label: '#',
-        });
-        tableHeadingsList.push({
-            prop: 'market_cap',
-            label: 'Market Cap',
-        });
+        tableHeadingsList.splice(0, 1);
     }
 
     const TableHeading = ({ prop, label }) => {
