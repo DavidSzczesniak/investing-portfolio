@@ -1,11 +1,12 @@
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faMoon, faSearch, faSun } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import Select from 'react-select';
+// import Select from 'react-select';
 import './NavBar.scss';
+import { NavButton } from '../NavButton/NavButton';
 
-export const NavBar = ({ refreshed, refreshApp }) => {
+export const NavBar = ({ refreshed, refreshApp, toggleSideBar }) => {
     const history = useHistory();
     const currencyList = [
         { value: 'usd', label: 'USD - $', symbol: '$' },
@@ -35,17 +36,17 @@ export const NavBar = ({ refreshed, refreshApp }) => {
         localStorage.setItem('currency', JSON.stringify(currency));
     }, [currency.value, currency, darkMode]);
 
-    function handleSearch(query) {
-        if (query) {
-            history.replace(`/asset-view?id=${query}`);
-        }
-    }
+    // function handleSearch(query) {
+    //     if (query) {
+    //         history.replace(`/asset-view?id=${query}`);
+    //     }
+    // }
 
-    function changeCurrency(selectedCurrency) {
-        localStorage.setItem('currency', JSON.stringify(selectedCurrency));
-        setCurrency(selectedCurrency);
-        refreshApp(!refreshed);
-    }
+    // function changeCurrency(selectedCurrency) {
+    //     localStorage.setItem('currency', JSON.stringify(selectedCurrency));
+    //     setCurrency(selectedCurrency);
+    //     refreshApp(!refreshed);
+    // }
 
     function toggleDarkMode() {
         localStorage.setItem('darkMode', !darkMode);
@@ -54,18 +55,43 @@ export const NavBar = ({ refreshed, refreshApp }) => {
 
     return (
         <div className="navbar" data-testid="navbar">
-            <div className="nav-container">
-                <h2 className="site-logo" onClick={() => history.replace('/')}>
-                    Investii
-                </h2>
-                <div className="nav-btn" onClick={() => history.replace('/user-list')}>
-                    Watchlist
-                </div>
-                <div className="nav-btn" onClick={() => history.replace('/portfolio')}>
-                    Portfolio
+            <div className="site-logo" onClick={() => history.replace('/')}>
+                Investii
+            </div>
+            <div className="nav-content">
+                <ul className="nav-links">
+                    <li>
+                        <NavLink exact to="/user-list">
+                            Watchlist
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink exact to="/portfolio">
+                            Portfolio
+                        </NavLink>
+                    </li>
+                </ul>
+                <div className="nav-btns">
+                    <NavButton icon={faSearch} ariaLabel="search" />
+                    <NavButton
+                        icon={faMoon}
+                        toggleIcon={{ otherIcon: faSun, condition: darkMode }}
+                        onClick={toggleDarkMode}
+                        className="dark-mode-toggle"
+                        ariaLabel="toggle dark mode"
+                        size="2x"
+                    />
+                    <NavButton
+                        icon={faBars}
+                        className="hamburger"
+                        onClick={toggleSideBar}
+                        ariaLabel="toggle sidebar menu display"
+                    />
+                    {/*  placeholder */}
+                    <button className="change-currency nav-button">USD</button>
                 </div>
             </div>
-            {assets.length > 0 && (
+            {/* {assets.length > 0 && (
                 <div className="search-container">
                     <Select
                         options={assets}
@@ -87,7 +113,7 @@ export const NavBar = ({ refreshed, refreshApp }) => {
                         </button>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

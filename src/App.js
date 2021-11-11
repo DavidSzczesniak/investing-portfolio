@@ -7,6 +7,7 @@ import { NavBar } from './components/NavBar/NavBar';
 import { Portfolio } from './components/Portfolio/Portfolio';
 import axios from 'axios';
 import { geckoAPI } from './constants';
+import { SideBar } from './components/SideBar/SideBar';
 
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
@@ -15,6 +16,7 @@ export const App = () => {
         label: 'USD - $',
         symbol: '$',
     };
+    const [showSideBar, setShowSideBar] = useState(false);
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || {};
@@ -52,7 +54,15 @@ export const App = () => {
 
     return (
         <Router>
-            <NavBar refreshed={refreshed} refreshApp={refreshApp} />
+            {showSideBar ? (
+                <SideBar close={() => setShowSideBar(false)} />
+            ) : (
+                <NavBar
+                    refreshed={refreshed}
+                    refreshApp={refreshApp}
+                    toggleSideBar={() => setShowSideBar(!showSideBar)}
+                />
+            )}
             <div className="container">
                 <Switch>
                     <Route exact path="/" component={() => <Main />} />

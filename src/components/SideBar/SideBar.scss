@@ -1,0 +1,88 @@
+.sidebar {
+    background: var(--background);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    button {
+        border: none;
+        background: none;
+    }
+    .nav-button {
+        & > svg {
+            font-size: 2.5rem;
+        }
+    }
+}
+
+.sidebar-header {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2rem 1.5rem 0 1.5rem;
+    .site-logo {
+        font-size: 2.5rem;
+    }
+}
+
+.sidebar-links {
+    flex-grow: 2;
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8rem 0 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    font-size: 3rem;
+    margin-bottom: 5rem;
+    width: 100%;
+    text-align: center;
+    & a {
+        &.active {
+            color: var(--clr-accent);
+        }
+        &:hover {
+            color: var(--clr-accent);
+        }
+    }
+}
+
+.sidebar-actions {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1.5rem;
+    & > div {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+}
+
+.change-currency {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.navbar .change-currency {
+    display: none;
+}
+
+@media (min-width: 40em) {
+    .change-currency {
+        font-size: 1.5rem;
+    }
+
+    .navbar .change-currency {
+        display: block;
+    }
+}

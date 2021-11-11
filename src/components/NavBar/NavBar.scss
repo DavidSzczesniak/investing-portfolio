@@ -2,13 +2,10 @@
 
 .navbar {
     display: flex;
-    padding: 1.2rem;
+    padding: 1rem 1.5rem;
     background-color: var(--background-secondary);
-    flex-direction: column;
-    & > * {
-        flex-basis: 100%;
-        justify-content: center;
-    }
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     position: -webkit-sticky;
     position: sticky;
@@ -16,123 +13,153 @@
     z-index: 1;
     border-radius: 0;
     border-bottom: 1px solid var(--clr-border);
+    .nav-button {
+        & > svg {
+            font-size: 1.5rem;
+        }
+    }
 }
 
 @media (min-width: 40em) {
     .navbar {
-        flex-direction: row;
-        justify-content: space-between;
+        padding: 0.5rem 2rem;
     }
 }
 
 .site-logo {
     cursor: pointer;
     color: var(--clr-accent);
+    font-size: 2rem;
     font-weight: 600;
 }
 
-.nav-container {
-    @include flexCenter();
+.nav-links {
+    display: none;
+    list-style: none;
+    * a {
+        &:hover {
+            color: var(--clr-accent);
+            cursor: pointer;
+        }
+    }
     & > * {
         margin-inline: 1.5rem;
     }
 }
 
-.nav-btn {
-    display: inline-block;
-    text-align: right;
-    &:hover {
-        color: var(--clr-accent);
-        cursor: pointer;
-        text-decoration: underline;
+@media (min-width: 40em) {
+    .nav-links {
+        @include flexCenter();
     }
 }
 
-.search-container {
-    margin-top: 1.5rem;
-    max-width: 30rem;
-    margin-inline: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    & > *:first-child {
-        flex-basis: 100%;
-        margin-right: 0.5rem;
-    }
-    & > *:nth-child(2) {
-        flex-basis: 50%;
-        margin-right: 0.5rem;
-        margin-top: 0.5rem;
-    }
-
-    & > *:nth-child(3) {
-        flex-basis: 20%;
-        margin-top: 0.25rem;
-    }
-
-    /* react-select dropdowns */
-    & [class$='-control'] {
-        background-color: var(--background);
-        border-color: var(--clr-border);
-        box-shadow: none;
-        &:hover {
-            border-color: var(--clr-accent);
-        }
-
-        & [class$='-Input'] {
-            color: var(--foreground);
-        }
-    }
-
-    & [class$='-singleValue'] {
-        color: var(--foreground);
-    }
-
-    & [class$='-menu'] {
-        background-color: var(--background-secondary);
-    }
-
-    & [class$='-option'] {
-        background-color: var(--background-secondary);
-        color: var(--foreground);
-        cursor: pointer;
-        &:hover {
-            background-color: var(--background);
-        }
-    }
+.hamburger {
+    background: none;
+    border: none;
+    height: fit-content;
 }
 
 @media (min-width: 40em) {
-    .search-container {
-        margin-top: 0;
-        flex-direction: row;
-        flex-wrap: nowrap;
-
-        & > *:nth-child(2),
-        & > *:nth-child(3) {
-            margin-top: 0;
-        }
+    .hamburger {
+        display: none;
     }
 }
 
 .dark-mode-toggle {
-    display: flex;
-    justify-content: center;
-    button {
-        width: 44px;
-        height: 44px;
-        padding: 0.75rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        background-color: var(--background-secondary);
-        border: none;
-        &:hover {
-            background-color: var(--background);
-        }
+    display: none;
+}
+
+@media (min-width: 40em) {
+    .dark-mode-toggle {
+        display: block;
     }
 }
 
-.dark-theme .dark-mode-toggle button:hover {
-    background-color: var(--background);
+.nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
+
+@media (min-width: 40em) {
+    .nav-content {
+        justify-content: space-between;
+    }
+}
+
+.nav-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-btn {
+    background: none;
+    border: none;
+}
+
+// .search-container {
+//     margin-top: 1.5rem;
+//     max-width: 30rem;
+//     margin-inline: 1.5rem;
+//     display: flex;
+//     flex-wrap: wrap;
+//     & > *:first-child {
+//         flex-basis: 100%;
+//         margin-right: 0.5rem;
+//     }
+//     & > *:nth-child(2) {
+//         flex-basis: 50%;
+//         margin-right: 0.5rem;
+//         margin-top: 0.5rem;
+//     }
+
+//     & > *:nth-child(3) {
+//         flex-basis: 20%;
+//         margin-top: 0.25rem;
+//     }
+
+//     /* react-select dropdowns */
+//     & [class$='-control'] {
+//         background-color: var(--background);
+//         border-color: var(--clr-border);
+//         box-shadow: none;
+//         &:hover {
+//             border-color: var(--clr-accent);
+//         }
+
+//         & [class$='-Input'] {
+//             color: var(--foreground);
+//         }
+//     }
+
+//     & [class$='-singleValue'] {
+//         color: var(--foreground);
+//     }
+
+//     & [class$='-menu'] {
+//         background-color: var(--background-secondary);
+//     }
+
+//     & [class$='-option'] {
+//         background-color: var(--background-secondary);
+//         color: var(--foreground);
+//         cursor: pointer;
+//         &:hover {
+//             background-color: var(--background);
+//         }
+//     }
+// }
+
+// @media (min-width: 40em) {
+//     .search-container {
+//         margin-top: 0;
+//         flex-direction: row;
+//         flex-wrap: nowrap;
+
+//         & > *:nth-child(2),
+//         & > *:nth-child(3) {
+//             margin-top: 0;
+//         }
+//     }
+// }
