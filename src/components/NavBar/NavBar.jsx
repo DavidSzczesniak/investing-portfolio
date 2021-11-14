@@ -2,11 +2,10 @@ import { faBars, faMoon, faSearch, faSun } from '@fortawesome/free-solid-svg-ico
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-// import Select from 'react-select';
 import './NavBar.scss';
-import { NavButton } from '../NavButton/NavButton';
+import { Button } from '../Button/Button';
 
-export const NavBar = ({ refreshed, refreshApp, toggleSideBar }) => {
+export const NavBar = ({ toggleSideBar, openSearch }) => {
     const history = useHistory();
     const currencyList = [
         { value: 'usd', label: 'USD - $', symbol: '$' },
@@ -14,14 +13,6 @@ export const NavBar = ({ refreshed, refreshApp, toggleSideBar }) => {
         { value: 'eur', label: 'EUR - €', symbol: '€' },
         { value: 'cad', label: 'CAD - $', symbol: '$' },
     ];
-    let assets =
-        JSON.parse(localStorage.getItem('assetList'))
-            ?.list.slice(0, 20)
-            .map((asset) => ({
-                value: asset.id,
-                label: `${asset.symbol.toUpperCase()} - ${asset.name}`,
-            })) || [];
-
     const [currency, setCurrency] = useState(
         JSON.parse(localStorage.getItem('currency')) || currencyList[0]
     );
@@ -35,12 +26,6 @@ export const NavBar = ({ refreshed, refreshApp, toggleSideBar }) => {
         }
         localStorage.setItem('currency', JSON.stringify(currency));
     }, [currency.value, currency, darkMode]);
-
-    // function handleSearch(query) {
-    //     if (query) {
-    //         history.replace(`/asset-view?id=${query}`);
-    //     }
-    // }
 
     // function changeCurrency(selectedCurrency) {
     //     localStorage.setItem('currency', JSON.stringify(selectedCurrency));
@@ -72,48 +57,28 @@ export const NavBar = ({ refreshed, refreshApp, toggleSideBar }) => {
                     </li>
                 </ul>
                 <div className="nav-btns">
-                    <NavButton icon={faSearch} ariaLabel="search" />
-                    <NavButton
+                    <Button
+                        onClick={openSearch}
+                        icon={faSearch}
+                        ariaLabel="search"
+                        className="nav-button"
+                    />
+                    <Button
+                        onClick={toggleDarkMode}
                         icon={faMoon}
                         toggleIcon={{ otherIcon: faSun, condition: darkMode }}
-                        onClick={toggleDarkMode}
-                        className="dark-mode-toggle"
                         ariaLabel="toggle dark mode"
-                        size="2x"
+                        className="nav-button dark-mode-toggle"
                     />
-                    <NavButton
-                        icon={faBars}
-                        className="hamburger"
+                    <Button
                         onClick={toggleSideBar}
-                        ariaLabel="toggle sidebar menu display"
+                        icon={faBars}
+                        ariaLabel="open sidebar menu"
+                        className="nav-button hamburger"
                     />
-                    {/*  placeholder */}
                     <button className="change-currency nav-button">USD</button>
                 </div>
             </div>
-            {/* {assets.length > 0 && (
-                <div className="search-container">
-                    <Select
-                        options={assets}
-                        placeholder="Search assets..."
-                        onChange={(e) => handleSearch(e.value)}
-                    />
-                    <Select
-                        options={currencyList}
-                        defaultValue={currency}
-                        onChange={(e) => changeCurrency(e)}
-                    />
-                    <div className="dark-mode-toggle">
-                        <button onClick={toggleDarkMode} aria-label="toggle dark mode">
-                            {darkMode ? (
-                                <FontAwesomeIcon icon={faSun} size="2x" />
-                            ) : (
-                                <FontAwesomeIcon icon={faMoon} size="2x" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-            )} */}
         </div>
     );
 };

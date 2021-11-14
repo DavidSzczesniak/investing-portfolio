@@ -35,7 +35,7 @@
 
 .nav-links {
     display: none;
-    list-style: none;
+    margin-left: 1rem;
     * a {
         &:hover {
             color: var(--clr-accent);
@@ -51,12 +51,6 @@
     .nav-links {
         @include flexCenter();
     }
-}
-
-.hamburger {
-    background: none;
-    border: none;
-    height: fit-content;
 }
 
 @media (min-width: 40em) {
@@ -97,69 +91,3 @@
     background: none;
     border: none;
 }
-
-// .search-container {
-//     margin-top: 1.5rem;
-//     max-width: 30rem;
-//     margin-inline: 1.5rem;
-//     display: flex;
-//     flex-wrap: wrap;
-//     & > *:first-child {
-//         flex-basis: 100%;
-//         margin-right: 0.5rem;
-//     }
-//     & > *:nth-child(2) {
-//         flex-basis: 50%;
-//         margin-right: 0.5rem;
-//         margin-top: 0.5rem;
-//     }
-
-//     & > *:nth-child(3) {
-//         flex-basis: 20%;
-//         margin-top: 0.25rem;
-//     }
-
-//     /* react-select dropdowns */
-//     & [class$='-control'] {
-//         background-color: var(--background);
-//         border-color: var(--clr-border);
-//         box-shadow: none;
-//         &:hover {
-//             border-color: var(--clr-accent);
-//         }
-
-//         & [class$='-Input'] {
-//             color: var(--foreground);
-//         }
-//     }
-
-//     & [class$='-singleValue'] {
-//         color: var(--foreground);
-//     }
-
-//     & [class$='-menu'] {
-//         background-color: var(--background-secondary);
-//     }
-
-//     & [class$='-option'] {
-//         background-color: var(--background-secondary);
-//         color: var(--foreground);
-//         cursor: pointer;
-//         &:hover {
-//             background-color: var(--background);
-//         }
-//     }
-// }
-
-// @media (min-width: 40em) {
-//     .search-container {
-//         margin-top: 0;
-//         flex-direction: row;
-//         flex-wrap: nowrap;
-
-//         & > *:nth-child(2),
-//         & > *:nth-child(3) {
-//             margin-top: 0;
-//         }
-//     }
-// }

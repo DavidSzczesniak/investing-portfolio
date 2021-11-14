@@ -1,0 +1,92 @@
+.modal-background {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 998;
+    border-radius: 0;
+}
+
+.search-container {
+    pointer-events: none;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: none;
+    z-index: 999;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 1rem;
+}
+
+.search-box {
+    pointer-events: all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 40rem;
+    background: var(--background-secondary);
+    border-radius: 1rem;
+    padding: 0 1.5rem;
+    margin-inline: 1rem;
+    &.with-results {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    & input {
+        width: 80%;
+        padding: 1.25rem 0;
+        font-size: 1.25rem;
+        background: none;
+        border: none;
+        &:focus {
+            outline: none;
+        }
+    }
+    & svg {
+        font-size: 1.25rem;
+        & path {
+            color: #6a6a6a;
+        }
+    }
+}
+
+.search-results {
+    pointer-events: all;
+    background: var(--background-secondary);
+    width: 100%;
+    max-width: 40rem;
+    max-height: 65vh;
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 1rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 1px solid var(--clr-border);
+    padding: 1rem;
+    margin-top: -0.5rem;
+    margin-inline: 1rem;
+    & li {
+        border-radius: 1rem;
+        background: var(--background);
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & .market-rank {
+            color: var(--clr-accent);
+        }
+        &:hover {
+            box-shadow: 0 0 0 2px var(--clr-accent);
+            // background: var(--clr-accent);
+            cursor: pointer;
+        }
+    }
+}

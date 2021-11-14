@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router';
+import { AssetChart } from '../components/AssetChart/AssetChart.jsx';
 import { AssetName, AssetPrice } from '../components/AssetInfo/AssetInfo';
 import { FavouritesButton } from '../components/FavouritesButton/FavouritesButton.jsx';
-import { AssetChart } from '../components/AssetChart/AssetChart.jsx';
 import '../css/asset-view.scss';
 import { compactNumber } from '../Utils/helpers';
 

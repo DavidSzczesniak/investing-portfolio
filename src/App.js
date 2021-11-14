@@ -8,6 +8,7 @@ import { Portfolio } from './components/Portfolio/Portfolio';
 import axios from 'axios';
 import { geckoAPI } from './constants';
 import { SideBar } from './components/SideBar/SideBar';
+import { AssetSearch } from './components/AssetSearch/AssetSearch';
 
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
@@ -17,6 +18,7 @@ export const App = () => {
         symbol: '$',
     };
     const [showSideBar, setShowSideBar] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || {};
@@ -53,24 +55,31 @@ export const App = () => {
     }, [refreshed, currency.value]);
 
     return (
-        <Router>
-            {showSideBar ? (
-                <SideBar close={() => setShowSideBar(false)} />
-            ) : (
-                <NavBar
-                    refreshed={refreshed}
-                    refreshApp={refreshApp}
-                    toggleSideBar={() => setShowSideBar(!showSideBar)}
-                />
-            )}
-            <div className="container">
-                <Switch>
-                    <Route exact path="/" component={() => <Main />} />
-                    <Route path="/user-list" component={() => <UserList />} />
-                    <Route path="/asset-view" component={() => <AssetView />} />
-                    <Route path="/portfolio" component={() => <Portfolio />} />
-                </Switch>
-            </div>
-        </Router>
+        <>
+            <Router>
+                {showSearch && <AssetSearch close={() => setShowSearch(false)} />}
+                {showSideBar ? (
+                    <SideBar
+                        close={() => setShowSideBar(false)}
+                        openSearch={() => setShowSearch(true)}
+                    />
+                ) : (
+                    <NavBar
+                        refreshed={refreshed}
+                        refreshApp={refreshApp}
+                        toggleSideBar={() => setShowSideBar(!showSideBar)}
+                        openSearch={() => setShowSearch(true)}
+                    />
+                )}
+                <div className="container">
+                    <Switch>
+                        <Route exact path="/" component={() => <Main />} />
+                        <Route path="/user-list" component={() => <UserList />} />
+                        <Route path="/asset-view" component={() => <AssetView />} />
+                        <Route path="/portfolio" component={() => <Portfolio />} />
+                    </Switch>
+                </div>
+            </Router>
+        </>
     );
 };

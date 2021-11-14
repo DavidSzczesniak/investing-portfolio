@@ -43,14 +43,7 @@ body {
     color: var(--foreground);
     background-color: var(--background);
     line-height: 1.6;
-    /* font-size: 0.8rem; */
 }
-
-/* @media (min-width: 40em) {
-    body {
-        font-size: 1rem;
-    }
-} */
 
 body,
 h1,
@@ -83,7 +76,20 @@ a {
 
 button {
     color: var(--foreground);
-    cursor: pointer;
+    background: none;
+    border: none;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+input {
+    color: var(--foreground);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 .container {
@@ -103,6 +109,8 @@ button {
     margin: 20px 0;
 }
 
-input {
-    color: var(--foreground);
+.change-currency {
+    &:hover {
+        color: var(--clr-accent);
+    }
 }

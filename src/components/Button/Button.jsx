@@ -6,14 +6,19 @@ export const Button = ({
     label,
     onClick,
     icon,
+    iconSize = '1x',
+    toggleIcon,
     isSecondary,
     ariaLabel,
     className,
-    iconSize = '1x',
     type,
 }) => {
     const secondary = isSecondary ? 'secondary-btn' : '';
     const iconOnly = !label ? 'icon-only' : '';
+
+    if (toggleIcon?.condition) {
+        icon = toggleIcon.otherIcon;
+    }
 
     return (
         <button

@@ -1,21 +1,18 @@
 .custom-btn {
-    background-color: var(--clr-accent);
-    border: 1px solid var(--clr-accent);
-    padding: 8px 16px;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
     color: var(--clr-light);
-    font-size: initial;
-    font-weight: 400;
-    margin: 0 10px;
+    background-color: var(--clr-accent);
+    border: none;
+    padding: 0.5rem 1rem;
     &:hover {
         background-color: var(--blue-hover);
-    }
-    svg {
-        color: var(--foreground);
+        cursor: pointer;
     }
 }
 
 .secondary-btn {
+    border: 1px solid var(--clr-accent);
     background: none;
     color: var(--clr-accent);
     &:hover,
@@ -27,14 +24,18 @@
     }
 }
 
-.icon-only {
+.custom-btn.icon-only {
+    width: fit-content;
+    height: fit-content;
     padding: 0;
-    margin: 0;
+    margin: 0 0.5rem;
+    // border: 1px solid red;
     background: none;
-    border: none;
+    svg {
+        color: var(--foreground);
+    }
     &:hover {
-        background: none;
-        & svg {
+        & svg > path {
             color: var(--clr-accent);
         }
     }

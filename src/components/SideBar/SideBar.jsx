@@ -2,7 +2,7 @@ import { faMoon, faSun, faTimes } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { NavButton } from '../NavButton/NavButton';
+import { Button } from '../Button/Button';
 import './SideBar.scss';
 
 export const SideBar = ({ close }) => {
@@ -33,11 +33,11 @@ export const SideBar = ({ close }) => {
                     }}>
                     Investii
                 </div>
-                <NavButton
-                    icon={faTimes}
+                <Button
                     onClick={close}
+                    icon={faTimes}
                     ariaLabel="close sidebar menu"
-                    size="3x"
+                    className="sidebar-button"
                 />
             </div>
             <ul className="sidebar-links">
@@ -58,12 +58,12 @@ export const SideBar = ({ close }) => {
                     <button className="change-currency">USD</button>
                 </div>
                 <div>
-                    <NavButton
+                    <Button
+                        onClick={toggleDarkMode}
                         icon={faMoon}
                         toggleIcon={{ otherIcon: faSun, condition: darkMode }}
-                        onClick={toggleDarkMode}
                         ariaLabel="toggle dark mode"
-                        size="3x"
+                        className="sidebar-button"
                     />
                 </div>
             </div>
