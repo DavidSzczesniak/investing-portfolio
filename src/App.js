@@ -73,10 +73,18 @@ export const App = () => {
                 )}
                 <div className="container">
                     <Switch>
-                        <Route exact path="/" component={() => <Main />} />
-                        <Route path="/user-list" component={() => <UserList />} />
-                        <Route path="/asset-view" component={() => <AssetView />} />
-                        <Route path="/portfolio" component={() => <Portfolio />} />
+                        <Route exact path="/">
+                            <Main />
+                        </Route>
+                        <Route path="/user-list">
+                            <UserList />
+                        </Route>
+                        <Route path="/asset-view">
+                            <AssetView />
+                        </Route>
+                        <Route path="/portfolio">
+                            <Portfolio />
+                        </Route>
                     </Switch>
                 </div>
             </Router>
