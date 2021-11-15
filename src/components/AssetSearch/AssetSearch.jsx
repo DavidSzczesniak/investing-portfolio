@@ -1,6 +1,6 @@
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { AssetName } from '../AssetInfo/AssetInfo';
 import { Button } from '../Button/Button';
@@ -11,11 +11,6 @@ export const AssetSearch = ({ close }) => {
     const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
     const history = useHistory();
     const [filteredList, setFiltered] = useState(assets);
-
-    useEffect(() => {
-        // temporarily disable scrolling when search is open
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-    });
 
     function handleSearch(event) {
         setSearchValue(event.target.value);
@@ -31,8 +26,6 @@ export const AssetSearch = ({ close }) => {
     }
 
     function goToAsset(id) {
-        document.getElementsByTagName('body')[0].style.overflow = 'auto';
-
         history.replace(`/asset-view?id=${id}`);
         close();
     }

@@ -54,21 +54,28 @@ export const App = () => {
         }
     }, [refreshed, currency.value]);
 
+    function openSearch() {
+        setShowSearch(true);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    }
+
+    function closeSearch() {
+        setShowSearch(false);
+        document.getElementsByTagName('body')[0].style.overflow = 'auto';
+    }
+
     return (
         <>
             <Router>
-                {showSearch && <AssetSearch close={() => setShowSearch(false)} />}
+                {showSearch && <AssetSearch close={closeSearch} />}
                 {showSideBar ? (
-                    <SideBar
-                        close={() => setShowSideBar(false)}
-                        openSearch={() => setShowSearch(true)}
-                    />
+                    <SideBar close={() => setShowSideBar(false)} openSearch={openSearch} />
                 ) : (
                     <NavBar
                         refreshed={refreshed}
                         refreshApp={refreshApp}
                         toggleSideBar={() => setShowSideBar(!showSideBar)}
-                        openSearch={() => setShowSearch(true)}
+                        openSearch={openSearch}
                     />
                 )}
                 <div className="container">
