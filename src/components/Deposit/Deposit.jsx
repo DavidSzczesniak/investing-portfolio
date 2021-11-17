@@ -66,9 +66,9 @@ export const Deposit = ({ close }) => {
     }
 
     return (
-        <div className="deposit">
-            <div className="header">
-                <h2 className="page-title">Deposit</h2>
+        <>
+            <div className="page-header">
+                <h2 className="title">Deposit</h2>
                 <Button icon={faTimes} onClick={close} ariaLabel="close" iconSize="2x" />
             </div>
             <FontAwesomeIcon icon={faSearch} size="1x" className="search-icon" />
@@ -130,6 +130,6 @@ export const Deposit = ({ close }) => {
                     <span>No results found</span>
                 )}
             </div>
-        </div>
+        </>
     );
 };

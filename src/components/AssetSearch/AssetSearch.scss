@@ -1,26 +1,3 @@
-.modal-background {
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: 998;
-    border-radius: 0;
-}
-
-.search-container {
-    pointer-events: none;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    background: none;
-    z-index: 999;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
-    padding: 10vh 1rem;
-}
-
 .search-box {
     pointer-events: all;
     display: flex;

@@ -1,22 +1,17 @@
 import { faBars, faMoon, faSearch, faSun } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import './NavBar.scss';
 import { Button } from '../Button/Button';
+import { ModalContext } from '../../ModalContext';
 
-export const NavBar = ({ toggleSideBar, openSearch }) => {
+export const NavBar = ({ toggleSideBar }) => {
     const history = useHistory();
-    const currencyList = [
-        { value: 'usd', label: 'USD - $', symbol: '$' },
-        { value: 'gbp', label: 'GBP - £', symbol: '£' },
-        { value: 'eur', label: 'EUR - €', symbol: '€' },
-        { value: 'cad', label: 'CAD - $', symbol: '$' },
-    ];
-    const [currency, setCurrency] = useState(
-        JSON.parse(localStorage.getItem('currency')) || currencyList[0]
-    );
     const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
+    const defaultCurrency = { value: 'USD', label: 'United States Dollar', symbol: '$' };
+    const selectedCurrency = JSON.parse(localStorage.getItem('currency')) || defaultCurrency;
+    const { openModal } = useContext(ModalContext);
 
     useEffect(() => {
         if (darkMode) {
@@ -24,14 +19,8 @@ export const NavBar = ({ toggleSideBar, openSearch }) => {
         } else {
             document.body.classList.remove('dark-theme');
         }
-        localStorage.setItem('currency', JSON.stringify(currency));
-    }, [currency.value, currency, darkMode]);
-
-    // function changeCurrency(selectedCurrency) {
-    //     localStorage.setItem('currency', JSON.stringify(selectedCurrency));
-    //     setCurrency(selectedCurrency);
-    //     refreshApp(!refreshed);
-    // }
+        localStorage.setItem('currency', JSON.stringify(selectedCurrency));
+    }, [darkMode, selectedCurrency]);
 
     function toggleDarkMode() {
         localStorage.setItem('darkMode', !darkMode);
@@ -58,7 +47,7 @@ export const NavBar = ({ toggleSideBar, openSearch }) => {
                 </ul>
                 <div className="nav-btns">
                     <Button
-                        onClick={openSearch}
+                        onClick={() => openModal('search')}
                         icon={faSearch}
                         ariaLabel="search"
                         className="nav-button"
@@ -76,7 +65,12 @@ export const NavBar = ({ toggleSideBar, openSearch }) => {
                         ariaLabel="open sidebar menu"
                         className="nav-button hamburger"
                     />
-                    <button className="change-currency nav-button">USD</button>
+                    <button
+                        onClick={() => openModal('currency')}
+                        type="button"
+                        className="change-currency nav-button">
+                        {selectedCurrency.value}
+                    </button>
                 </div>
             </div>
         </div>

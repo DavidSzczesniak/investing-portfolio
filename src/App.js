@@ -9,6 +9,10 @@ import axios from 'axios';
 import { geckoAPI } from './constants';
 import { SideBar } from './components/SideBar/SideBar';
 import { AssetSearch } from './components/AssetSearch/AssetSearch';
+import { CurrencyList } from './components/ChangeCurrency/CurrencyList';
+import { Modal } from './Modal/Modal';
+import { ModalContext } from './ModalContext';
+import { disableScrolling, enableScrolling } from './Utils/helpers';
 
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
@@ -18,7 +22,7 @@ export const App = () => {
         symbol: '$',
     };
     const [showSideBar, setShowSideBar] = useState(false);
-    const [showSearch, setShowSearch] = useState(false);
+    const [modal, setModal] = useState(undefined);
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || {};
@@ -54,28 +58,35 @@ export const App = () => {
         }
     }, [refreshed, currency.value]);
 
-    function openSearch() {
-        setShowSearch(true);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    function openModal(name) {
+        setModal(name);
+        disableScrolling();
     }
 
-    function closeSearch() {
-        setShowSearch(false);
-        document.getElementsByTagName('body')[0].style.overflow = 'auto';
+    function closeModal() {
+        setModal(undefined);
+        enableScrolling();
     }
 
     return (
-        <>
+        <ModalContext.Provider value={{ openModal, closeModal }}>
             <Router>
-                {showSearch && <AssetSearch close={closeSearch} />}
+                {modal === 'search' ? (
+                    <Modal>
+                        <AssetSearch />
+                    </Modal>
+                ) : modal === 'currency' ? (
+                    <Modal>
+                        <CurrencyList refreshApp={refreshApp} refreshed={refreshed} />
+                    </Modal>
+                ) : null}
                 {showSideBar ? (
-                    <SideBar close={() => setShowSideBar(false)} openSearch={openSearch} />
+                    <SideBar close={() => setShowSideBar(false)} />
                 ) : (
                     <NavBar
                         refreshed={refreshed}
                         refreshApp={refreshApp}
                         toggleSideBar={() => setShowSideBar(!showSideBar)}
-                        openSearch={openSearch}
                     />
                 )}
                 <div className="container">
@@ -95,6 +106,6 @@ export const App = () => {
                     </Switch>
                 </div>
             </Router>
-        </>
+        </ModalContext.Provider>
     );
 };

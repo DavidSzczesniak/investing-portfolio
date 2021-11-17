@@ -1,0 +1,56 @@
+.currency-list {
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 40rem;
+    max-height: 65vh;
+    background: var(--background-secondary);
+    border-radius: 1rem;
+    padding: 0 1.5rem;
+    margin-inline: 1rem;
+}
+
+.currency-list ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+    margin: 0 0 2rem 0;
+    & > li {
+        text-align: center;
+        min-width: 15rem;
+        border-radius: 1rem;
+        background: var(--background);
+        margin: 0.5rem;
+        padding: 0.5rem 1rem;
+        &.selected {
+            background: var(--clr-accent);
+            pointer-events: none;
+            color: var(--clr-light);
+        }
+        &:hover {
+            box-shadow: 0 0 0 2px var(--clr-accent);
+            cursor: pointer;
+        }
+        & > p {
+            display: block;
+        }
+        & .flag-icon {
+            border-radius: 25%;
+            height: 2rem;
+            width: 2rem;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .currency-list ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}

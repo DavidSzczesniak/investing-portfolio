@@ -1,21 +1,27 @@
 import { faMoon, faSun, faTimes } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { ModalContext } from '../../ModalContext';
+import { disableScrolling, enableScrolling } from '../../Utils/helpers';
 import { Button } from '../Button/Button';
 import './SideBar.scss';
 
 export const SideBar = ({ close }) => {
-    const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
     const history = useHistory();
+    const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
+    const defaultCurrency = { value: 'USD', label: 'United States Dollar', symbol: '$' };
+    const selectedCurrency = JSON.parse(localStorage.getItem('currency')) || defaultCurrency;
+    const { openModal } = useContext(ModalContext);
 
     useEffect(() => {
+        disableScrolling();
         if (darkMode) {
             document.body.classList.add('dark-theme');
         } else {
             document.body.classList.remove('dark-theme');
         }
-    }, [darkMode]);
+    }, [darkMode, selectedCurrency]);
 
     function toggleDarkMode() {
         localStorage.setItem('darkMode', !darkMode);
@@ -29,12 +35,16 @@ export const SideBar = ({ close }) => {
                     className="site-logo"
                     onClick={() => {
                         history.replace('/');
+                        enableScrolling();
                         close();
                     }}>
                     Investii
                 </div>
                 <Button
-                    onClick={close}
+                    onClick={() => {
+                        enableScrolling();
+                        close();
+                    }}
                     icon={faTimes}
                     ariaLabel="close sidebar menu"
                     className="sidebar-button"
@@ -54,8 +64,12 @@ export const SideBar = ({ close }) => {
             </ul>
             <div className="sidebar-actions">
                 <div>
-                    {/* placeholder */}
-                    <button className="change-currency">USD</button>
+                    <button
+                        onClick={() => openModal('currency')}
+                        type="button"
+                        className="change-currency nav-button">
+                        {selectedCurrency.value}
+                    </button>
                 </div>
                 <div>
                     <Button
