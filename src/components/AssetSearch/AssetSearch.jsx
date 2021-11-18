@@ -1,10 +1,8 @@
-import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import { ModalContext } from '../../ModalContext';
 import { AssetName } from '../AssetInfo/AssetInfo';
-import { Button } from '../Button/Button';
+import { SearchField } from '../SearchField/SearchField';
 import './AssetSearch.scss';
 
 export const AssetSearch = () => {
@@ -34,18 +32,15 @@ export const AssetSearch = () => {
 
     return (
         <>
-            <div className={searchValue ? 'search-box with-results' : 'search-box'}>
-                <FontAwesomeIcon icon={faSearch} />
-                <input
-                    type="text"
-                    placeholder="Search"
-                    onChange={handleSearch}
-                    value={searchValue || ''}
-                    className={searchValue && 'with-results'}
-                    autoFocus
-                />
-                <Button icon={faTimesCircle} onClick={() => setSearchValue(undefined)} />
-            </div>
+            <SearchField
+                inputValue={searchValue}
+                onChange={handleSearch}
+                clearSearch={() => setSearchValue(false)}
+                size="lg"
+                style={
+                    searchValue ? { borderBottomLeftRadius: '0', borderBottomRightRadius: '0' } : {}
+                }
+            />
             {searchValue && (
                 <ul className="search-results">
                     {filteredList.length > 0 ? (

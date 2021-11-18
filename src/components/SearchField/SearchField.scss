@@ -1,0 +1,40 @@
+.search-field {
+    pointer-events: all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: var(--background-secondary);
+    border-radius: 1rem;
+    padding: 0 1.5rem;
+    margin-inline: 1rem;
+    & input {
+        width: 80%;
+        background: none;
+        border: none;
+        &:focus {
+            outline: none;
+        }
+    }
+    & svg {
+        font-size: 1.25rem;
+        & path {
+            color: #6a6a6a;
+        }
+    }
+    /* size rules */
+    &.lg {
+        max-width: 40rem;
+        & input {
+            font-size: 1.25rem;
+            padding: 1.25rem 0;
+        }
+    }
+    &.md {
+        max-width: 30rem;
+        & input {
+            font-size: 1rem;
+            padding: 1rem 0;
+        }
+    }
+}

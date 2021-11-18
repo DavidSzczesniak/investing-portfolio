@@ -36,6 +36,7 @@
 .asset-price,
 .asset-holdings {
     flex-direction: column;
+    justify-content: center;
     align-items: flex-end;
     text-align: left;
     span:first-child {

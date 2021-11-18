@@ -28,6 +28,11 @@ export const SideBar = ({ close }) => {
         setDarkMode(!darkMode);
     }
 
+    function closeSideBar() {
+        enableScrolling();
+        close();
+    }
+
     return (
         <div className="sidebar">
             <div className="sidebar-header">
@@ -41,10 +46,7 @@ export const SideBar = ({ close }) => {
                     Investii
                 </div>
                 <Button
-                    onClick={() => {
-                        enableScrolling();
-                        close();
-                    }}
+                    onClick={closeSideBar}
                     icon={faTimes}
                     ariaLabel="close sidebar menu"
                     className="sidebar-button"
@@ -52,12 +54,12 @@ export const SideBar = ({ close }) => {
             </div>
             <ul className="sidebar-links">
                 <li>
-                    <NavLink exact to="/user-list" onClick={close}>
+                    <NavLink exact to="/user-list" onClick={closeSideBar}>
                         Watchlist
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink exact to="/portfolio" onClick={close}>
+                    <NavLink exact to="/portfolio" onClick={closeSideBar}>
                         Portfolio
                     </NavLink>
                 </li>

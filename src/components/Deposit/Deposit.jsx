@@ -1,9 +1,9 @@
-import { faSearch, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import { getRandomColor } from '../../Utils/helpers';
 import { AssetName } from '../AssetInfo/AssetInfo';
 import { Button } from '../Button/Button';
+import { SearchField } from '../SearchField/SearchField';
 import './Deposit.scss';
 
 export const Deposit = ({ close }) => {
@@ -71,22 +71,13 @@ export const Deposit = ({ close }) => {
                 <h2 className="title">Deposit</h2>
                 <Button icon={faTimes} onClick={close} ariaLabel="close" iconSize="2x" />
             </div>
-            <FontAwesomeIcon icon={faSearch} size="1x" className="search-icon" />
-            <input
-                type="text"
-                placeholder="Search"
-                className="asset-search"
-                onChange={handleSearch}
-                value={searchValue || ''}
-            />
-            {searchValue && (
-                <Button
-                    icon={faTimesCircle}
-                    onClick={handleSearchClear}
-                    ariaLabel="clear search"
-                    className="clear-search"
+            <div className="search-container">
+                <SearchField
+                    inputValue={searchValue}
+                    onChange={handleSearch}
+                    clearSearch={handleSearchClear}
                 />
-            )}
+            </div>
             <div className="asset-list">
                 {filteredAssetList.length > 0 ? (
                     <>

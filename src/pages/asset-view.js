@@ -75,7 +75,9 @@ export const AssetView = () => {
                     <div className="asset-view__header">
                         <AssetName asset={asset} />
                         <AssetPrice asset={asset} currency={currency.symbol} />
-                        <FavouritesButton asset={asset} />
+                        <span style={{ display: 'flex', alignItems: 'center' }}>
+                            <FavouritesButton asset={asset} />
+                        </span>
                     </div>
                     <div className="asset-view__content">
                         <AssetChart asset={asset} />
