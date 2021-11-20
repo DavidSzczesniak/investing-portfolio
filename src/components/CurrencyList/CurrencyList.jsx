@@ -1,12 +1,10 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import React, { useContext } from 'react';
+import React from 'react';
 import ReactCountryFlag from 'react-country-flag';
-import { ModalContext } from '../../ModalContext';
 import { Button } from '../Button/Button';
 import './CurrencyList.scss';
 
-export const CurrencyList = ({ refreshApp, refreshed }) => {
-    const { closeModal } = useContext(ModalContext);
+export const CurrencyList = ({ refreshApp, refreshed, close }) => {
     const allCurrencies = [
         {
             value: 'USD',
@@ -38,14 +36,14 @@ export const CurrencyList = ({ refreshApp, refreshed }) => {
     function changeCurrency(selectedCurrency) {
         localStorage.setItem('currency', JSON.stringify(selectedCurrency));
         refreshApp(!refreshed);
-        closeModal();
+        close();
     }
 
     return (
         <div className="currency-list">
             <div className="page-header">
                 <h2 className="title">Select Currency</h2>
-                <Button icon={faTimes} onClick={closeModal} ariaLabel="close" iconSize="2x" />
+                <Button icon={faTimes} onClick={close} ariaLabel="close" iconSize="2x" />
             </div>
             <ul>
                 {allCurrencies.map((currency, index) => {

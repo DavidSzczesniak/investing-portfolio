@@ -1,16 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { ModalContext } from '../../ModalContext';
 import { AssetName } from '../AssetInfo/AssetInfo';
 import { SearchField } from '../SearchField/SearchField';
 import './AssetSearch.scss';
 
-export const AssetSearch = () => {
+export const AssetSearch = ({ close }) => {
     const [searchValue, setSearchValue] = useState(undefined);
     const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
     const history = useHistory();
     const [filteredList, setFiltered] = useState(assets);
-    const { closeModal } = useContext(ModalContext);
 
     function handleSearch(event) {
         setSearchValue(event.target.value);
@@ -27,7 +25,7 @@ export const AssetSearch = () => {
 
     function goToAsset(id) {
         history.replace(`/asset-view?id=${id}`);
-        closeModal();
+        close();
     }
 
     return (

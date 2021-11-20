@@ -1,18 +1,13 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { NavBar } from './components/NavBar/NavBar';
+import { Portfolio } from './components/Portfolio/Portfolio';
+import { SideBar } from './components/SideBar/SideBar';
+import { geckoAPI } from './constants';
 import { AssetView } from './pages/asset-view';
 import { Main } from './pages/main';
 import { UserList } from './pages/user-list';
-import { NavBar } from './components/NavBar/NavBar';
-import { Portfolio } from './components/Portfolio/Portfolio';
-import axios from 'axios';
-import { geckoAPI } from './constants';
-import { SideBar } from './components/SideBar/SideBar';
-import { AssetSearch } from './components/AssetSearch/AssetSearch';
-import { CurrencyList } from './components/ChangeCurrency/CurrencyList';
-import { Modal } from './Modal/Modal';
-import { ModalContext } from './ModalContext';
-import { disableScrolling, enableScrolling } from './Utils/helpers';
 
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
@@ -22,7 +17,6 @@ export const App = () => {
         symbol: '$',
     };
     const [showSideBar, setShowSideBar] = useState(false);
-    const [modal, setModal] = useState(undefined);
 
     useEffect(() => {
         const currentAssetList = JSON.parse(localStorage.getItem('assetList')) || {};
@@ -58,54 +52,37 @@ export const App = () => {
         }
     }, [refreshed, currency.value]);
 
-    function openModal(name) {
-        setModal(name);
-        disableScrolling();
-    }
-
-    function closeModal() {
-        setModal(undefined);
-        enableScrolling();
-    }
-
     return (
-        <ModalContext.Provider value={{ openModal, closeModal }}>
-            <Router>
-                {modal === 'search' ? (
-                    <Modal>
-                        <AssetSearch />
-                    </Modal>
-                ) : modal === 'currency' ? (
-                    <Modal>
-                        <CurrencyList refreshApp={refreshApp} refreshed={refreshed} />
-                    </Modal>
-                ) : null}
-                {showSideBar ? (
-                    <SideBar close={() => setShowSideBar(false)} />
-                ) : (
-                    <NavBar
-                        refreshed={refreshed}
-                        refreshApp={refreshApp}
-                        toggleSideBar={() => setShowSideBar(!showSideBar)}
-                    />
-                )}
-                <div className="container">
-                    <Switch>
-                        <Route exact path="/">
-                            <Main />
-                        </Route>
-                        <Route path="/user-list">
-                            <UserList />
-                        </Route>
-                        <Route path="/asset-view">
-                            <AssetView />
-                        </Route>
-                        <Route path="/portfolio">
-                            <Portfolio />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </ModalContext.Provider>
+        <Router>
+            {showSideBar ? (
+                <SideBar
+                    refreshed={refreshed}
+                    refreshApp={refreshApp}
+                    close={() => setShowSideBar(false)}
+                />
+            ) : (
+                <NavBar
+                    refreshed={refreshed}
+                    refreshApp={refreshApp}
+                    toggleSideBar={() => setShowSideBar(!showSideBar)}
+                />
+            )}
+            <div className="container">
+                <Switch>
+                    <Route exact path="/">
+                        <Main />
+                    </Route>
+                    <Route path="/user-list">
+                        <UserList />
+                    </Route>
+                    <Route path="/asset-view">
+                        <AssetView />
+                    </Route>
+                    <Route path="/portfolio">
+                        <Portfolio />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 };
