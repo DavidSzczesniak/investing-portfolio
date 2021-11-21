@@ -35,7 +35,7 @@ export const App = () => {
             async function getAssetPrices() {
                 await axios
                     .get(
-                        `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=100`
+                        `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=250`
                     )
                     .then((res) => {
                         localStorage.setItem(

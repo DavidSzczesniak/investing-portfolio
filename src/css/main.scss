@@ -1,0 +1,41 @@
+.top-crypto-lists {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    & > .foreground-panel {
+        margin: 1rem 0.5rem;
+    }
+    & > .foreground-panel:nth-child(1) {
+        flex-grow: 3;
+    }
+    & > .foreground-panel:nth-child(2) {
+        flex-grow: 1;
+    }
+}
+
+.trending-list,
+.dominance-list {
+    margin-bottom: 0;
+    & > li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.25rem;
+        & > .value-change {
+            font-size: 1rem;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .top-crypto-lists {
+        flex-direction: row;
+        & > .foreground-panel:nth-child(1) {
+            max-width: 40rem;
+        }
+        & > .foreground-panel:nth-child(2) {
+            max-width: 30rem;
+        }
+    }
+}

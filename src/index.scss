@@ -97,7 +97,7 @@ ul {
     margin-inline: auto;
     padding-top: 1rem;
     width: 90%;
-    max-width: 100rem;
+    max-width: 80rem;
 }
 
 .page-title {
@@ -133,5 +133,28 @@ ul {
 .change-currency {
     &:hover {
         color: var(--clr-accent);
+    }
+}
+
+.foreground-panel {
+    background-color: var(--background-secondary);
+    border: 1px solid var(--clr-border);
+    padding: 1rem;
+    & header {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin: 0.5rem 0.5rem 1rem;
+        color: var(--foreground);
+        & > h3 {
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        & > svg {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: var(--clr-accent);
+        }
     }
 }
