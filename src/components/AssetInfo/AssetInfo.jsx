@@ -26,11 +26,12 @@ export const AssetName = ({ asset, disableClick }) => {
 };
 
 export const AssetPrice = ({ asset, currency }) => {
+    const currentPrice = asset.current_price;
     return (
         <div className="asset-price">
             <span>
                 {currency}
-                {normalizeNumber(asset.current_price, 4)}
+                {currentPrice <= 1 ? currentPrice : normalizeNumber(currentPrice, 4)}
             </span>
             <ValueChangePercent changeValue={asset.price_change_percentage_24h} />
         </div>
