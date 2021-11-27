@@ -11,8 +11,8 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
     const [assetList, setAssetList] = useState([]);
     const [refreshed, refreshPage] = useState(false);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
+        value: 'USD',
+        label: 'United States Dollar',
         symbol: '$',
     };
     const [currentSort, setCurrentSort] = useState({
@@ -32,7 +32,7 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
             );
             setAssetList(filteredAssets);
         }
-    }, [refreshed, currency.value, assets, portfolio, favourites]);
+    }, [refreshed, assets, portfolio, favourites]);
 
     function handleSort(heading) {
         let nextSort = {

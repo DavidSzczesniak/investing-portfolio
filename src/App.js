@@ -12,8 +12,8 @@ import { UserList } from './pages/user-list';
 export const App = () => {
     const [refreshed, refreshApp] = useState(false);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
+        value: 'USD',
+        label: 'United States Dollar',
         symbol: '$',
     };
     const [showSideBar, setShowSideBar] = useState(false);

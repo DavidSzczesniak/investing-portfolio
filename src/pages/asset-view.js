@@ -15,8 +15,8 @@ export const AssetView = () => {
     const assetId = query.get('id');
     const [asset, setAsset] = useState(undefined);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
+        value: 'USD',
+        label: 'United States Dollar',
         symbol: '$',
     };
 

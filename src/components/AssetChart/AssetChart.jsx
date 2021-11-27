@@ -26,8 +26,8 @@ export const AssetChart = ({ asset }) => {
         JSON.parse(localStorage.getItem('chartDataType'))?.value || 'prices'
     );
     const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
+        value: 'USD',
+        label: 'United States Dollar',
         symbol: '$',
     };
 

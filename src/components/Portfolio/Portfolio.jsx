@@ -10,8 +10,8 @@ import './Portfolio.scss';
 export const Portfolio = () => {
     const [depositScreen, toggleDepositScreen] = useState(false);
     const currency = JSON.parse(localStorage.getItem('currency')) || {
-        value: 'usd',
-        label: 'USD - $',
+        value: 'USD',
+        label: 'United States Dollar',
         symbol: '$',
     };
     // create list of owned assets with up-to-date prices and amounts owned
