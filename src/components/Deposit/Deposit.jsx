@@ -92,6 +92,7 @@ export const Deposit = ({ close }) => {
                             <div className="asset-input">
                                 <input
                                     type="number"
+                                    step="any"
                                     defaultValue={getAssetAmount(editedAsset.id) || 0}
                                 />
                             </div>
