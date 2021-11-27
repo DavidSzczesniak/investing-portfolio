@@ -38,11 +38,15 @@ export const App = () => {
                         `${geckoAPI}coins/markets?vs_currency=${currency.value}&order=market_cap_desc&per_page=250`
                     )
                     .then((res) => {
+                        const list = res.data.map((item) => ({
+                            ...item,
+                            image: item.image.replace('large', 'small'),
+                        }));
                         localStorage.setItem(
                             'assetList',
                             JSON.stringify({
                                 updatedOn: new Date(),
-                                list: res.data,
+                                list: list,
                                 currency: currency.value,
                             })
                         );

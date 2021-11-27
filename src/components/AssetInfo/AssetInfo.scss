@@ -8,7 +8,8 @@
     }
     img {
         margin-right: 0.75em;
-        height: 20px;
+        height: 1.5rem;
+        width: 1.5rem;
         align-self: center;
     }
     & > div {
@@ -20,9 +21,6 @@
 
 @media (min-width: 40em) {
     .asset-name {
-        img {
-            height: 25px;
-        }
         & > div {
             flex-direction: row;
             align-items: center;
