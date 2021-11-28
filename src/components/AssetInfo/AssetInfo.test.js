@@ -1,62 +1,79 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
-import AssetInfo from './AssetInfo';
+import { normalizeNumber } from '../../Utils/helpers';
+import { AssetHoldings, AssetName, AssetPrice } from './AssetInfo';
+import { compactNumber } from '../../Utils/helpers';
 
 const assetMock = {
-    circulating_supply: 18781275,
     current_price: 45439,
     id: 'bitcoin',
     image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-    market_cap: 855194997162,
     name: 'Bitcoin',
     price_change_percentage_24h: 3.26545,
     symbol: 'btc',
-    total_volume: 41156019415,
-    updatedOn: '2021-08-09T21:13:12.469Z',
+    amount: '1.23241',
 };
-const mockCallback = jest.fn();
 
-const renderComponent = ({ onClick }) =>
-    render(<AssetInfo asset={assetMock} userAssetList={[assetMock]} onClick={onClick} />);
+const renderName = () => render(<AssetName asset={assetMock} />);
+const renderPrice = ({ currency = '$' }) =>
+    render(<AssetPrice asset={assetMock} currency={currency} />);
+const renderHoldings = ({ currency = '$' }) =>
+    render(<AssetHoldings asset={assetMock} currency={currency} />);
 
-it('renders with basic props', async () => {
-    const { getByTestId, getByText, getByTitle } = renderComponent({});
+describe('Testing AssetName', () => {
+    it('renders with basic props', async () => {
+        const { getByTestId, getByText, getByAltText } = renderName();
 
-    getByTestId('asset-info');
-    getByText(assetMock.name);
-    getByText(assetMock.symbol.toUpperCase());
-    getByText('$' + assetMock.current_price.toLocaleString());
-    getByText(assetMock.price_change_percentage_24h.toFixed(2) + '%');
-    getByTitle('caret-up');
+        getByTestId('asset-name');
+        getByText(assetMock.name);
+        getByText(assetMock.symbol.toUpperCase());
+        getByAltText(`${assetMock.name} logo`);
+        const displayedImage = document.querySelector('img');
+        expect(displayedImage.src).toEqual(assetMock.image);
+    });
 });
 
-it('renders with basic props - negative price change', async () => {
-    assetMock.price_change_percentage_24h = -2;
-    const { getByTestId, getByTitle } = renderComponent({});
+describe('Testing AssetPrice', () => {
+    it('renders with basic props', async () => {
+        const { getByTestId, getByText, getByTitle } = renderPrice({});
 
-    getByTestId('asset-info');
-    getByTitle('caret-down');
+        getByTestId('asset-price');
+        const normalizedPrice = normalizeNumber(assetMock.current_price, 4);
+        getByText(`$${normalizedPrice}`);
+        getByText(assetMock.price_change_percentage_24h.toFixed(2) + '%');
+        getByTitle('caret-up');
+    });
+    it('renders with a different currency symbol', async () => {
+        const { getByTestId, getByText } = renderPrice({ currency: '£' });
+
+        getByTestId('asset-price');
+        const normalizedPrice = normalizeNumber(assetMock.current_price, 4);
+        getByText(`£${normalizedPrice}`);
+    });
+    it("doesn't format prices below 0", async () => {
+        assetMock.current_price = 0.123;
+        const { getByText } = renderPrice({});
+
+        getByText('$0.123');
+    });
 });
 
-it('executes callback function on click of asset title', async () => {
-    const { getByTestId } = renderComponent({ onClick: mockCallback });
+describe('Testing AssetHoldings', () => {
+    it('renders with basic props', async () => {
+        const { getByTestId, getByText } = renderHoldings({});
 
-    fireEvent.click(getByTestId('asset-name'));
+        getByTestId('asset-holdings');
+        const normalizedPrice = normalizeNumber(assetMock.amount * assetMock.current_price, 2);
+        getByText(`$${normalizedPrice}`);
+        const amount = `${compactNumber(assetMock.amount)} ${assetMock.symbol.toUpperCase()}`;
+        getByText(amount);
+    });
+    it('renders with a different currency symbol', async () => {
+        const { getByTestId, getByText } = renderHoldings({ currency: '£' });
 
-    expect(mockCallback).toHaveBeenCalledTimes(1);
-});
-
-it('removes and saves asset from watchlist', async () => {
-    const { getByTestId } = renderComponent({});
-
-    // asset is removed, button changes to Save function
-    fireEvent.click(screen.getByTestId('remove-asset'));
-    getByTestId('save-asset');
-    expect(localStorage.getItem('assetList')).toBe('[]');
-
-    // asset is saved, button changes to Remove function
-    fireEvent.click(screen.getByTestId('save-asset'));
-    getByTestId('remove-asset');
-    expect(localStorage.getItem('assetList')).toBe(JSON.stringify([assetMock]));
+        getByTestId('asset-holdings');
+        const normalizedPrice = normalizeNumber(assetMock.amount * assetMock.current_price, 2);
+        getByText(`£${normalizedPrice}`);
+    });
 });

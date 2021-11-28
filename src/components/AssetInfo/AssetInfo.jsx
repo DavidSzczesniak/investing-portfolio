@@ -28,7 +28,7 @@ export const AssetName = ({ asset, disableClick }) => {
 export const AssetPrice = ({ asset, currency }) => {
     const currentPrice = asset.current_price;
     return (
-        <div className="asset-price">
+        <div className="asset-price" data-testid="asset-price">
             <span>
                 {currency}
                 {currentPrice <= 1 ? currentPrice : normalizeNumber(currentPrice, 4)}
@@ -40,7 +40,7 @@ export const AssetPrice = ({ asset, currency }) => {
 
 export const AssetHoldings = ({ asset, currency }) => {
     return (
-        <div className="asset-holdings">
+        <div className="asset-holdings" data-testid="asset-holdings">
             <span>
                 {currency}
                 {normalizeNumber(asset.amount * asset.current_price, 2)}
