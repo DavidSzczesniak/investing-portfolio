@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { geckoAPI } from '../../constants.js';
-import './AssetChart.scss';
 import { getCSSVar, isPositive } from '../../Utils/helpers.js';
+import './AssetChart.scss';
+import { ToggleButton } from '../ToggleButton/ToggleButton.jsx';
 
 export const AssetChart = ({ asset }) => {
-    const [chartData, setChartData] = useState({ x: null, y: null });
+    const [marketData, setMarketData] = useState({ x: null, y: null });
     const timeRanges = [
         { value: '1', label: '24h' },
         { value: '7', label: '7d' },
@@ -32,52 +33,26 @@ export const AssetChart = ({ asset }) => {
     };
 
     useEffect(() => {
-        // set gradient and color options for the chart
-        const chartCtx = document.getElementsByTagName('canvas')[0].getContext('2d');
-        const gradient = chartCtx.createLinearGradient(0, 0, 0, 600);
-
-        if (isPositive(asset.price_change_percentage_24h)) {
-            gradient.addColorStop(0, 'rgb(22, 199, 132, 0.5)');
-            gradient.addColorStop(0.5, 'rgb(22, 199, 132, 0.05)');
-        } else {
-            gradient.addColorStop(0, 'rgba(234, 57, 67, 0.5)');
-            gradient.addColorStop(0.5, 'rgba(234, 57, 67, 0.05)');
-        }
-
-        getMarketChart();
-        async function getMarketChart() {
+        getMarketData();
+        async function getMarketData() {
             await axios
                 .get(
                     `${geckoAPI}coins/${asset.id}/market_chart?vs_currency=${currency.value}&days=${timeRange}`
                 )
                 .then((res) => {
-                    let xAxis = [];
-                    let yAxis = [];
+                    let x = [];
+                    let y = [];
                     res.data[dataType].forEach((data) => {
-                        xAxis.push(
+                        x.push(
                             new Date(data[0]).toLocaleDateString('en-GB', {
                                 hour: '2-digit',
                                 minute: '2-digit',
                             })
                         );
-                        yAxis.push(data[1]);
+                        y.push(data[1]);
                     });
 
-                    setChartData({
-                        labels: xAxis,
-                        datasets: [
-                            {
-                                data: yAxis,
-                                borderWidth: 2.5,
-                                borderColor: isPositive(asset.price_change_percentage_24h)
-                                    ? getCSSVar('up')
-                                    : getCSSVar('down'),
-                                backgroundColor: gradient,
-                                fill: true,
-                                tension: 0.2,
-                            },
-                        ],
-                    });
+                    setMarketData({ x, y });
                 });
         }
     }, [asset.id, asset.price_change_percentage_24h, currency.value, dataType, timeRange]);
@@ -193,33 +168,45 @@ export const AssetChart = ({ asset }) => {
         },
     };
 
-    const ToggleButton = ({ current, options, onClick }) => {
-        return (
-            <div className="toggle-btn">
-                {options.map((option, index) => {
-                    return (
-                        <button
-                            key={index}
-                            className={`${current === option.value ? 'selected' : ''}`}
-                            onClick={() => onClick(option)}>
-                            {option.label}
-                        </button>
-                    );
-                })}
-            </div>
-        );
+    const chartData = (canvas) => {
+        // set gradient and color options for the chart
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+        if (isPositive(asset.price_change_percentage_24h)) {
+            gradient.addColorStop(0, 'rgb(22, 199, 132, 0.5)');
+            gradient.addColorStop(0.5, 'rgb(22, 199, 132, 0.05)');
+        } else {
+            gradient.addColorStop(0, 'rgba(234, 57, 67, 0.5)');
+            gradient.addColorStop(0.5, 'rgba(234, 57, 67, 0.05)');
+        }
+
+        return {
+            labels: marketData.x,
+            datasets: [
+                {
+                    data: marketData.y,
+                    borderWidth: 2.5,
+                    borderColor: isPositive(asset.price_change_percentage_24h)
+                        ? getCSSVar('up')
+                        : getCSSVar('down'),
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.2,
+                },
+            ],
+        };
     };
 
     return (
-        <div className="chart-container">
+        <div className="chart-container" data-testid="chart-container">
             <div className="chart-header">
                 <ToggleButton
-                    current={dataType}
+                    default={dataType}
                     options={dataTypes}
                     onClick={handleDataTypeSelection}
                 />
                 <ToggleButton
-                    current={timeRange}
+                    default={timeRange}
                     options={timeRanges}
                     onClick={handleRangeSelection}
                 />
