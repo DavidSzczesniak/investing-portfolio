@@ -4,11 +4,10 @@ import { AssetName } from '../AssetInfo/AssetInfo';
 import { SearchField } from '../SearchField/SearchField';
 import './AssetSearch.scss';
 
-export const AssetSearch = ({ close }) => {
+export const AssetSearch = ({ searchOptions, close }) => {
     const [searchValue, setSearchValue] = useState(undefined);
-    const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
     const history = useHistory();
-    const [filteredList, setFiltered] = useState(assets);
+    const [filteredList, setFiltered] = useState(searchOptions);
 
     function handleSearch(event) {
         setSearchValue(event.target.value);
@@ -17,9 +16,9 @@ export const AssetSearch = ({ close }) => {
 
         if (searchTerm) {
             const searchRegex = new RegExp(`${searchTerm}`, 'i');
-            setFiltered(assets.filter((asset) => Boolean(asset.name.match(searchRegex))));
+            setFiltered(searchOptions.filter((asset) => Boolean(asset.name.match(searchRegex))));
         } else {
-            setFiltered(assets);
+            setFiltered(searchOptions);
         }
     }
 
@@ -40,11 +39,14 @@ export const AssetSearch = ({ close }) => {
                 }
             />
             {searchValue && (
-                <ul className="search-results">
+                <ul className="search-results" data-testid="search-results">
                     {filteredList.length > 0 ? (
                         filteredList.map((asset, index) => {
                             return (
-                                <li key={index} onClick={() => goToAsset(asset.id)}>
+                                <li
+                                    key={index}
+                                    onClick={() => goToAsset(asset.id)}
+                                    data-testid="search-result">
                                     <AssetName asset={asset} disableClick />
                                     <div className="market-rank"># {asset.market_cap_rank}</div>
                                 </li>

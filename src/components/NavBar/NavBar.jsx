@@ -15,6 +15,7 @@ export const NavBar = ({ refreshApp, refreshed, toggleSideBar }) => {
     const defaultCurrency = { value: 'USD', label: 'United States Dollar', symbol: '$' };
     const selectedCurrency = JSON.parse(localStorage.getItem('currency')) || defaultCurrency;
     const { open, modalType, openModal, closeModal } = useModal();
+    const assetList = JSON.parse(localStorage.getItem('assetList'))?.list || [];
 
     useEffect(() => {
         if (darkMode) {
@@ -35,7 +36,7 @@ export const NavBar = ({ refreshApp, refreshed, toggleSideBar }) => {
             {open && modalType && (
                 <Modal close={closeModal}>
                     {modalType === 'search' ? (
-                        <AssetSearch close={closeModal} />
+                        <AssetSearch searchOptions={assetList} close={closeModal} />
                     ) : (
                         modalType === 'currency' && (
                             <CurrencyList
