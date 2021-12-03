@@ -46,14 +46,14 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                     />
                 </Modal>
             )}
-            <div className="sidebar">
+            <div className="sidebar" data-testid="sidebar">
                 <div className="sidebar-header">
                     <div
                         className="site-logo"
+                        data-testid="site-logo"
                         onClick={() => {
                             history.replace('/');
-                            enableScrolling();
-                            close();
+                            closeSideBar();
                         }}>
                         Investii
                     </div>
@@ -62,6 +62,7 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                         icon={faTimes}
                         ariaLabel="close sidebar menu"
                         className="sidebar-button"
+                        testId="close-sidebar"
                     />
                 </div>
                 <ul className="sidebar-links">
@@ -81,6 +82,7 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                         <button
                             onClick={openModal}
                             type="button"
+                            data-testid="change-currency"
                             className="change-currency nav-button">
                             {selectedCurrency.value}
                         </button>
@@ -92,6 +94,7 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                             toggleIcon={{ otherIcon: faSun, condition: darkMode }}
                             ariaLabel="toggle dark mode"
                             className="sidebar-button"
+                            testId="dark-mode"
                         />
                     </div>
                 </div>

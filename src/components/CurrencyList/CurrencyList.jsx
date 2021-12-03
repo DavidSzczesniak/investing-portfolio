@@ -31,7 +31,7 @@ export const CurrencyList = ({ refreshApp, refreshed, close }) => {
             icon: { code: 'CA', label: 'Canada flag' },
         },
     ];
-    const selectedCurrency = JSON.parse(localStorage.getItem('currency')).value || 'USD';
+    const selectedCurrency = JSON.parse(localStorage.getItem('currency'))?.value || 'USD';
 
     function changeCurrency(selectedCurrency) {
         localStorage.setItem('currency', JSON.stringify(selectedCurrency));
@@ -40,7 +40,7 @@ export const CurrencyList = ({ refreshApp, refreshed, close }) => {
     }
 
     return (
-        <div className="currency-list">
+        <div className="currency-list" data-testid="currency-list">
             <div className="page-header">
                 <h2 className="title">Select Currency</h2>
                 <Button icon={faTimes} onClick={close} ariaLabel="close" iconSize="2x" />
