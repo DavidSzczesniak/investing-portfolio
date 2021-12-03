@@ -16,7 +16,7 @@ export const SearchField = ({ inputValue, onChange, clearSearch, size = 'md', st
                 className={inputValue ? 'with-results' : undefined}
                 autoFocus
             />
-            <Button icon={faTimesCircle} onClick={clearSearch} />
+            <Button icon={faTimesCircle} onClick={clearSearch} testId="clear-search" />
         </div>
     );
 };

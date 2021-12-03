@@ -60,7 +60,7 @@ export const Portfolio = () => {
     return (
         <div className="portfolio" data-testid="portfolio">
             {depositScreen ? (
-                <Deposit close={() => toggleDepositScreen(false)} />
+                <Deposit searchOptions={assets} close={() => toggleDepositScreen(false)} />
             ) : (
                 <>
                     <div className="portfolio__header">Current Balance</div>

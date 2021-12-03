@@ -8,9 +8,8 @@ import { Button } from '../Button/Button';
 import { SearchField } from '../SearchField/SearchField';
 import './Deposit.scss';
 
-export const Deposit = ({ close }) => {
-    const assets = JSON.parse(localStorage.getItem('assetList'))?.list || [];
-    const [filteredAssetList, setFilteredList] = useState(assets);
+export const Deposit = ({ searchOptions, close }) => {
+    const [filteredAssetList, setFilteredList] = useState(searchOptions);
     const [searchValue, setSearchValue] = useState(undefined);
     const [holdings, setHoldings] = useState(JSON.parse(localStorage.getItem('holdings')) || []);
     const [editedAsset, setEditedAsset] = useState(undefined);
@@ -23,9 +22,11 @@ export const Deposit = ({ close }) => {
 
         if (searchTerm) {
             const searchRegex = new RegExp(`${searchTerm}`, 'i');
-            setFilteredList(assets.filter((asset) => Boolean(asset.name.match(searchRegex))));
+            setFilteredList(
+                searchOptions.filter((asset) => Boolean(asset.name.match(searchRegex)))
+            );
         } else {
-            setFilteredList(assets);
+            setFilteredList(searchOptions);
         }
     }
 
@@ -35,10 +36,11 @@ export const Deposit = ({ close }) => {
 
     function handleSearchClear() {
         setSearchValue(undefined);
-        setFilteredList(assets);
+        setFilteredList(searchOptions);
     }
 
     function handleDeposit(asset, amount) {
+        // console.log(amount.elements);
         const existingHolding = holdings.find((a) => a.id === asset.id);
         const newHoldings = holdings;
         amount = Number(amount);
@@ -78,7 +80,7 @@ export const Deposit = ({ close }) => {
         <>
             {open && (
                 <Modal close={closeEditModal}>
-                    <div className="edit-asset">
+                    <div className="edit-asset" data-testid="edit-asset">
                         <div className="page-header">
                             <h2 className="title">{editedAsset.name}</h2>
                             <Button
@@ -88,12 +90,15 @@ export const Deposit = ({ close }) => {
                                 iconSize="2x"
                             />
                         </div>
-                        <form onSubmit={(e) => handleDeposit(editedAsset, e.target[0].value)}>
+                        <form
+                            onSubmit={(e) => handleDeposit(editedAsset, e.target.elements[0].value)}
+                            data-testid="form">
                             <div className="asset-input">
                                 <input
                                     type="number"
                                     step="any"
                                     defaultValue={getAssetAmount(editedAsset.id) || 0}
+                                    data-testid="asset-input"
                                 />
                             </div>
                             <div
@@ -108,42 +113,51 @@ export const Deposit = ({ close }) => {
                     </div>
                 </Modal>
             )}
-            <div className="page-header">
-                <h2 className="title">Deposit</h2>
-                <Button icon={faTimes} onClick={close} ariaLabel="close" iconSize="2x" />
-            </div>
-            <div className="search-container">
-                <SearchField
-                    inputValue={searchValue}
-                    onChange={handleSearch}
-                    clearSearch={handleSearchClear}
-                />
-            </div>
-            <div className="asset-list">
-                {filteredAssetList.length > 0 ? (
-                    <>
-                        {filteredAssetList
-                            .sort((a, b) => getAssetAmount(b.id) - getAssetAmount(a.id))
-                            .map((asset, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        onClick={() => {
-                                            setEditedAsset(asset);
-                                            openModal();
-                                        }}>
-                                        <AssetName asset={asset} disableClick />
-                                        <span className="holding-amount">
-                                            {getAssetAmount(asset.id) || '0'}{' '}
-                                            {asset.symbol.toUpperCase()}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                    </>
-                ) : (
-                    <span>No results found</span>
-                )}
+            <div data-testid="deposit">
+                <div className="page-header">
+                    <h2 className="title">Deposit</h2>
+                    <Button
+                        icon={faTimes}
+                        onClick={close}
+                        ariaLabel="close"
+                        iconSize="2x"
+                        testId="close"
+                    />
+                </div>
+                <div className="search-container">
+                    <SearchField
+                        inputValue={searchValue}
+                        onChange={handleSearch}
+                        clearSearch={handleSearchClear}
+                    />
+                </div>
+                <div className="asset-list">
+                    {filteredAssetList.length > 0 ? (
+                        <>
+                            {filteredAssetList
+                                .sort((a, b) => getAssetAmount(b.id) - getAssetAmount(a.id))
+                                .map((asset, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            data-testid="asset-list-item"
+                                            onClick={() => {
+                                                setEditedAsset(asset);
+                                                openModal();
+                                            }}>
+                                            <AssetName asset={asset} disableClick />
+                                            <span className="holding-amount">
+                                                {getAssetAmount(asset.id) || '0'}{' '}
+                                                {asset.symbol.toUpperCase()}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                        </>
+                    ) : (
+                        <span>No results found</span>
+                    )}
+                </div>
             </div>
         </>
     );
