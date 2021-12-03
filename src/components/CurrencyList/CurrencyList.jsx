@@ -52,6 +52,7 @@ export const CurrencyList = ({ refreshApp, refreshed, close }) => {
                         <li
                             key={index}
                             onClick={() => changeCurrency(currency)}
+                            data-testid="currency-item"
                             className={isSelected ? 'selected' : ''}>
                             <ReactCountryFlag
                                 countryCode={currency.icon.code}
