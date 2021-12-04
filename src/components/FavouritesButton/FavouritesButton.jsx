@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '../Button/Button';
 import './FavouritesButton.scss';
 
-export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
+export const FavouritesButton = ({ asset, refreshPage, refreshed }) => {
     const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
     const assetInWatchlist = watchlist.find((a) => a === asset.id);
     const [owned, setOwned] = useState(assetInWatchlist);
@@ -19,7 +19,7 @@ export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
         localStorage.setItem('watchlist', JSON.stringify(newList));
 
         setOwned(true);
-        refreshPage && refreshPage(!refreshState);
+        refreshPage && refreshPage(!refreshed);
     }
 
     function handleRemoveAsset() {
@@ -29,7 +29,7 @@ export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
         localStorage.setItem('watchlist', JSON.stringify(newList));
 
         setOwned(false);
-        refreshPage && refreshPage(!refreshState);
+        refreshPage && refreshPage(!refreshed);
     }
 
     return (
@@ -37,6 +37,7 @@ export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
             {owned ? (
                 <Button
                     className="favourites-btn"
+                    testId="favourites-btn"
                     onClick={handleRemoveAsset}
                     ariaLabel="Remove from favourites"
                     icon={faStar}
@@ -44,6 +45,7 @@ export const FavouritesButton = ({ asset, refreshPage, refreshState }) => {
             ) : (
                 <Button
                     className="favourites-btn"
+                    testId="favourites-btn"
                     onClick={handleSaveAsset}
                     ariaLabel="Save to favourites"
                     icon={faOutlineStar}

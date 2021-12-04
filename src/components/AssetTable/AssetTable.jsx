@@ -194,7 +194,7 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
                                         <td>
                                             <FavouritesButton
                                                 asset={asset}
-                                                refreshState={refreshed}
+                                                refreshed={refreshed}
                                                 refreshPage={refreshPage}
                                             />
                                         </td>
