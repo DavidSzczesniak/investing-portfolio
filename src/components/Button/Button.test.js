@@ -4,35 +4,41 @@ import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Button } from './Button';
 
-const renderComponent = ({ onClick, isSecondary = false }) =>
-    render(<Button label="Click Me!" icon={faPlus} isSecondary={isSecondary} onClick={onClick} />);
 const mockCallback = jest.fn();
+const renderComponent = ({ isSecondary = false }) => {
+    const component = render(
+        <Button label="Click Me!" icon={faPlus} isSecondary={isSecondary} onClick={mockCallback} />
+    );
+    const button = component.getByTestId('custom-btn');
+
+    return { button, ...component };
+};
 
 it('renders with props', async () => {
-    const { getByTestId } = renderComponent({});
+    const { button } = renderComponent({});
 
-    expect(getByTestId('custom-btn')).toHaveTextContent('Click Me!');
-    expect(getByTestId('custom-btn')).toContainHTML('svg');
-    expect(getByTestId('custom-btn')).not.toHaveClass('secondary-btn');
+    expect(button).toHaveTextContent('Click Me!');
+    expect(button).toContainHTML('svg');
+    expect(button).not.toHaveClass('secondary-btn');
 });
 
 it('renders with props and secondary styling', async () => {
-    const { getByTestId } = renderComponent({ isSecondary: true });
+    const { button } = renderComponent({ isSecondary: true });
 
-    expect(getByTestId('custom-btn')).toHaveClass('secondary-btn');
+    expect(button).toHaveClass('secondary-btn');
 });
 
 it('renders with just an icon', async () => {
     const { getByTestId } = render(<Button icon={faPlus} />);
 
-    expect(getByTestId('custom-btn')).toHaveTextContent('');
-    expect(getByTestId('custom-btn')).toContainHTML('svg');
+    const button = getByTestId('custom-btn');
+    expect(button).toHaveTextContent('');
+    expect(button).toContainHTML('svg');
 });
 
 it('executes callback function on click', async () => {
-    const { getByTestId } = renderComponent({ onClick: mockCallback });
+    const { button } = renderComponent({});
 
-    const button = getByTestId('custom-btn');
     fireEvent.click(button);
 
     expect(mockCallback).toHaveBeenCalledTimes(1);

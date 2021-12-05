@@ -54,7 +54,7 @@ it('renders with basic props', async () => {
 it('executes close prop callback', async () => {
     const { getByTestId } = renderComponent();
 
-    fireEvent.click(getByTestId('custom-btn close'));
+    fireEvent.click(getByTestId('close'));
     expect(mockCallback).toHaveBeenCalledTimes(1);
 });
 
@@ -71,7 +71,7 @@ it('clears user input when button is clicked', async () => {
 
     fireEvent.change(input, { target: { value: 'Bitcoin' } });
     expect(input.value).toBe('Bitcoin');
-    fireEvent.click(getByTestId('custom-btn clear-search'));
+    fireEvent.click(getByTestId('clear-search'));
     expect(input.value).toBe('');
 });
 

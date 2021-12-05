@@ -1,12 +1,19 @@
 .info-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    transform: translateY(50%);
+    transform: translateY(30%);
     svg {
         color: var(--foreground-secondary);
-        margin-bottom: 20px;
+        margin-bottom: 3rem;
+    }
+    button {
+        margin-top: 1rem;
     }
 }
 
 .info-page__message {
-    margin: 20px;
+    margin: 1.5rem;
 }

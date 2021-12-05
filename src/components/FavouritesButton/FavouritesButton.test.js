@@ -11,7 +11,7 @@ const renderComponent = () => {
     const component = render(
         <FavouritesButton asset={mockAsset} refreshPage={refreshFn} refreshed={false} />
     );
-    const button = component.getByTestId('custom-btn favourites-btn');
+    const button = component.getByTestId('favourites-btn');
 
     return { button, ...component };
 };

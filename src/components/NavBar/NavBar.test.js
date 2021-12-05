@@ -48,7 +48,7 @@ it('opens currency switch modal', async () => {
 it('opens asset search modal', async () => {
     const { getByTestId } = renderComponent();
 
-    fireEvent.click(getByTestId('custom-btn open-search'));
+    fireEvent.click(getByTestId('open-search'));
     getByTestId('search-field');
 });
 

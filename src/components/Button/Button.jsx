@@ -12,7 +12,7 @@ export const Button = ({
     ariaLabel,
     className,
     type,
-    testId,
+    testId = 'custom-btn',
 }) => {
     const secondary = isSecondary ? 'secondary-btn' : '';
     const iconOnly = !label ? 'icon-only' : '';
@@ -23,7 +23,7 @@ export const Button = ({
 
     return (
         <button
-            data-testid={`custom-btn ${testId}`}
+            data-testid={testId}
             onClick={() => onClick && onClick()}
             aria-label={ariaLabel}
             type={`${type ? type : 'button'}`}

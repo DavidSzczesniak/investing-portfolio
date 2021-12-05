@@ -34,7 +34,7 @@ it('executes close prop callback', async () => {
 
     fireEvent.click(document.getElementsByClassName('site-logo')[0]);
     expect(closeFn).toHaveBeenCalledTimes(1);
-    fireEvent.click(getByTestId('custom-btn close-sidebar'));
+    fireEvent.click(getByTestId('close-sidebar'));
     expect(closeFn).toHaveBeenCalledTimes(2);
 });
 
@@ -52,7 +52,7 @@ it('toggles dark mode', async () => {
     const { getByTestId } = renderComponent();
 
     expect(body).not.toHaveClass('dark-theme');
-    fireEvent.click(getByTestId('custom-btn dark-mode'));
+    fireEvent.click(getByTestId('dark-mode'));
     expect(body).toHaveClass('dark-theme');
 });
 
