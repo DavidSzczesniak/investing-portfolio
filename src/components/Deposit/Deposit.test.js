@@ -101,7 +101,7 @@ it('opens modal to edit an asset', async () => {
 });
 
 it('saves new asset amount', async () => {
-    const { getByTestId, debug, listItems, getByText } = renderComponent();
+    const { getByTestId, listItems, getByText } = renderComponent();
 
     fireEvent.click(listItems[0]);
     const editInput = getByTestId('asset-input');
