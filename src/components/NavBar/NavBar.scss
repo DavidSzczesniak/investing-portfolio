@@ -37,6 +37,9 @@
     display: none;
     margin-left: 1rem;
     * a {
+        &.active {
+            color: var(--clr-accent);
+        }
         &:hover {
             color: var(--clr-accent);
             cursor: pointer;

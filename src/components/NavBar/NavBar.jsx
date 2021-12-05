@@ -71,6 +71,7 @@ export const NavBar = ({ refreshApp, refreshed, toggleSideBar }) => {
                             icon={faSearch}
                             ariaLabel="search"
                             className="nav-button"
+                            testId="open-search"
                         />
                         <Button
                             onClick={toggleDarkMode}

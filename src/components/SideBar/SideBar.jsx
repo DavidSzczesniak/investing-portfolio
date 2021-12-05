@@ -50,7 +50,6 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                 <div className="sidebar-header">
                     <div
                         className="site-logo"
-                        data-testid="site-logo"
                         onClick={() => {
                             history.replace('/');
                             closeSideBar();
@@ -82,7 +81,6 @@ export const SideBar = ({ refreshed, refreshApp, close }) => {
                         <button
                             onClick={openModal}
                             type="button"
-                            data-testid="change-currency"
                             className="change-currency nav-button">
                             {selectedCurrency.value}
                         </button>
