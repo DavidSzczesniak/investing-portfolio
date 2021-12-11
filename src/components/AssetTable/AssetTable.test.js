@@ -115,8 +115,21 @@ describe('sorting', () => {
         expect(firstAsset).toHaveTextContent(mockAssets[0].name);
     });
 
+    it('sorts by name (string)', async () => {
+        const { clickSort, firstAsset } = renderComponent({});
+        // descending
+        clickSort('name');
+        expect(firstAsset).toHaveTextContent(mockAssets[1].name);
+        // ascending
+        clickSort('name');
+        expect(firstAsset).toHaveTextContent(mockAssets[0].name);
+        // default
+        clickSort('name');
+        expect(firstAsset).toHaveTextContent(mockAssets[0].name);
+    });
+
     // special case as it uses two data points to calculate the sort order
-    it('sorts by name (string - special case)', async () => {
+    it('sorts by holdings (string - special case)', async () => {
         const { clickSort, firstAsset } = renderComponent({ portfolio: true });
         // descending
         clickSort('amount');
