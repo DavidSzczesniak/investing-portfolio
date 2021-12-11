@@ -134,7 +134,7 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
 
     const TableHeading = ({ prop, label }) => {
         return (
-            <th onClick={() => handleSort(prop)}>
+            <th onClick={() => handleSort(prop)} data-testid={`sort-${prop}`}>
                 <div>
                     {label}
                     {currentSort.heading === prop && currentSort.icon && (
@@ -148,7 +148,7 @@ export const AssetTable = ({ assets, portfolio, favourites }) => {
     return (
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             {assetList.length > 0 ? (
-                <table className="asset-table">
+                <table className="asset-table" data-testid="asset-table">
                     <thead>
                         <tr>
                             {tableHeadingsList.map((heading, index) => {
