@@ -1,0 +1,23 @@
+.market-stats {
+    width: 100%;
+    max-width: 50rem;
+    flex-grow: 1;
+    align-items: center;
+    & > div {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 500;
+        & > h4 {
+            color: var(--foreground-secondary);
+            font-weight: 500;
+        }
+    }
+}
+
+@media (min-width: 40em) {
+    .market-stats {
+        width: unset;
+    }
+}

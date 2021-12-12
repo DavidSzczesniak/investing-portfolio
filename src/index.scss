@@ -39,6 +39,12 @@
     border-radius: 4px;
 }
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
 body {
     color: var(--foreground);
     background-color: var(--background);
@@ -95,9 +101,9 @@ ul {
 .container {
     text-align: center;
     margin-inline: auto;
-    padding-top: 1rem;
     width: 90%;
     max-width: 80rem;
+    height: 90%;
 }
 
 .page-title {

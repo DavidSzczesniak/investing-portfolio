@@ -5,6 +5,8 @@ import { ValueChangePercent } from '../ValueChangePercent/ValueChangePercent';
 import './AssetInfo.scss';
 import { compactNumber } from '../../Utils/helpers';
 
+const currency = JSON.parse(localStorage.getItem('currency')).symbol || '$';
+
 export const AssetName = ({ asset, disableClick }) => {
     const history = useHistory();
 
@@ -25,7 +27,7 @@ export const AssetName = ({ asset, disableClick }) => {
     );
 };
 
-export const AssetPrice = ({ asset, currency }) => {
+export const AssetPrice = ({ asset }) => {
     const currentPrice = asset.current_price;
     return (
         <div className="asset-price" data-testid="asset-price">
@@ -38,7 +40,7 @@ export const AssetPrice = ({ asset, currency }) => {
     );
 };
 
-export const AssetHoldings = ({ asset, currency }) => {
+export const AssetHoldings = ({ asset }) => {
     return (
         <div className="asset-holdings" data-testid="asset-holdings">
             <span>
