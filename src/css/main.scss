@@ -18,7 +18,7 @@
 .dominance-list {
     margin-bottom: 0;
     height: 12rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     & > li {
         display: flex;
         justify-content: space-between;
