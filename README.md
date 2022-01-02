@@ -1,6 +1,6 @@
 # Investing app for learning purposes
 
-The aim is to be able to search different assets like cryptocurrencies and precious metals. Those can then be saved to the user's personal watchlist and also a portfolio, where they can input their amounts of each and have a neat dashboard to display the whole thing; distribution, total asset worth etc. 
+The aim is to be able to search different cryptocurrencies and save them to the user's personal watchlist and/or portfolio, where they can input their amounts of each and have a neat dashboard to display the whole thing; distribution, total asset worth etc. 
 
 Currently, it can:
 
